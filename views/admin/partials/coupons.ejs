@@ -1,0 +1,156 @@
+<%- include('../layouts/header') %>
+      <%- include('../layouts/head-links') %>
+      <div class="container line-break text-center py-3">
+        <span class="shadow-heading" style="text-transform: uppercase;">Coupons</span>
+      </div>
+      <!-- Button trigger modal -->
+      <div class="container d-flex justify-content-center my-3">
+        <button
+          type="button"
+          class="btn btn-dark text-center"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Add New Coupon
+        </button>
+      </div>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        data-bs-backdrop="static"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Add New Coupon
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+                
+                <!-- -------------------- -->
+
+
+                <form action="coupon_management/addNew" method="post">
+                    <div class="mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="form-holder"
+                        name="name"
+                        placeholder="Name"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="form-holder"
+                        name="code"
+                        placeholder="Code"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="form-holder"
+                        placeholder="Discount in %"
+                        name="discount"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="form-holder"
+                          placeholder="Starting Date"
+                          name="startingDate"
+                          required
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="form-holder"
+                          placeholder="Expiry Date"
+                          name="expiryDate"
+                          required
+                        />
+                      </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-success">
+                    Save changes
+                  </button>
+                  </form>
+
+
+<!-- ------------------- -->
+            
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Responsive data table -->
+      
+      <div class="card-body container">
+        <table id="dataTable" class="table table-hover cell-border fw-light nowrap">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Name</th>
+              <th>Code</th>
+              <th>Discount</th>
+              <th>Starting Date</th>
+              <th>Expiry Date</th>
+              <th>Activity</th>
+            </tr>
+          </thead>
+          <% if(coupons !=null){ %>
+          <tbody>
+            <% coupons.forEach(function(item,i){ %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= item.name %></td>
+              <td><%= item.code %></td>
+              <td><%= item.discount %>%</td>
+              <td><%= moment(item.startingDate).format('ll')  %></td>
+              <td><%= moment(item.expiryDate).format('ll') %></td>
+              <td class="text-center d-flex flex-column">
+                <% if(item.active==true){ %> 
+                <a href="/admin/coupon_management/changeActivity?id=<%= item._id %>" onclick="return confirm('Proceed to change of <%= item.name %> ?')" class="btn btn-success text-white btn-sm  my-1">Active</a>
+              <% }else{ %>
+                <a href="/admin/coupon_management/changeActivity?id=<%= item._id %>" onclick="return confirm('Proceed to change of <%= item.name %> ?')" class="btn btn-danger text-white btn-sm my-1">In-active</a>
+                <% } %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+          <% } %>
+        </table>
+      </div>
+
+      <%- include('../layouts/footer') %>

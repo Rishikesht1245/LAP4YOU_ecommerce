@@ -1,0 +1,74 @@
+<%- include('../layouts/header') %> <%- include('../layouts/user-links') %>
+
+<div class="container mx-auto">
+  <div class="line-break text-center py-4">
+    <span class="shadow-heading">Your Orders</span>
+  </div>
+  <div class="row justify-content-center m-3">
+    <div class="col-lg-9">
+      <% if(allOrders!= null && allOrders.length !=0){%> <%
+      allOrders.forEach((order,i) => {%>
+      <div
+        class="d-flex rounded my-2 p-3"
+        style="border: 1px solid #dbdbdb; font-size: 0.7rem"
+      >
+        <div
+          class="prod-details d-flex flex-grow-1 flex-column justify-content-between"
+        >
+          <div
+            class="d-flex justify-content-between mb-2"
+            style="border-bottom: 1px solid #dbdbdb"
+          >
+            <span class="mb-1"><b><%=i+1%>.</b> Order ID: <%=order._id%></span>
+
+            <span class="mb-1" style="color: green"
+              ><% if(order.delivered==true){%>Delivered<%}else{%>Not
+              Delivered<%}%></span
+            >
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <span class="mb-1">Total Quantity:</span
+            ><span><%=order.totalQuantity%></span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span class="mb-1" style="letter-spacing: 1px"
+              >Mode of Payment:</span
+            ><span> <%=order.modeOfPayment%></span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span class="mb-1">Bill Amount: </span
+            ><span><%=order.finalPrice%></span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span class="mb-1">Shipping Adress:</span
+            ><span> <%=order.shippingAddress.building%></span>
+          </div>
+
+          <div
+            class="d-flex justify-content-between mt-2"
+            style="border-top: 1px solid #dbdbdb; width: 100%"
+          >
+            <span class="mt-2">Order Date: <%=moment(order.orderedOn).format('MMMM Do YYYY, h:mm:ss a')%></span>
+            <a
+              href="/users/orders/<%=order._id%>"
+              class="btn btn-secondary btn-sm text-white mt-1"
+              style="font-size: 0.6rem"
+              >View Details</a
+            >
+          </div>
+        </div>
+      </div>
+      <%})%> <%}else{%>
+      <h5 class="text-center my-4 fw-light">You have not made any orders.</h5>
+      <div class="text-center my-4 fw-bold">
+        <a href="/" class=" fst-italic"
+          >Continue shopping <i class="fa fa-arrow-right"></i
+        ></a>
+      </div>
+      <%}%>
+    </div>
+  </div>
+</div>
+
+<%- include('../layouts/footer') %>

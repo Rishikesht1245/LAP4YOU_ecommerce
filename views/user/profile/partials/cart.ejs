@@ -1,0 +1,106 @@
+<%- include('../layouts/header') %> <%- include('../layouts/user-links') %>
+
+<div class="container mx-auto">
+  <div class="line-break text-center py-4">
+    <span class="shadow-heading">Your Cart</span>
+  </div>
+  <div class="row justify-content-center m-3" id="cart">
+    <div class="col-lg-6">
+      <% if(userCart!= null && userCart.products.length!= 0){%> <%
+      userCart.products.forEach((product,i) => {%>
+      <div
+        class="row d-flex rounded my-2 p-3"
+        style="border: 1px solid #dbdbdb"
+      >
+        <div class="col-lg-4 prod-img text-center">
+          <img
+            src="/public/img/products/<%=product.name.thumbnail%>"
+            alt=""
+            height="150px"
+          />
+        </div>
+        <div
+          class="col-lg-8 prod-details d-flex flex-grow-1 flex-column justify-content-between"
+        >
+          <h5><a href="/products/<%=product.name._id%>" style="color: black !important;"><%=product.name.name%></a></h5>
+          <h6 class="text-secondary"><%=product.name.brand.name%></h6>
+          <span
+            style="text-transform: none; font-size: 0.85rem; font-weight: 700"
+          >
+            Price: <%=product.name.price%></span
+          >
+          <div class="d-flex justify-content-end mt-2">
+            <div class="counter d-flex p-1 align-items-center rounded mx-4">
+              <button
+                class="btn btn-sm btn-light button-div"
+                onclick='reduceCount("<%=product.name._id%>","<%=i%>")'
+              >
+                <i class="fa fa-minus"></i>
+              </button>
+              <span id="cartCount<%=i%>" class="fw-bold px-2"
+                ><%=product.quantity%></span
+              >
+              <button
+                class="btn btn-sm btn-light button-div"
+                onclick='addCount("<%=product.name._id%>","<%=i%>")'
+              >
+                <i class="fa fa-plus h-100"></i>
+              </button>
+            </div>
+            <div class="d-flex align-items-center">
+              <button class="btn button-div btn-sm text-white btn-dark">
+                <span
+                  style="font-size: 0.8rem; letter-spacing: 1px"
+                  onclick="removeFromCart('<%=product.name._id%>')"
+                  >Remove</span
+                >
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%})%>
+    </div>
+
+    <div class="col-lg-4 my-3">
+      <div
+        class="order-summary rounded p-3 my-3 d-flex flex-column"
+        style="border: 1px solid #dbdbdb; font-size: 0.9rem"
+      >
+        <div class="d-flex justify-content-between p-1">
+          <span>Total items:</span>
+          <span id="totalItems"><%=userCart.totalQuantity%></span>
+        </div>
+        <div class="d-flex justify-content-between p-1">
+          <span>Products:</span>
+          <span id="totalProducts"><%=userCart.products.length%></span>
+        </div>
+        <div class="d-flex justify-content-between p-1">
+          <span>Price:</span>
+          <span id="totalPrice">₹ <%=userCart.totalPrice%></span>
+        </div>
+      </div>
+      <div
+        class="order-summary rounded p-3 my-3 d-flex flex-column"
+        style="border: 1px solid #dbdbdb; font-size: 0.9rem"
+      >
+        <a
+          href="/users/cart/checkout"
+          type="submit"
+          class="text-white btn btn-dark btn-sm button-div"
+          >Proceed to checkout</a
+        >
+      </div>
+      <%}else{%>
+      <h5 class="text-center my-4 fw-light">No products on your cart yet.</h5>
+      <div class="text-center my-4 fw-bold">
+        <a href="/" class=" fst-italic"
+          >Continue shopping <i class="fa fa-arrow-right"></i
+        ></a>
+      </div>
+      <%}%>
+    </div>
+  </div>
+</div>
+<script src="/public/js/singleProduct.js"></script>
+<%- include('../layouts/footer') %>

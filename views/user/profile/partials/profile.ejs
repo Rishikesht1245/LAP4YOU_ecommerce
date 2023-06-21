@@ -1,0 +1,92 @@
+<%- include('../layouts/header') %> 
+<%- include('../layouts/user-links') %>
+
+<% if(currentUser!=null){%>
+<div class="container">
+  <div class="line-break text-center py-4">
+    <span class="shadow-heading">Welcome, </span
+    ><span class="brand-name"><%=currentUser.name%></span>
+  </div>
+  <div class="row mb-5 mt-4">
+    <div class="col-lg-6 mx-auto">
+      <div class="user-details line-break mb-3" style="position: relative;">
+        <div class="photo text-center" style="position: absolute; right: 0;">
+          <img class="rounded-5" src="/Public/img/users/<%=currentUser.photo%>" alt="" style="min-width: 50px; max-width: 100px;">
+        </div>
+            <div class="name">
+              <h6>Name</h6>
+              <p style="text-transform: none;"><%=currentUser.name%></p>
+          </div>
+          <div class="email my-4">
+              <h6>Email</h6>
+              <p style="text-transform: none;"><%=currentUser.email%></p>
+          </div>
+        <div class="contact-Number  my-4">
+            <h6>Contact Number</h6>
+            <p style="text-transform: none;"><%=currentUser.number%></p>
+        </div>
+       
+        <div class="address">
+          <h6>Primary Address</h6>
+          <% if(defaultAddress!=""){ %>
+            <p style="text-transform: none;"><%=defaultAddress[0].addresses.building%></br><%=defaultAddress[0].addresses.address%> - <%=defaultAddress[0].addresses.pincode%></br><%=defaultAddress[0].addresses.country%></br>Alternate No: <%=defaultAddress[0].addresses.contactNumber%></br></p>
+
+          <%}else{%>
+            <p class="fw-bold text-danger" style="text-transform: none;">You have not set any default address.</p>
+
+            <%}%>
+      </div>
+
+      </div>
+      <div class="form-footer d-flex justify-content-between">
+        <a href="/users/forgotPassword"> Reset password? </a>
+        <a href="update_details" class="btn btn-dark w-50 text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+          >Update Account</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<%}%>
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Update your details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cl    ose"></button>
+        </div>
+        <div class="modal-body">
+          <form action="" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="form-holder"
+                placeholder="name"
+                name = "name"
+                value="<%=currentUser.name%>"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="form-holder" style="font-size: 0.75rem">Upload your image</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="form-holder"
+                  placeholder="photo"
+                  name = "photo"
+                  />
+                </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-dark">Save Changes</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<%- include('../layouts/footer') %>

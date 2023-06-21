@@ -1,0 +1,177 @@
+<%- include('../layouts/header') %> <%- include('../layouts/head-links') %>
+<div class="container line-break-top line-break text-center py-3">
+  <span class="shadow-heading">DashBoard</span>
+</div>
+<div class="col-md-10 mx-auto my-3">
+  <div class="row m-0">
+      <div class="col-xl-3 col-lg-6 mb-2">
+          <div class="card l-bg-cherry">
+              <div class="card-statistic-3 p-4">
+                  <div class="card-icon card-icon-large"><i class="fas fa-shopping-cart"></i></div>
+                  <div class="mb-4">
+                      <h5 class="card-title mb-0">Orders</h5>
+                  </div>
+                  <div class="row align-items-center mb-2 d-flex">
+                      <div class="col-8">
+                          <h4 class="d-flex align-items-center mb-0">
+                              <%=locals.orderCount%>
+                          </h4>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 mb-2 ">
+          <div class="card l-bg-blue-dark">
+              <div class="card-statistic-3 p-4">
+                  <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div>
+                  <div class="mb-4">
+                      <h5 class="card-title mb-0">Customers</h5>
+                  </div>
+                  <div class="row align-items-center mb-2 d-flex">
+                      <div class="col-8">
+                          <h4 class="d-flex align-items-center mb-0">
+                            <%=locals.customerCount%>
+                          </h4>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 mb-2">
+          <div class="card l-bg-green-dark">
+              <div class="card-statistic-3 p-4">
+                  <div class="card-icon card-icon-large"><i class="fas fa-clock"></i></div>
+                  <div class="mb-4">
+                      <h5 class="card-title mb-0">Products</h5>
+                  </div>
+                  <div class="row align-items-center mb-2 d-flex">
+                      <div class="col-8">
+                          <h4 class="d-flex align-items-center mb-0">
+                            <%=locals.productCount%>
+                          </h4>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 mb-2">
+          <div class="card l-bg-orange-dark">
+              <div class="card-statistic-3 p-4">
+                  <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+                  <div class="mb-4">
+                      <h5 class="card-title mb-0">Revenue ₹</h5>
+                  </div>
+                  <div class="row align-items-center mb-2 d-flex">
+                      <div class="col-8">
+                          <h4 class="d-flex align-items-center mb-0">
+                            <%=locals.totalRevenue%>
+                          </h4>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="container">
+  <h6 class="text-center mt-5 mb-3" >Sales Analytics - <%let currentYear = new Date();%>
+    <%currentYear = currentYear.getFullYear();%><%=currentYear%></h6>
+  <div class="row my-3" id="charts">
+    <div class="col-lg-6">
+      
+      <canvas id="myChart"></canvas>
+    </div>
+    <div class="col-lg-6">
+      <canvas id="myChart2"></canvas>
+    </div>
+  </div>
+  <h6 class="text-center mt-5 mb-3" >Order Status</h6>
+  <div class="col-lg-4 mx-auto">
+    <canvas id="myChart3"></canvas>
+  </div>
+ 
+</div>
+
+<!-- Table -->
+<div class="container  my-5" style="max-width: 1100px" >
+  <h6 class="text-center" >Recent Orders</h6>
+  <%if(recentOrders){%>
+    <table class="table table-hover cell-border fw-light nowrap" id="dataTable" style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>User</th>
+          <th>Bill</th>
+          <th>Status</th>
+          <th>Payment</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody" style="font-size: 0.85rem;">
+        
+       <%recentOrders.forEach((order)=>{%>
+        <tr>
+          <td><%=order._id%></td>
+          <td><%=order.customer.email%></td>
+          <td><%= order.finalPrice %></td>
+          <td class="text-center" style="width: 20%">
+            <div>
+              <%if(order.status === 'In-transit'){%>
+                <% if (order.delivered != true) {%>
+                  <span>In-transit</span>
+                  <%}else{%>
+                  <span
+                    ><i class="fa fa-check text-success"></i
+                    ><span>Delivered</span> <%} %> <br /><% if (order.delivered ==
+                    true) {%>
+                    <span><%=moment(order.deliveredOn).format('lll')%></span>
+                    <%}%></span
+                  >
+                <%} else {%>
+                  <%=order.status%>
+                  <%}%>
+              </div>
+          </td>
+          <td><%= order.modeOfPayment %></td>
+        </tr>
+        <%})%>
+      </tbody>
+    </table>
+    <%}%>
+    <div class=" text-center my-3">
+      <a class="btn btn-sm btn-dark text-white" href="/admin/salesReport">Download Sales Report</a>
+    
+    </div> 
+</div>
+<!-- <input id="chartYear" type="number" min="2023" max="2050" step="1" value="2023" />
+<button  onclick="chartYear()" class="btn btn-dark btn-sm">Change Year</button> -->
+</section>
+
+<footer class="bg-theme">
+  <div
+    class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around"
+  >
+    <a class="col-lg-3 pb-2 text-center " href="#">Track Shipping</a>
+    <a class="col-lg-3 pb-2 text-center" href="#">Contact Us</a>
+    <a class="col-lg-3 pb-2 text-center" href="#">Customer Care</a>
+    <a class="col-lg-3 pb-2 text-center" href="#">About us</a>
+  </div>
+  <div class="copyright bg-theme py-2 text-center text-white">
+    <span>Copyright © 2023 | LAP4YOU | Made by <a class="text-grey" href="https://rishikesht1245.github.io/Rishikesh_website/">Rishikesh T</a></span>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/public/js/admin/dashboard.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  if ( window.history.replaceState ) {
+ window.history.replaceState( null, null, window.location.href );
+  }
+</script>
+</body>
+</html>

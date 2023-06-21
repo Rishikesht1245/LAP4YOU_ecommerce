@@ -1,0 +1,284 @@
+<%- include('../layouts/header') %> 
+<%- include('../layouts/user-links') %>
+
+<div class="container">
+  <div class="line-break text-center py-4">
+    <span class="shadow-heading">Your Addresses</span>
+  </div>
+</div>
+      <!-- Button trigger modal -->
+      <div class="container d-flex justify-content-center my-3">
+        
+        <button
+          type="button"
+          class="btn btn-dark text-center"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Add New Address
+        </button>
+      </div>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        data-bs-backdrop="static"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Add New Address
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+            <form action="addresses/addNew" method="post">
+                    <div class="mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="form-holder"
+                        name="building"
+                        placeholder="Building Name/No."
+                        required
+                        style="text-transform: none;"
+                      />
+                    </div> 
+                    <div class="mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="form-holder"
+                        placeholder="Address"
+                        name="address"
+                        required
+                        style="text-transform: none;"
+                      />
+                    </div>
+                    <div class="mb-3">
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="form-holder"
+                          placeholder="Pin Code"
+                          name="pincode"
+                          required
+                          style="text-transform: none;"
+                        />
+                      </div>
+                    <div class="mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="form-holder"
+                          placeholder="Country"
+                          name="country"
+                          required
+                          style="text-transform: none;"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="form-holder"
+                          placeholder="Contact Number"
+                          name="contactNumber"
+                          required
+                          style="text-transform: none;"
+                        />
+                      </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-dark">
+                    Save changes
+                  </button>
+                </form> 
+                </div>
+                       
+          </div>
+        </div>
+      </div>
+    <%if(allAddresses != null){%>
+      <div class="container mx-auto row flex-column align-items-center">
+          
+        <% allAddresses.forEach(function(address,i){ %>        
+          <div class="address rounded col-lg-8 p-4 mb-3 mx-auto" style="border: 1px solid #DBDBDB">
+            <div class="addresses">
+              <% if(address.primary==true){%>
+                <h6 class="fw-bold">
+                Default Address
+              </h6>
+              <%}else{%>
+                <h6>
+                  Address
+                </h6>
+              <%}%>
+      <p style="text-transform: none;">
+          <%=address.building%>,</br><%=address.address%>, <%=address.pincode%></br><%=address.country%>
+      </p>
+      <p>
+          <b style="text-transform: none;">
+              Contact Number: 
+          </b> 
+              <%=address.contactNumber%>
+      </p>  
+  </div>
+  <div class="d-flex justify-content-between">
+    
+  <div>
+      <!-- <a type="Button" href="addresses/?edit=<%=i%>" class="btn btn-dark btn-sm px-3 mx-2 text-white">Edit</a> -->
+        <a type="Button" href="addresses/delete?addressID=<%=address._id%>" onclick="showConfirmation(event, 'Address', 'Delete')" class="btn btn-danger btn-sm px-3 mx-3 text-white hoverable">Remove</a>
+   
+
+      <!-- Edit modal -->
+      <div class="container ">
+        <!-- modal button trigger -->
+        <button
+          type="button"
+          class="btn btn-sm px-3 my-2 mx-1 btn-secondary text-center"
+          data-bs-toggle="modal"
+          data-bs-target="#editModal_<%= address._id %>"
+        >
+          EDIT ADDRESS
+        </button>
+      </div>
+
+      <!-- Modal Popup -->
+       <!-- Modal -->
+       <div
+       class="modal fade"
+       id="editModal_<%= address._id %>"
+       tabindex="-1"
+       aria-labelledby="editModalLabel"
+       aria-hidden="true"
+       data-bs-backdrop="static"
+     >
+       <div class="modal-dialog">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h1 class="modal-title fs-5" id="editModalLabel">
+               Edit Address
+             </h1>
+             <button
+               type="button"
+               class="btn-close"
+               data-bs-dismiss="modal"
+               aria-label="Close"
+             ></button>
+           </div>
+           <div class="modal-body">
+           <form action="addresses/editAddress?addressID=<%=address._id%>" method="post">
+                   <div class="mb-3">
+                     <input
+                       type="text"
+                       class="form-control"
+                       id="form-holder"
+                       name="building"
+                       value = "<%=address.building%>"
+                       placeholder="Building Name/No."
+                       required
+                       style="text-transform: none;"
+                     />
+                   </div> 
+                   <div class="mb-3">
+                     <input
+                       type="text"
+                       class="form-control"
+                       id="form-holder"
+                       value = "<%=address.address%>"
+                       placeholder="Address"
+                       name="address"
+                       required
+                       style="text-transform: none;"
+                     />
+                   </div>
+                   <div class="mb-3">
+                       <input
+                         type="number"
+                         class="form-control"
+                         id="form-holder"
+                         value = "<%=address.pincode%>"
+                         placeholder="Pin Code"
+                         name="pincode"
+                         required
+                         style="text-transform: none;"
+                       />
+                     </div>
+                   <div class="mb-3">
+                       <input
+                         type="text"
+                         class="form-control"
+                         id="form-holder"
+                         value="<%=address.country%>"
+                         placeholder="Country"
+                         name="country"
+                         required
+                         style="text-transform: none;"
+                       />
+                     </div>
+                     <div class="mb-3">
+                       <input
+                         type="number"
+                         class="form-control"
+                         id="form-holder"
+                         value="<%=address.contactNumber%>"
+                         placeholder="Contact Number"
+                         name="contactNumber"
+                         required
+                         style="text-transform: none;"
+                       />
+                     </div>
+               </div>
+               <div class="modal-footer">
+                 <button
+                   type="button"
+                   class="btn btn-secondary"
+                   data-bs-dismiss="modal"
+                 >
+                   Close
+                 </button>
+                 <button type="submit" class="btn btn-dark">
+                   Save changes
+                 </button>
+               </form> 
+               </div>
+                      
+         </div>
+       </div>
+     </div>
+     <!-- Modal end -->
+    </div>
+      <div>
+        <% if(!address.primary){%>
+          <a type="Button" href="addresses/changeRole?addressID=<%=address._id%> " class="btn btn-success btn-sm px-3 mx-2 text-white hoverable" >Set as default</a>
+        <%}%>
+      </div>
+
+  </div>
+          </div>
+       <% }) %> 
+
+  </div>
+    <%} else{%>
+      <h5 class="text-center my-4 fw-light">Please add a new address.</h5>
+    <%}%>
+
+<%- include('../layouts/footer') %>

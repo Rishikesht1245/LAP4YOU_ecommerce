@@ -1,0 +1,42 @@
+
+        html {
+        scroll-behavior: smooth;
+      }
+      #dataTable_paginate,
+      #dataTable_info,
+      #dataTable_length,
+      #dataTable_filter {
+        font-size: 0.75em;
+        margin: 10px 0;
+      }
+      #dataTable > thead {
+        background-color: #ececec;
+        color: #7f7f7f;
+        font-weight: lighter;
+      }
+      #dataTable {
+        width: 100%;
+      }
+      table.dt-rowReorder-float {
+        opacity: 0.8;
+      }
+      div.dt-rowReorder-float-parent {
+        table-layout: fixed;
+        outline: 2px solid #888;
+        outline-offset: -2px;
+        z-index: 2001;
+        position: absolute !important;
+        overflow: hidden;
+      }
+      tr.dt-rowReorder-moving {
+        outline: 2px solid #555;
+        outline-offset: -2px;
+      }
+      body.dt-rowReorder-noOverflow {
+        overflow-x: hidden;
+      }
+      table.dataTable td.reorder {
+        text-align: center;
+        cursor: move;
+      }
+  

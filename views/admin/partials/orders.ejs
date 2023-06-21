@@ -1,0 +1,69 @@
+<%- include('../layouts/header') %> <%- include('../layouts/head-links') %>
+<div class="container line-break-top line-break text-center py-3">
+  <span class="shadow-heading">All Orders</span>
+</div>
+<div class="container my-3">
+  <% if(allOrders !=null) { %>
+  <table
+    class="table table-hover cell-border fw-light nowrap"
+    id="dataTable"
+    style="width: 100%"
+  >
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Customer</th>
+        <th style="width: 20%">Bill</th>
+        <th style="width: 20%">Status</th>
+        <th>Order Date</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <% allOrders.forEach(function(item,i){ %>
+      <tr>
+        <td>
+          <%= item._id %><br /><a
+            href="/admin/orders/<%= item._id %>"
+            class="btn btn-sm btn-dark text-white m-1"
+            >Detailed View</a
+          >
+        </td>
+        <td><%= item.customer.name %><br /><%= item.customer.email %></td>
+        <td style="width: 20%">
+          <b>Bill:</b> <%= item.finalPrice %><br /><b>Discount Price:</b> <%=
+          item.discountPrice %><br /><b>Price:</b> <%= item.price %>
+        </td>
+        <td class="text-center" style="width: 20%">
+          <div id="deliver<%=i%>">
+            <%if(item.status === 'In-transit'){%>
+              <% if (item.delivered != true) {%>
+                <button
+                  class="btn btn-sm btn-dark w-100"
+                  onclick="deliverOrder('<%=item._id%>','<%=i%>')"
+                >
+                  <i class="fa fa-truck text-warning"></i><span>Deliver</span>
+                </button>
+                <%}else{%>
+                <span
+                  ><i class="fa fa-check text-success"></i
+                  ><span>Delivered</span> <%} %> <br /><% if (item.delivered ==
+                  true) {%>
+                  <span><%=moment(item.deliveredOn).format('lll')%></span>
+                  <%}%></span
+                >
+              <%} else {%>
+                <%=item.status%>
+                <%}%>
+            </div>
+        </td>
+        <td><%= moment(item.orderedOn).format('lll') %> <br /></td>
+      </tr>
+      <% }) %>
+    </tbody>
+    <tfoot></tfoot>
+  </table>
+  <% } %>
+</div>
+<script src="/public/js/admin/admin.js"></script>
+
+<%- include('../layouts/footer') %>

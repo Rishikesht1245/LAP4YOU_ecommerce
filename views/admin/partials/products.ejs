@@ -1,0 +1,313 @@
+<%- include('../layouts/header') %>
+
+      <%- include('../layouts/head-links') %>
+
+      <!-- Button trigger modal -->
+      <div class="container d-flex justify-content-center my-3">
+        <button
+          type="button"
+          class="btn btn-dark text-center"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Add New Product
+        </button>
+      </div>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        data-bs-backdrop="static"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Add New Product
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+                
+                <!-- ---------ADD NEW PRODUCT INSIDE MODAL----------- -->
+
+
+                <form action="/admin/product_management/add_product" method="POST" enctype="multipart/form-data" id="addProductForm"">
+                    <div class="mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="form-holder"
+                        name="name"
+                        placeholder="Name"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                        <label for="thumbnail" class="px-1" style="font-size: 0.75rem;">Upload thumbnail</label>
+                      <input
+                        class="form-control"
+                        id="thumbnail"
+                        name="thumbnail"
+                        type="file"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="frontImage" class="px-1" style="font-size: 0.75rem;">Upload Front Image</label>
+                    <input
+                      class="form-control"
+                      id="frontImage"
+                      name="frontImage"
+                      type="file"
+                      required
+                    />
+                  </div>
+                    <div class="mb-3">
+                      <label for="images" class="px-1" style="font-size: 0.75rem;">Upload 3 Images</label>
+                    <input
+                      class="form-control"
+                      id="images"
+                      name="images"
+                      type="file"
+                      multiple
+                      required
+                    />
+                    <p id="error-message" style="font-size:0.7rem" class="text-danger fw-bold"></p>
+                  </div>
+                    <div class="mb-3">
+                      <select id="inputState" class="form-control" name="category" required> 
+                        <option value="">Choose category</option> 
+                        <%categories.forEach((data)=>{%> 
+                          <option value="<%=data._id%>"><%=data.name%></option> 
+                        <%})%> 
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <select id="inputState-brand" class="form-control" name="brand" required> 
+                        <option value="">Choose Brand</option> 
+                        <%brands.forEach((data)=>{%> 
+                          <option value="<%=data._id%>"><%=data.name%></option> 
+                        <%})%> 
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="model"
+                          placeholder="Model"
+                          name="model"
+                          required
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="salesPackage"
+                          placeholder="Sales Package"
+                          name="salesPackage"
+                          required
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="series"
+                          placeholder="Series"
+                          name="series"
+                          required
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="processor"
+                          placeholder="Processor"
+                          name="processor"
+                          required
+                        />
+                      </div>
+                      <!-- RAM AND SSD COMBO -->
+                      <div class="mb-3">
+                        <label>SSD And RAM Capacity vs Price:</label>
+                        <div id="ssd-container">
+                          <div class="ssd-row">
+                            <select  class="form-control" name="ramCapacity[]" required> 
+                              <option value="">Select RAM</option> 
+                              <option value="4 GB">4 GB</option> 
+                              <option value="8 GB">8 GB</option> 
+                              <option value="16 Gb">16 GB</option> 
+                              <option value="32 GB">32 GB</option> 
+                            </select>
+                            <select id="inputState" class="form-control" name="ssdCapacity[]" required> 
+                              <option value="">Select SSD</option> 
+                              <option value = '256 GB'>256 GB</option> 
+                              <option value = '512 GB'>512 GB</option> 
+                              <option value = '1 TB'>1 TB</option> 
+                              <option value = '2 TB'>2 TB</option> 
+                            </select>
+                            <input type="number" class="form-control" name="combPrice[]" placeholder="Price" required>
+                            <input type="number" class="form-control" name="quantity[]" placeholder="Quantity" required>
+                          </div>
+                        </div>
+                        <button type="button" class="add-ssd-btn btn btn-dark mt-3">Add More</button>
+                      </div>
+                      <div class="mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="operatingSystem"
+                          placeholder="Operating System"
+                          name="operatingSystem"
+                          required
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="screenSize"
+                          placeholder="Screen Size"
+                          name="screenSize"
+                          required
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="warranty"
+                          placeholder="Warranty"
+                          name="warranty"
+                          required
+                        />
+                      </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-success">
+                    Save changes
+                  </button>
+                </div>
+              </form>
+
+
+<!-- ------------------- -->
+            
+            
+          </div>
+        </div>
+      </div>
+
+      <!-- Responsive data table -->
+      <div class="card-body container">
+        <table id="dataTable" class="table table-hover cell-border fw-light nowrap">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Image</th>
+              <th>Category</th>
+              <th>Brand</th>
+              <th>Total Stock</th>
+              <th>Variants and Price</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <% if(products !=null){ %>
+          <tbody>
+            <% products.forEach(function(item,i){ %>
+            <tr>
+              <td><%= item.name %></td>
+              <td class="text-center"><img src="/Public/img/products/<%= item.thumbnail %>" alt="" width="80px" height="100px"></td>
+              <td><%= item.category.name %></td>
+              <td><%= item.brand.name %></td>
+              <td><%= item.RAMSSD.reduce(function(acc,value){return acc+= value.quantity},0) %></td>
+              <td style="font-size: small;">
+                <% item.RAMSSD.forEach(function(value,i){ %>
+                  <div>
+                    <div>RAM : <%= value.ramCapacity %>, SSD : <%= value.ssdCapacity %></div>
+                    <div>PRICE : ₹<%= value.price %>, Stock : <%= value.quantity %></div><hr style="margin: 0; padding: 0; font-weight: 400;">
+                  </div>
+                <% }) %>
+              </td>
+              <td >
+                <div class="text-center d-flex flex-column">
+                  <a href="/admin/product_management/edit?id=<%= item._id %>" onclick="return confirm('Proceed to edit <%= item.name %> ?')" class="btn btn-dark text-white btn-sm my-1">Edit</a>
+                <% if(item.listed==true){ %> 
+                <a href="/admin/product_management/changeListing?id=<%= item._id %>" onclick="return confirm('Proceed to change listing of <%= item.name %> ?')" class="btn btn-danger text-white btn-sm  my-1">Unlist</a>
+              <% }else{ %>
+                <a href="/admin/product_management/changeListing?id=<%= item._id %>" onclick="return confirm('Proceed to change listing of <%= item.name %> ?')" class="btn btn-success text-white btn-sm my-1">List</a>
+                <% } %>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+          <% } %>
+        </table>
+      </div>
+
+      <script>
+        $(document).ready(function() {
+          // Add event listener for adding more SSD rows
+          $('.add-ssd-btn').on('click', function() {
+          var ssdRow = '<div class="ssd-row mt-4">' +
+          `<select  class="form-control" name="ramCapacity[]"> 
+                    <option selected>Select RAM</option> 
+                    <option>4 GB</option> 
+                    <option>8 GB</option> 
+                    <option>16 GB</option> 
+                    <option>32 GB</option> 
+            </select>` +
+          ` <select class="form-control" name="ssdCapacity[]"> 
+                    <option selected>Select SSD</option> 
+                    <option>256 GB</option> 
+                    <option>512 GB</option> 
+                    <option>1 TB</option> 
+                    <option>2 GB</option> 
+            </select>`+
+          '<input type="number" class="form-control" name="combPrice[]" placeholder="Price" required>' +
+          '<input type="number" class="form-control" name="quantity[]" placeholder="Quantity" required>'+
+          '<button type="button" class="btn btn-danger mb-1 remove-ssd-btn">Remove</button>' +
+          '</div>';
+
+          $('#ssd-container').append(ssdRow);
+          });
+
+          // Add event listener for removing SSD rows
+          $('#ssd-container').on('click','.remove-ssd-btn', function() {
+          $(this).parent().remove();
+          });
+        });
+
+        // 3 images validation
+        $('#addProductForm').submit(function(event) {
+              var fileInput = $('#images');
+              //fileInput.get(0) retrieves the underlying DOM element from the jQuery object get(index)
+              if (fileInput.get(0).files.length < 3) {
+                event.preventDefault();
+                $('#error-message').text('Please Upload 3 files')
+              }
+            });
+
+      </script>
+      <%- include('../layouts/footer') %>

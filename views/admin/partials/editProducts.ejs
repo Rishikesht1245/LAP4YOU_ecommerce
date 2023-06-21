@@ -1,0 +1,177 @@
+<%- include('../layouts/header') %> <%- include('../layouts/head-links') %>
+<div class="container " style="text-decoration: none">
+<form action="" method="post" enctype="multipart/form-data" class="container row flex-column my-5 mx-auto">
+    <div class="mb-3 col-lg-6">
+      <label for="name" class="px-1" style="font-size: 0.75rem;">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        value="<%= product.name %>"
+        name="name"
+        placeholder="Name"
+      />
+    </div>
+    <div class="mb-3 col-lg-6 d-flex flex-column">
+        <label for="thumbnail" class="px-1" style="font-size: 0.75rem;">Upload Thumbnail</label>
+        <img class=" border" src="/Public/img/products/<%=product.thumbnail%>" width="150px"  alt="">
+      <input
+        class="form-control"
+        id="thumbnail"
+        name="thumbnail"
+        type="file"
+      />
+    </div>
+    <div class="mb-3 col-lg-6 d-flex flex-column">
+      <label for="frontImage" class="px-1" style="font-size: 0.75rem;">Upload front image</label>
+      <img class=" border" src="/Public/img/products/<%=product.frontImage%>" width="150px"  alt="">
+    <input
+      class="form-control"
+      id="frontImage"
+      name="frontImage"
+      type="file"
+    />
+  </div>
+  <div class="mb-3 col-lg-6 d-flex flex-column">
+    <label for="images" class="px-1" style="font-size: 0.75rem;">Upload images (Only 3)</label>
+    <div class="row">
+      <%product.images.forEach((image)=>{%><img class="col-8 col-lg-4 border" src="/Public/img/products/<%=image%>" width="150px"  alt=""><%})%>
+    </div>
+  <input
+    class="form-control"
+    id="images"
+    name="images"
+    type="file"
+    multiple
+  />
+</div>
+    <div class="mb-3 col-lg-6">
+      <select id="inputState" class="form-control" name="category"  required> 
+        <option value="<%=product.category._id%>" class="fw-bold" selected><%=product.category.name%></option> 
+        <%categories.forEach((data)=>{%> 
+          <option value="<%=data._id%>"><%=data.name%></option> 
+        <%})%> 
+      </select>
+    </div>
+    <div class="mb-3 col-lg-6">
+      <select id="inputState-brand" class="form-control" name="brand"  required> 
+        <option value="<%=product.brand._id%>" class="fw-bold" selected><%=product.brand.name%></option> 
+        <%brands.forEach((data)=>{%> 
+          <option value="<%=data._id%>"><%=data.name%></option> 
+        <%})%> 
+      </select>
+    </div>
+    <div class="mb-3 col-lg-6">
+    <label for="Model" class="px-1" style="font-size: 0.75rem;">Model</label>
+      <input
+        type="text"
+        class="form-control"
+        id="Model"
+        placeholder="Model"
+        name="model"
+        value="<%= product.model %>"
+        required
+      />
+    </div>
+    <div class="mb-3 col-lg-6">
+    <label for="SalesPackage" class="px-1" style="font-size: 0.75rem;">Sales Package</label>  
+        <input
+          type="text"
+          class="form-control"
+          id="SalesPackage"
+          placeholder="Sales Package"
+          name="salesPackage"
+          value="<%= product.salesPackage %>"
+          required
+        />
+      </div>
+      <div class="mb-3 col-lg-6">
+      <label for="series" class="px-1" style="font-size: 0.75rem;">Series</label>  
+        <input
+          type="text"
+          class="form-control"
+          id="series"
+          placeholder="Series"
+          name="series"
+          value="<%= product.series %>"
+          required
+        />
+      </div>
+      <div class="mb-3 col-lg-6">
+      <label for="processor" class="px-1" style="font-size: 0.75rem;">Processor</label>  
+      <input
+          type="text"
+          class="form-control"
+          id="processor"
+          placeholder="Processor"
+          name="processor"
+          value="<%= product.processor %>"
+          required
+          />
+        </div>
+        <!-- RAM AND SSD -->
+        <div class="mb-3 col-lg-4"> <p style="font-size: small;" class="mb-0">RAM SSD AND PRICE</p>
+          <% product.RAMSSD.forEach(function(data,i){ %> 
+            <select name="ramCapacity[]" class="form-control">
+                <option <% if(data.ramCapacity == '4 GB'){ %> selected <% } %>>4 GB</option>
+                <option <% if(data.ramCapacity == '8 GB'){ %> selected <% } %>>8 GB</option>
+                <option <% if(data.ramCapacity == '16 GB'){ %> selected <% } %>>16 GB</option>
+                <option <% if(data.ramCapacity == '32 GB'){ %> selected <% } %>>32 GB</option>
+            </select>
+            <select name="ssdCapacity[]" class="form-control">
+                <option <% if(data.ssdCapacity == '256 GB'){ %> selected <% } %>>256 GB</option>
+                <option <% if(data.ssdCapacity == '512 GB'){ %> selected <% } %>>512 GB</option>
+                <option <% if(data.ssdCapacity == '1 TB'){ %> selected <% } %>>1 TB</option>
+                <option <% if(data.ssdCapacity == '2 TB'){ %> selected <% } %>>2 TB</option>
+            </select>
+            <input type="number" class="form-control" name="combPrice[]" placeholder="Price"  value="<%= data.price %>" required>
+            <input type="number" class="form-control" name="quantity[]" placeholder="Quantity" value="<%= data.quantity %>" required>
+          </br>
+            <%})%>
+         </div>
+        <div class="mb-3 col-lg-6">
+        <label for="operatingSystem" class="px-1" style="font-size: 0.75rem;">Operating System</label>  
+        <input
+            type="text"
+            class="form-control"
+            id="operatingSystem"
+            placeholder="Operating System"
+            name="operatingSystem"
+            value="<%= product.operatingSystem %>"
+            required
+          />
+        </div>
+        <div class="mb-3 col-lg-6">
+        <label for="screenSize" class="px-1" style="font-size: 0.75rem;">Screen Size</label>  
+        <input
+          type="text"
+          class="form-control"
+          id="screenSize"
+          value="<%=product.screenSize%>"
+          placeholder="Screen Size"
+          name="screenSize"
+          required
+        />
+      </div>
+      <div class="mb-3 col-lg-6">
+        <label for="warranty" class="px-1" style="font-size: 0.75rem;">Warranty</label>  
+        <input
+              type="text"
+              class="form-control"
+              id="warranty"
+              value="<%=product.warranty%>"
+              placeholder="Warranty"
+              name="warranty"
+              required
+            />
+          </div>
+      <div class="float-end mb-5">
+        <a href="/admin/product_management" onclick="return confirm('Discard Changes ?')" class="btn btn-secondary text-white my-1">Cancel</a>
+        <button type="submit" class="btn btn-success my-1">
+          <span>Save changes</span>
+        </button>
+        </form>
+      </div>
+</div>
+
+  <%- include('../layouts/footer') %>

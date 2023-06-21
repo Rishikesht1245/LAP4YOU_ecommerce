@@ -1,0 +1,49 @@
+<%- include('../layouts/header') %> <%- include('../layouts/head-links') %>
+<div class="container line-break-top line-break text-center py-3">
+  <span class="shadow-heading">Customers</span>
+</div>
+<div class="container my-3">
+  <% if(allCustomers !=null) { %>
+  <table class="table table-hover cell-border fw-light nowrap" id="dataTable" style="width: 100%;">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th style="width: 20%">Access</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <% allCustomers.forEach(function(item,i){ %>
+      <tr>
+        <td><%= item.name %></td>
+        <td><%= item.email %></td>
+        <td><%= item.number %></td>
+        <td class="text-center" style="width: 20%">
+          <div id="<%=item._id%>">
+            <button
+            class="btn btn-sm btn-dark w-100"
+            onclick="changeAccess('<%=item._id%>','<%=item.access%>')"
+          >
+            <% if (item.access == true) {%>
+            <i
+              class="py-1 fa fa-lock-open fa-lg text-success"
+              aria-hidden="true"
+            ></i
+            ><span>Active</span>
+            <%}else{%>
+            <i class="py-1 fa fa-lock fa-lg text-danger" aria-hidden="true"></i
+            ><span>Inactive</span> <%} %>
+          </button>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+    <tfoot></tfoot>
+  </table>
+  <% } %>
+</div>
+<script src="/public/js/admin/admin.js"></script>
+
+<%- include('../layouts/footer') %>

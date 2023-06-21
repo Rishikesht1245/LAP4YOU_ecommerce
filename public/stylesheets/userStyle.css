@@ -1,0 +1,139 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  text-transform: uppercase;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+:root {
+  font-family: "Inter", sans-serif;
+  letter-spacing: 2.7px;
+}
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: "Inter var", sans-serif;
+    letter-spacing: 2.7px;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: #201f1f;
+}
+
+a:hover {
+  color: rgb(172, 172, 166) !important;
+}
+
+.brand-name {
+  text-shadow: grey;
+  font-weight: bold;
+  color: black;
+  text-shadow: 0px 2px 4px rgb(153, 153, 153);
+  letter-spacing: 4px;
+  font-size: 20px;
+}
+
+.header-top,
+.bg-theme {
+  background-color: #484747;
+}
+.header-top-links {
+  font-size: 0.8rem;
+  padding: 4px 0;
+  color: rgb(236, 230, 230) !important;
+}
+
+/* Shadow */
+.shadow {
+  text-shadow: 0px 2px 4px rgb(153, 153, 153);
+}
+/* Line break */
+.line-break {
+  border-bottom: 1px solid #dbdbdb;
+}
+
+i {
+  font-size: 1.2em;
+  padding: 0 5px;
+}
+
+footer {
+  font-size: 0.9rem;
+  margin-top: auto;
+}
+
+.shadow-heading {
+  text-shadow: grey;
+  color: rgb(27, 26, 26);
+  text-shadow: 0px 2px 4px rgb(153, 153, 153);
+  letter-spacing: 4px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.shadow-product {
+  text-shadow: grey;
+  color: rgb(255, 255, 255);
+  text-shadow: 0px 2px 4px rgb(53, 53, 53);
+  letter-spacing: 4px;
+  font-size: 20px;
+}
+.shadow-product-heading {
+  text-shadow: grey;
+  color: rgb(255, 255, 255);
+  text-shadow: 0px 2px 4px rgb(53, 53, 53);
+  letter-spacing: 4px;
+  font-size: 1.5rem;
+}
+.shadow-details {
+  text-shadow: grey;
+  color: rgb(255, 255, 255);
+  text-shadow: 0px 2px 4px rgb(53, 53, 53);
+  letter-spacing: 4px;
+  text-transform: none;
+}
+
+.buy-cart {
+  text-transform: uppercase;
+  font-weight: lighter;
+  padding: 0 20px;
+}
+
+.product-description,
+.product-description h6 {
+  font-size: 0.9rem;
+}
+
+#carouselIndicators {
+  border: 1px solid #c7c7c7;
+}
+
+#form-holder {
+  padding: 10px;
+  letter-spacing: 4px;
+  font-size: 0.8rem;
+}
+
+input {
+  padding: 10px;
+  letter-spacing: 3px;
+  font-size: 0.8rem !important;
+  text-transform: none;
+}
+
+.form-footer,
+.form-footer a {
+  font-weight: bold;
+  padding: 5px 0;
+  font-size: 0.7rem;
+}
+

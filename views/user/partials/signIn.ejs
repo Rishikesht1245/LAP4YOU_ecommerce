@@ -1,0 +1,44 @@
+<%- include('../layouts/header') %>
+<div class="container">
+  <div class="line-break text-center py-4">
+    <span class="shadow-heading">Welcome Back</span>
+  </div>
+  <div class="row my-5 pt-4">
+    <div class="col-lg-5 mx-auto">
+      <span class=" mx-auto text-center pb-3" style="font-size: 0.8rem; text-transform: none;">
+        <% if(locals.errorMessage) {%><p class="alert alert-danger text-danger mt-0  fw-bold text-uppercase mb-4"><%= locals.errorMessage %></p> <%}%>
+    </span>
+      <form action="/users/signIn" method="post">
+        <div class="mb-3">
+          <input
+            type="email"
+            class="form-control"
+            id="form-holder"
+            name="email"
+            placeholder="e-Mail"
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            type="password"
+            class="form-control"
+            id="form-holder"
+            placeholder="Password"
+            name = "password"
+          />
+        </div>
+        <input type="submit" class="btn btn-dark w-100" value="Sign in" />
+      </form>
+      <div class="form-footer d-flex justify-content-between">
+        <a href="/users/forgotPassword">
+            Forgot password?
+        </a>
+        <a href="/users/signUp" class="text-end">
+            Don't have an account?
+        </a>
+          </div>
+    </div>
+  </div>
+
+</div>
+<%- include('../layouts/footer') %>

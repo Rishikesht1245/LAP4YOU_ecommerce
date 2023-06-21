@@ -1,0 +1,170 @@
+<%- include('../layouts/header') %> <%- include('../layouts/head-links') %>
+<div class="container line-break-top line-break text-center py-3">
+  <span class="shadow-heading">Banners</span>
+</div>
+<div class="container my-3">
+    <div class="container d-flex justify-content-center my-3">
+      
+      <button
+          type="button"
+          class="btn btn-dark text-center"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Add New Banner
+        </button>
+      </div>
+      <span
+        class="text-center pb-3"
+        style="font-size: 0.8rem; text-transform: none"
+        >
+        <p class="text-danger mt-0 fw-bold text-uppercase">
+          <%= locals.errorMessage %>
+        </p>
+      </span>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        data-bs-backdrop="static"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Add New Banner
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+                
+                <!-- -------------------- -->
+
+
+                <form action="" method="post" enctype="multipart/form-data">
+                    
+                    <div class="mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="form-holder"
+                          placeholder="Title"
+                          name="title"
+                          required
+                        />
+                      </div>
+                    <div class="mb-3">
+                        <label for="thumbnail" class="px-1" style="font-size: 0.75rem;">Upload Image</label>
+                      <input
+                        class="form-control"
+                        id="form-holder"
+                        name="bannerImage"
+                        type="file"
+                      />
+                    </div>
+                    <div class="mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="form-holder"
+                          placeholder="Descrpition"
+                          name="description"
+                        />
+                      </div>
+                    <div class="mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="form-holder"
+                          placeholder="URL"
+                          name="url"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="form-holder"
+                          placeholder="Video URL"
+                          name="videoURL"
+                        />
+                      </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-success">
+                    Save changes
+                  </button>
+                  </form>
+
+
+<!-- ------------------- -->
+            
+            </div>
+          </div>
+        </div>
+      </div>
+  <div id="allBanners">
+    <% if(allBanners !=null) { %>
+        <table class="table table-hover cell-border fw-light nowrap" id="dataTable" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th style="width: 20%">Action</th>
+              <th>Description</th>
+              <th>Image</th>
+              <th>URL</th>
+              <th>Video</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <% allBanners.forEach(function(item,i){ %>
+            <tr>
+              <td><%= item.title %></td>
+              <td class="text-center" style="width: 20%">
+                <div id="<%=item._id%>" class="d-flex flex-column">
+                  <button class="btn btn-sm btn-dark w-100" onclick="changeActivity('<%=item._id%>', '<%=item.active%>')">
+                    <% if (item.active == true) { %>
+                      <i class="py-1 fa fa-lock-open fa-lg text-success" aria-hidden="true"></i>
+                      <span>Active</span>
+                    <% } else { %>
+                      <i class="py-1 fa fa-lock fa-lg text-danger" aria-hidden="true"></i>
+                      <span>In-Active</span>
+                    <% } %>
+                  </button>                  
+                <button class="btn btn-sm btn-dark text-danger my-1" onclick="deleteBanner('<%=item._id%>')"><i class="py-1 fa fa-trash fa-lg text-danger" aria-hidden="true" ></i ><span>Delete</span></button>
+                </div>
+              </td>
+              <td><%= item.description %></td>
+              <td><%if(item.image){%><%= item.image %><%}else{%>None<%}%></td>
+              <td><%if(item.url){%><%= item.url %><%}else{%>None<%}%></td>
+              <td><%if(item.videoURL){%><a href="<%= item.videoURL %>" target="_blank"><b class="text-primary">Video Link</b></a><%}else{%>None<%}%></td>
+              
+            </tr>
+            <% }) %>
+          </tbody>
+          <tfoot></tfoot>
+        </table>
+        <% } %>
+  </div>
+</div>
+
+<script src="/public/js/admin/admin.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<%- include('../layouts/footer') %>
+

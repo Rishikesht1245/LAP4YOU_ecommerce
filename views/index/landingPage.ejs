@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/stylesheets/landingPage.css" />
+    <link rel="stylesheet" href="/public/stylesheets/userStyle.css" />
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"
+    />
+    <link rel="shortcut icon" type="image/jpg" href="/public/img/lap4you-favicon.png" />
+    <title>LAP4YOU | Home Page</title>
+  </head>
+  <body>
+    <header style="z-index: 10">
+      <div class="container-fluid header-top">
+        <div class="container d-flex header-top-links justify-content-end">
+          <a class="px-2 d-none d-lg-block" href="">Contact Us</a>
+          <a class="px-2 d-none d-lg-block" href="">About Us</a>
+        </div>
+      </div>
+      <nav
+        class="container navbar navbar-expand-lg bg-white py-3 px-2 line-break"
+      >
+        <div class="container-fluid justify-content-around">
+          <a class="navbar-brand d-flex align-items-center" href="/">
+            <img
+              src="/public/img/lap4you-logo.png"
+              alt="Logo"
+              width="40"
+              height="40"
+              class="d-inline-block align-text-top"
+            />
+            <div class="brand-name ms-3">
+              <span>LAP<span style="color : red;">4</span>YOU</span>
+            </div>
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarText"
+            aria-controls="navbarText"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-2 mb-2 mb-lg-0 align-items-center">
+              <li class="nav-item mx-2 ms-lg-5">
+                <a class="nav-link text-dark" href="/categories/64888a004cb3b3a4b1bb8be3"
+                  >Gaming</a
+                >
+              </li>
+              <li class="nav-item mx-2">
+                <a class="nav-link text-dark" href="/categories/648d9311ca2707bb62f29e06"
+                  >Business</a
+                >
+              </li>
+              <li class="nav-item mx-2">
+                <a class="nav-link  text-dark" href="/categories/648d930bca2707bb62f29e01"
+                  >Student</a
+                >
+              </li>
+            </ul>
+            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+              <a class="nav-link" href="/products">Collections</a>
+            </span>
+            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+              <a class="nav-link" href="/users/wishlist">Wishlist</a>
+            </span>
+            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+              <a class="nav-link" href="/users/cart">Cart</a>
+            </span>
+
+            <span class="nav-item nav-link text-center mb-2 mb-lg-0 ms-lg-3">
+              <% if(session){%>
+              <div class="d-block d-lg-none">
+                <hr />
+                <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+                  <a class="nav-link fw-bold" href="/users/profile"
+                    ><img
+                      src="/Public/img/users/<%=locals.currentUser.photo%>"
+                      height="25px"
+                      alt=""
+                      class="mx-2"
+                    /><%=locals.currentUser.name%></a
+                  >
+                </span>
+                <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+                  <a
+                    class="nav-link"
+                    style="font-size: 0.85rem"
+                    href="/users/signOut"
+                    >Sign out</a
+                  >
+                </span>
+              </div>
+              <div class="btn-group dropstart d-none d-lg-block">
+                <button
+                  type="button"
+                  class="btn dropdown-toggle button-div"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  style="
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    color: grey;
+                    font-weight: 600;
+                  "
+                >
+                  <img
+                    src="/Public/img/users/<%=locals.currentUser.photo%>"
+                    height="25px"
+                    alt=""
+                  />
+                </button>
+                <ul class="dropdown-menu" style="font-size: 0.75rem">
+                  <li
+                    class="dropdown-item border-bottom"
+                    style="pointer-events: none"
+                  >
+                    <%=locals.currentUser.name%>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/users/profile">Profile</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/users/orders">Orders</a>
+                  </li>
+                  <li class="border-bottom">
+                    <a class="dropdown-item" href="/users/addresses">Address</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/users/signOut">Sign Out</a>
+                  </li>
+                </ul>
+              </div>
+
+              <% }else{%>
+              <a class="nav-link" href="/users/signIn">Sign In</a>
+              <%}%>
+            </span>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <section class="container mx-auto">
+      <!-- Banner -->
+      <!-- Carousel wrapper -->
+      <%if (banners!=null){%>
+      <div
+        id="carouselVideoExample"
+        class="carousel slide carousel-fade mx-auto"
+        data-bs-ride="carousel"
+        style="position: relative; top: -6px;"
+      >
+        <!-- Inner -->
+        <div class="carousel-inner h-75">
+          <!-- Single item -->
+          <%banners.forEach(banner => {%>
+          <div class="carousel-item active h-75" style="background-position: center; background-size: cover;">
+            <%if(banner.videoURL){%>
+              <video class="img-fluid" autoplay loop muted>
+                <source src="<%=banner.videoURL%>" type="video/mp4" />
+              </video>
+            <%}%>
+            <img src="/public/img/banners/<%=banner.image%>" alt="" style="object-fit: cover; height: auto; width: 100%;">
+            <a href="/products/">
+              <div
+                class="carousel-caption d-lg-block d-none"
+                style="position: absolute; top: 10%; left: 20%;"
+              >
+                <h3 style="text-shadow: 1px 1px #7c7c7c; font-size: 1.7rem" class="text-danger">
+                  <%=banner.title%>
+                </h3>
+                <p style="text-shadow: 1px 1px #7c7c7c; font-size: 1rem" class="text-danger">
+                  <%=banner.description%>
+                </p>
+              </div>
+            </a>
+            <a href="/<%=banner.url%>">
+              <div
+                class="carousel-caption d-block d-lg-none"
+                style="position: absolute"
+              >
+                <h3 style="text-shadow: 1px 1px #7c7c7c; font-size: 0.8rem">
+                  <%=banner.title%>
+                </h3>
+                <p style="text-shadow: 1px 1px #7c7c7c; font-size: 0.5rem">
+                  <%=banner.description%>
+                </p>
+              </div>
+            </a>
+          </div>
+          <%})%>
+        </div>
+        <!-- Inner -->
+
+        <!-- Controls -->
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselVideoExample"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselVideoExample"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <%}%>
+      <!-- Carousel wrapper -->
+      <!-- banner -->
+
+      <% if(newReleases != null){%>
+      <div class="line-break text-center py-4">
+        <span class="shadow-heading" style="font-size: 1rem">New Releases</span>
+      </div>
+      <div class="text-center d-flex justify-content-center flex-column my-3">
+        <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
+          <% newReleases.forEach((product,i)=>{%>
+          <div class="col">
+            <div class="card h-100 border-0 rounded">
+              <a href="/products/<%=product._id%>"
+                ><img
+                  src="../../public/img/products/<%=product.thumbnail%>"
+                  class="card-img-top p-4 h-70"
+                  alt="..."
+                  style="object-fit: scale-down;"
+                />
+                <div class="card-body">
+                  <h6 class="card-title text-black"><%=product.name%></h6>
+                  <span
+                    style="
+                      font-weight: bold;
+                      color: #7f7f7f;
+                      font-size: 0.75rem;
+                    "
+                    class="my-2"
+                    ><%=product.brand.name%></span
+                  >
+                </div></a
+              >
+            </div>
+          </div>
+          <%})%>
+        </div>
+        <span
+          ><a 
+            href="/categories/newReleases"
+            class="btn btn-outline-dark py-2 px-3 mt-5"
+            style="font-size: 0.75rem"
+            >SHOW MORE</a
+          ></span
+        >
+      </div>
+      <%}%>
+      <img
+        class="w-100 my-3 rounded"
+        src="../../public/img/design/banner.jpg"
+        alt=""
+      />
+
+      <!-- GAMING -->
+      <div class="line-break text-center py-4">
+        <span class="shadow-heading" style="font-size: 1rem">GAMING</span>
+      </div>
+      <div class="text-center d-flex justify-content-center flex-column my-3">
+        <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
+          <% gaming.forEach((product,i)=>{%>
+          <div class="col">
+            <div class="card h-100 border-0 p-3">
+              <a href="/products/<%=product._id%>"
+                ><img
+                  src="../../public/img/products/<%=product.thumbnail%>"
+                  class="card-img-top p-2 h-75"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h6 class="card-title text-black"><%=product.name%></h6>
+                  <span
+                    style="
+                      font-weight: bold;
+                      color: #7f7f7f;
+                      font-size: 0.75rem;
+                    "
+                    class="my-2"
+                    ><%=product.brand.name%></span
+                  >
+                </div></a
+              >
+            </div>
+          </div>
+          <%})%>
+        </div>
+        <span
+          ><a 
+            href="/categories/64888a004cb3b3a4b1bb8be3"
+            class="btn btn-outline-dark py-2 px-3 mt-5"
+            style="font-size: 0.75rem"
+            >SHOW MORE</a
+          ></span
+        >
+      </div>
+      <div class="line-break text-center py-4">
+        <span class="shadow-heading" style="font-size: 1rem">STUDENT</span>
+      </div>
+      <div class="text-center d-flex justify-content-center flex-column my-3">
+        <div
+          class="row row-cols-1 row-cols-md-4 g-4 mb-3 justify-content-center"
+        >
+          <% student.forEach((product,i)=>{%>
+          <div class="col">
+            <div class="card h-100 border-0 p-3">
+              <a href="/products/<%=product._id%>"
+                ><img
+                  src="../../public/img/products/<%=product.thumbnail%>"
+                  class="card-img-top p-2 h-75"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h6 class="card-title text-black"><%=product.name%></h6>
+                  <span
+                    style="
+                      font-weight: bold;
+                      color: #7f7f7f;
+                      font-size: 0.75rem;
+                    "
+                    class="my-2"
+                    ><%=product.brand.name%></span
+                  >
+                </div></a
+              >
+            </div>
+          </div>
+          <%})%>
+        </div>
+        <span
+          ><a 
+            href="/categories/648d930bca2707bb62f29e01"
+            class="btn btn-outline-dark py-2 px-3 my-3"
+            style="font-size: 0.75rem"
+            >SHOW MORE</a
+          ></span
+        >
+      </div>
+      <div class="line-break text-center py-4">
+        <span class="shadow-heading" style="font-size: 1rem">BUSINESS</span>
+      </div>
+      <div class="text-center d-flex justify-content-center flex-column my-3">
+        <div
+          class="row row-cols-1 row-cols-md-4 g-4 mb-3 justify-content-center"
+        >
+          <% business.forEach((product,i)=>{%>
+          <div class="col">
+            <div class="card h-100 border-0 p-3">
+              <a href="/products/<%=product._id%>"
+                ><img
+                  src="../../public/img/products/<%=product.thumbnail%>"
+                  class="card-img-top p-2 h-70"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h6 class="card-title text-black"><%=product.name%></h6>
+                  <span
+                    style="
+                      font-weight: bold;
+                      color: #7f7f7f;
+                      font-size: 0.75rem;
+                    "
+                    class="my-5"
+                    ><%=product.brand.name%></span
+                  >
+                </div></a
+              >
+            </div>
+          </div>
+          <%})%>
+        </div>
+        <span
+          ><a 
+            href="/categories/648d9311ca2707bb62f29e06"
+            class="btn btn-outline-dark py-2 px-3 my-3"
+            style="font-size: 0.75rem"
+            >SHOW MORE</a
+          ></span>
+          <div class="line-break text-center py-4 mt-5">
+            <span class="shadow-heading mt-5" style="font-size: 1rem">DISTRIBUTORS</span>
+          </div>
+          <img
+            class="w-50 mt-5 mb-4 mx-auto h-25"
+            src="/public/img/design/distributors.jpg"
+            alt=""
+          />
+      </div>
+    </section>
+    <footer class="bg-theme">
+      <div
+        class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around footer-links"
+      >
+        <a class="col-lg-2 pb-2 text-center text-white" href="#">Track Shipping</a>
+        <a class="col-lg-2 pb-2 text-center text-white" href="#">Contact Us</a>
+        <a class="col-lg-2 pb-2 text-center text-white" href="#">Customer Care</a>
+        <a class="col-lg-2 pb-2 text-center text-white" href="#">About us</a>
+        <span class="col-lg-2 justify-content-center d-flex align-items-center">
+          <i class="fab fa-instagram text-white"></i>
+          <i class="fab fa-facebook-f text-white"></i>
+          <i class="fab fa-twitter text-white"></i>
+          <i class="fab fa-whatsapp text-white"></i>
+        </span>
+      </div>
+      <div
+        class="copyright bg-theme py-2 text-center"
+        style="font-size: 0.85rem"
+      >
+        <span style="color: white;"
+          >Copyright © 2023 | LAP4YOU | Made by
+          <a class=".footer-links" href="https://rishikesht1245.github.io/Rishikesh_website/"
+            >Rishikesh T </a
+          ></span
+        >
+      </div>
+    </footer>
+    <script>
+      if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+      }
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>

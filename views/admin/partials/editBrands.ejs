@@ -1,0 +1,30 @@
+<%- include('../layouts/header') %> <%- include('../layouts/head-links') %>
+
+<div class="container">
+  <div class="line-break text-center py-4">
+    <span class="shadow-heading">Edit Brand</span>
+  </div>
+  <div class="row mb-5 pt-4">
+    <p class="text-danger mt-0 pt-4 text-uppercase text-center">
+      <%= locals.errorMessage %>
+    </p>
+    <div class="col-lg-5 mx-auto ">        
+      <form action="" method="post" class="d-flex align-items-center flex-column ">
+        <div class="w-75">
+          <input
+            required
+            class="form-control my-3 "
+            id="editCategory"
+            placeholder="Change Category Name"
+            value="<%if(brand){%><%=locals.brand.name%><%}%>"
+            name="name"
+            style="text-transform: none;"
+          />
+        </div>
+        <input type="submit" class="text-center btn btn-dark w-25" value="Save" />
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../layouts/footer') %>

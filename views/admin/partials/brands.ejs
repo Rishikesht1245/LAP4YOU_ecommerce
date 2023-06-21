@@ -1,0 +1,74 @@
+
+<%- include('../layouts/header') %> <%- include('../layouts/head-links') %>
+<div class="container">
+  <div class="line-break text-center py-4">
+    <span class="shadow-heading">Brands</span>
+  </div>
+  <div class="d-flex flex-column justify-content-center mb-5 pt-4 w-75 mx-auto">
+      <% if(details !=null) { %>
+      <table
+        id="dataTable"
+        class="table table-hover cell-border fw-light nowrap"
+      >
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% details.forEach(function(item,i){ %>
+          <tr>
+            <td><%= i+1 %></td>
+            <td><%= item.name %></td>
+            <td class="text-center">
+              <a
+                href="/admin/brands/edit?id=<%= item._id%>"
+                onclick="showConfirmation(event, '<%= item.name %>', 'edit')"
+                ><i
+                class="py-1 fa fa-edit fa-lg text-dark"
+              ></i>
+              </a>
+              <a
+                href="/admin/brands/delete_brand?id=<%= item._id%>"
+                onclick="showConfirmation(event, '<%= item.name %>', 'delete')"
+                ><i
+                  class="py-1 fa fa-trash fa-lg text-danger"
+                  aria-hidden="true"
+                ></i>
+              </a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+      </table>
+      <% } %>
+    <div class="w-50 mx-auto mt-4">
+      <span
+        class="text-center pb-3"
+        style="font-size: 0.8rem; text-transform: none"
+      >
+        <p class="text-danger mt-0 fw-bold text-uppercase">
+          <%= locals.errorMessage %>
+        </p>
+      </span>
+      <!-- Posting to sane get route, so no need to mention action link -->
+      <form action="" method="post">
+        <div class="mb-3">
+          <input
+            type="string"
+            class="form-control"
+            id="form-holder"
+            placeholder="Enter Brand Name"
+            name="brand"
+            style="text-transform: none"
+          />
+        </div>
+        <input type="submit" class="btn btn-dark w-100" value="Add New Brand" />
+      </form>
+    </div>
+  </div>
+</div>
+<script src="/public/js/admin/admin.js"></script>
+<%- include('../layouts/footer') %>

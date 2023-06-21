@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/stylesheets/index.css">
+    <link rel="stylesheet" href="/public/stylesheets/userStyle.css" />
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"
+    />
+    <!-- Include sweet alert -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.all.min.js"></script>
+    
+    <link rel="shortcut icon" type="image/jpg" href="/public/img/lap4you-favicon.png" />
+    <title><%=locals.documentTitle%> | LAP4YOU</title>
+    
+    <style>
+      .product-details {
+  background-image: url(/public/img/design/productPage/heroBG/Black.jpg);
+  min-height: 100px;
+}
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container-fluid header-top">
+        <div class="container d-flex header-top-links justify-content-end">
+          <a class="px-2 d-none d-lg-block" href="">Contact Us</a>
+          <a class="px-2 d-none d-lg-block" href="">About Us</a>
+        </div>
+      </div>
+      <nav
+        class="container navbar navbar-expand-lg bg-white py-3 px-2 line-break"
+      >
+        <div class="container-fluid justify-content-around">
+          <a class="navbar-brand d-flex align-items-center" href="/">
+            <img
+              src="/public/img/lap4you-logo.png"
+              alt="Logo"
+              width="40"
+              height="40"
+              class="d-inline-block align-text-top"
+            />
+            <div class="brand-name ms-3">
+              <span>LAP<span style="color: red;">4</span>YOU</span>
+            </div>
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarText"
+            aria-controls="navbarText"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
+              <li class="nav-item mx-3 ms-lg-5 ">
+                <a class="nav-link text-dark" href="/categories/64888a004cb3b3a4b1bb8be3">Gaming</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link text-dark" href="/categories/648d930bca2707bb62f29e01">Student</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link text-dark" href="/categories/648d9311ca2707bb62f29e06">Business</a>
+              </li>
+            </ul>
+            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+              <a class="nav-link" href="/products">Collection</a>
+            </span>
+            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+              <a class="nav-link" href="/users/wishlist">Wishlist</a>
+            </span>
+            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+              <a class="nav-link" href="/users/cart">Cart</a>
+            </span>
+            <span class="nav-item nav-link text-center mb-2 mb-lg-0 ms-lg-3">
+              <% if(session){%>
+              <div class="d-block d-lg-none">
+                <hr />
+                <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+                  <a class="nav-link fw-bold" href="/users/profile"
+                    ><img
+                      src="/Public/img/users/<%=locals.currentUser.photo%>"
+                      height="25px"
+                      alt=""
+                      class="mx-2"
+                    /><%=locals.currentUser.name%></a
+                  >
+                </span>
+                <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+                  <a
+                    class="nav-link"
+                    style="font-size: 0.85rem"
+                    href="/users/signOut"
+                    >Sign out</a
+                  >
+                </span>
+              </div>
+              <div class="btn-group dropstart d-none d-lg-block">
+                <button
+                  type="button"
+                  class="btn dropdown-toggle button-div"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  style="
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    color: grey;
+                    font-weight: 600;
+                  "
+                >
+                  <img
+                    src="/Public/img/users/<%=locals.currentUser.photo%>"
+                    height="25px"
+                    alt=""
+                  />
+                </button>
+                <ul class="dropdown-menu" style="font-size: 0.75rem">
+                  <li
+                    class="dropdown-item border-bottom"
+                    style="pointer-events: none"
+                  >
+                    <%=locals.currentUser.name%>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/users/profile">Profile</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/users/orders">Orders</a>
+                  </li>
+                  <li class="border-bottom">
+                    <a class="dropdown-item" href="/users/addresses">Address</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/users/signOut">Sign Out</a>
+                  </li>
+                </ul>
+              </div>
+
+              <% }else{%>
+              <a class="nav-link" href="/users/signIn">Sign In</a>
+              <%}%>
+            </span>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <% if (productDetails != null) { %>
+      <section>
+        <div class="brand-BG container d-flex flex-column align-items-center" style="background-size: cover;">
+          <img style="height: 5%; object-fit: cover; background-color: #f3f3f3;" src="/public/img/design/productPage/brandBG/" alt="" width="100%" class="rounded mt-3" />
+          <div class="product-details rounded row justify-content-around my-3 py-5 px-5">
+            <img src="/public/img/products/<%=productDetails.frontImage%>" alt="" width="100%" class="heroIMG rounded col-lg-5" />
+            <div class="product-title col-lg-5 mx-3 p-2 text-dark d-flex flex-column justify-content-around">
+              <div class="brand-fav d-flex justify-content-between my-1">
+                <h6 class="fw-bold"><%=productDetails.brand.name%></h6>
+                <button class="bg-transparent border-0" id="wishlistHeart" onclick="addToWishlist('<%=productDetails._id%>')">
+                  <i class="fa fa-heart <%if(productExistInWishlist==null){%>text-white<%}else{%>text-danger<%}%>"></i>
+                </button>
+              </div>
+              <h3 class="fw-light shadow-product-heading  text-dark"><%=productDetails.name%></h3>
+              <p class="shadow-details text-dark">Price: ₹ <%=productDetails.RAMSSD[0].price%></p>
+              <div class="model-case d-flex">
+                <p class="w-50 shadow-details text-dark">Model:</p>
+                <p class="w-50 shadow-details text-dark"><%=productDetails.model%></p>
+              </div>
+              <div class="buy-cart row text-center justify-content-around p-0">
+                <div id="buyNow" class="button-div rounded col-5 border p-2  d-flex align-items-center justify-content-center" onclick="buyNow('<%=productDetails._id%>')">
+                  <span style="font-size: 0.8rem;">Buy Now</span>
+                </div>
+                <div id="addToCart" class="button-div rounded col-5 border p-2  d-flex align-items-center justify-content-center" onclick="addToCart('<%=productDetails._id%>')">
+                  <span style="font-size: 0.8rem;">Add to cart</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="product-description mt-2 mb-5 container text-center">
+          <div id="description">
+            <!-- first row -->
+            <div class="row my-3 justify-content-around">
+              <div class="col-3 d-flex flex-column">
+                <div class="description-heading">
+                  <h6 class="fw-bold">Sales Package</h6>
+                  <p><%=productDetails.salesPackage%></p>
+                </div>
+              </div>
+              <div class="col-3 d-flex flex-column">
+                <div class="description-heading">
+                  <h6 class="fw-bold">Series</h6>
+                  <p><%=productDetails.series%></p>
+                </div>
+              </div>
+              <div class="col-3 d-flex flex-column">
+                <div class="description-heading">
+                  <h6 class="fw-bold">Type</h6>
+                  <p><%=productDetails.category.name%></p>
+                </div>
+              </div>
+            </div>
+            <!-- second row -->
+            <div class="row my-3 justify-content-around">
+              <div class="col-3 d-flex flex-column">
+                <div class="description-heading">
+                  <h6 class="fw-bold">Processor</h6>
+                  <p><%=productDetails.processor%></p>
+                </div>
+              </div>
+              <div class="col-3 d-flex flex-column">
+                <div class="description-heading">
+                  <h6 class="fw-bold">RAM Capacity</h6>
+                  <select class="form-select" id="ramCapacitySelect">
+                    <% productDetails.RAMSSD.forEach(function(ramSSD) { %>
+                      <option value="<%= ramSSD.ramCapacity %>"><%= ramSSD.ramCapacity %></option>
+                    <% }); %>
+                  </select>
+                </div>
+              </div>
+              <div class="col-3 d-flex flex-column">
+                <div class="description-heading">
+                  <h6 class="fw-bold">SSD Capacity</h6>
+                  <select class="form-select" id="ssdCapacitySelect">
+                    <% productDetails.RAMSSD.forEach(function(ramSSD) { %>
+                      <option value="<%= ramSSD.ssdCapacity %>"><%= ramSSD.ssdCapacity %></option>
+                    <% }); %>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- third row -->
+            <div class="row my-3 justify-content-around">
+              <div class="col-3 d-flex flex-column">
+                <div class="description-heading">
+                  <h6 class="fw-bold">Warranty</h6>
+                  <p><%=productDetails.warranty%></p>
+                </div>
+              </div>
+              <div class="col-3 d-flex flex-column">
+                <div class="description-heading">
+                  <h6 class="fw-bold">Screen Size</h6>
+                  <p><%=productDetails.screenSize%></p>
+                </div>
+              </div>
+              <div class="col-3 d-flex flex-column">
+                <div class="description-heading">
+                  <h6 class="fw-bold">Operating System</h6>
+                  <p><%=productDetails.operatingSystem%></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Carousel -->
+          <div id="carouselIndicators" class="container rounded carousel carousel-dark slide my-5 w-50" data-bs-ride="true" style="background-position: center; background-size: cover;">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active h-50">
+                <img src="../../public/img/products/<%=productDetails.images[0]%>" class="d-block" alt="..." style="object-fit: cover; width: 100%; height: auto;">
+              </div>
+              <div class="carousel-item h-50" style="background-position: center; background-size: cover;">
+                <img src="../../public/img/products/<%=productDetails.images[1]%>" class="d-block" alt="..." style="object-fit: cover;  width: 100%; height: auto;">
+              </div>
+              <div class="carousel-item h-50" style="background-position: center; background-size: cover;">
+                <img src="../../public/img/products/<%=productDetails.images[2]%>" class="d-block" alt="..." style="object-fit: cover; height: auto;">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+    
+<!-- Review Carousel -->
+<%if(reviews!=null){%>
+<div class="container" id="reviewContainer">
+  <% if (numberOfReviews!=null){%> <h6 class="text-center mx-auto col-lg-10">Reviews - (<%=numberOfReviews%>)</h6><%}%>
+  </div>
+    <div class="container d-flex justify-content-center">
+      <div class="row carousal-row">
+          <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="cards-wrapper card_wrap">
+                      <div class="card cardMargin">
+                        <div class="card-body">
+                          
+                          <div class=" text-center" style="position: relative;">
+                            <span>
+                              <% for( i=1; i<=5; i++){ %>
+                                <%if(i<=reviews[0].rating){%>
+                                <span style="color: yellow">★</span>
+                                <%}else{%>
+                                  <span style="color: gray">★</span>
+                              <%}}%>
+                            </span>
+                            <span id="helpful<%=reviews[0]._id%>" style=" position: absolute; right: 0;">
+                              <button onclick="helpful('<%=reviews[0]._id%>')" class="btn btn-sm rounded" style="background-color: #f3f3f3;"><%=reviews[0].helpful%> 👍</button>
+                            </span>
+                          </div>
+                          <h6 class="my-1 card-title"><%=reviews[0].review%></h6>
+                          <div>
+                            <p class="card-text" style="font-size: 0.65rem"><%=reviews[0].customer.name%></p>
+                          <img src="/public/img/users/<%=reviews[0].customer.photo%>" class="card-img-top w-25 rounded-2" alt="..."></a>
+                          </div>
+                          </div>
+                        </div>
+                        <%if(reviews[1]){%>
+                        <div class="card cardMargin">
+                          <div class="card-body">
+                            <div class=" text-center" style="position: relative;">
+                              <span>
+                                <% for( i=1; i<=5; i++){ %>
+                                  <%if(i<=reviews[1].rating){%>
+                                  <span style="color: yellow">★</span>
+                                  <%}else{%>
+                                    <span style="color: gray">★</span>
+                                <%}}%>
+                              </span>
+                              <span id="helpful<%=reviews[1]._id%>" style=" position: absolute; right: 0;">
+                                <button onclick="helpful('<%=reviews[1]._id%>')" class="btn btn-sm rounded" style="background-color: #f3f3f3;"><%=reviews[1].helpful%> 👍</button>
+                              </span>
+                            </div>
+                            <h6 class="my-1 card-title"><%=reviews[1].review%></h6>
+                            <p class="card-text" style="font-size: 0.65rem"><%=reviews[1].customer.name%></p>
+                            <img src="/public/img/users/<%=reviews[1].customer.photo%>" class="card-img-top w-25 rounded-2" alt="..."></a>
+                           </div>
+                         </div>
+                         <%}%>
+                        <%if(reviews[2]){%>
+                         <div class="card cardMargin">
+                           <div class="card-body">
+                            <div class=" text-center" style="position: relative;">
+                              <span>
+                                <% for( i=1; i<=5; i++){ %>
+                                  <%if(i<=reviews[2].rating){%>
+                                  <span style="color: yellow">★</span>
+                                  <%}else{%>
+                                    <span style="color: gray">★</span>
+                                <%}}%>
+                              </span>
+                              <span id="helpful<%=reviews[2]._id%>" style=" position: absolute; right: 0;">
+                                <button onclick="helpful('<%=reviews[2]._id%>')" class="btn btn-sm rounded" style="background-color: #f3f3f3;"><%=reviews[2].helpful%> 👍</button>
+                              </span>
+                            </div>
+                             <h6 class="my-1 card-title"><%=reviews[2].review%></h6>
+                             <p class="card-text" style="font-size: 0.65rem"><%=reviews[2].customer.name%></p>
+                             <img src="/public/img/users/<%=reviews[2].customer.photo%>" class="card-img-top w-25 rounded-2" alt="..."></a>
+                           </div>
+                         </div>
+                         <%}%>
+                  </div>
+                </div>
+                <div class="carousel-item ">
+                    <div class="cards-wrapper card_wrap">
+                        <% for(var i=3; i<=6; i++){%>
+                          <%if(reviews[i]!=null){%>
+                          <div class="card cardMargin">
+                            <div class="card-body">
+                              <div class=" text-center" style="position: relative;">
+                                <span>
+                                  <% for( j=1; j<=5; j++){ %>
+                                    <%if(i<=reviews[i].rating){%>
+                                    <span style="color: yellow">★</span>
+                                    <%}else{%>
+                                      <span style="color: gray">★</span>
+                                  <%}}%>
+                                </span>
+                                <span id="helpful<%=reviews[i]._id%>" style=" position: absolute; right: 0;">
+                                  <button onclick="helpful('<%=reviews[i]._id%>')" class="btn btn-sm rounded" style="background-color: #f3f3f3;"><%=reviews[i].helpful%> 👍</button>
+                                </span>
+                              </div>
+                              <h6 class="card-title"><%=reviews[i].review%></h6>
+                              <p class="card-text" style="font-size: 0.65rem"><%=reviews[i].customer.name%></p>
+                              
+                              <p class="card-text" style="font-size: 0.65rem"><%=moment(reviews[i].createdAt).format('ll') %></p>
+                              
+                              <img src="/public/img/users/<%=reviews[i].customer.photo%>" class="card-img-top rounded-2 w-25" alt="...">
+                            </div>
+                          </div>
+                          <%}%>
+                            <%}%>
+                      </div>
+                    </div>
+              </div>
+              <button class="carousel-control-prev" id="reviewButtomLeft" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon carousel-arrow" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" id="reviewButtomRight" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon carousel-arrow" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+      </div>
+    </div>
+<%}%>
+  <%if(session){%>
+    <button class=" btn btn-sm btn-dark mb-3 col-lg-2 mb-4" id="addReview" onclick="reviewAdd()">Add a review</button>
+  <%}%> 
+         <!-- Still Need any help -->
+        <div class="still-help" style="font-size: 0.75rem;">
+        <p><span class="fw-bold">Still need any help?</span> Our executive will help you in making the choice.</p>
+        <h6 class="fw-bold text-underline"><u><a href="" style="font-size: 0.75rem;">Contact executive</a></u></h6>
+         </div>
+    </section>
+    <%}%>
+    <footer class="bg-theme">
+      <div
+        class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around"
+      >
+        <a class="col-lg-2 pb-2 text-center text-white" href="#">Track Shipping</a>
+        <a class="col-lg-2 pb-2 text-center text-white" href="#">Contact Us</a>
+        <a class="col-lg-2 pb-2 text-center text-white" href="#">Customer Care</a>
+        <a class="col-lg-2 pb-2 text-center text-white" href="#">About us</a>
+        <span class="col-lg-2 justify-content-center d-flex align-items-center">
+          <i class="fab fa-instagram text-white"></i>
+          <i class="fab fa-facebook-f text-white"></i>
+          <i class="fab fa-twitter text-white"></i>
+          <i class="fab fa-whatsapp text-white"></i>
+        </span>
+      </div>
+      <div class="copyright bg-theme py-2 text-center text-white">
+        <span>Copyright © 2023 | LAP4YOU | Made by <a href="https://rishikesht1245.github.io/Rishikesh_website/">Rishikesh T</a></span>
+
+      </div>
+    </footer>
+   <script src="/public/js/singleProduct.js"></script>
+  
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>

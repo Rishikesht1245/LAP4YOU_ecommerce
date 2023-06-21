@@ -1,0 +1,40 @@
+<%- include('../layouts/header') %>
+
+<div class="container mx-auto">
+  <div class="text-center mb-5 mt-4 d-flex flex-column justify-content-center">
+    <h4>Your Order has been placed successfully <i class="fa fa-check"></i></h4>
+    <span class="mb-3 fw-light mt-1"> Order ID: <%=orderID%> </span>
+    <div class="text-center my-4">
+      <span class="navbar-brand text-center" >
+        <img
+          src="/public/img/timeless-logo.png"
+          alt="Logo"
+          width="80"
+          height="80"
+          class="d-inline-block align-text-top"
+        />
+        <h6 class="text-center mt-4">
+          Thank you choosing <span class="brand-name">TIMELESS</span>
+        </h6>
+      </span>
+    </div>
+  </div>
+  <div class="text-center mb-4 fw-bold">
+    <a
+      href="/users/orders/<%=orderID%>"
+      class="text-dark btn btn-secondary btn-sm text-white py-2 px-3 mx-2"
+      >View order details</a
+    >
+    <a href="/" class="text-dark btn btn-dark btn-sm text-white py-2 px-3"
+      >Continue shopping <i class="fa fa-arrow-right"></i
+    ></a>
+  </div>
+  <div class="text-center mt-5">
+    <span style="text-transform: none"
+      >For any queries, contact us on
+      <u style="text-transform: none">customersupport@timeless.com</u></span
+    >
+  </div>
+</div>
+
+<%- include('../layouts/footer') %>

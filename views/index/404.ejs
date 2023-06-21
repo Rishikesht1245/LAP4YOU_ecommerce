@@ -1,0 +1,19 @@
+<%- include('../user/layouts/header') %>
+<div class="container mx-auto">
+  <div class="text-center my-5 d-flex flex-column">
+    <h1 style="font-size: 4rem">404</h1>
+    <span class="mb-3 fw-bold"> Page not found </span>
+    <span class="my-4" style="text-transform: none">
+      Sorry, We cannot find <%if(url!=='/pageNotFound'){%><b class="text-danger"
+        ><%= locals.url %></b
+      ><%}else{%> the requested page<%}%> in our server.
+    </span>
+  </div>
+  <div class="text-center my-4 fw-bold">
+    <a href="/" class="text-dark"
+      >Continue shopping <i class="fa fa-arrow-right"></i
+    ></a>
+  </div>
+</div>
+
+<%- include('../user/layouts/footer') %>

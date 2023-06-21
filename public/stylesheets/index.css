@@ -1,0 +1,119 @@
+html {
+  scroll-behavior: smooth;
+}
+.button-div:hover {
+  color: white !important;
+  cursor: pointer;
+  font-weight: 400;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border: 1.4px solid white !important;
+}
+.button-div:active {
+  color: white !important;
+  font-weight: 400;
+  box-shadow: inset 0 6px 10px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+}
+#reviewButtomLeft,
+#reviewButtomRight {
+  width: 3%;
+}
+.product-details {
+  width: 80%;
+}
+@media all and (max-width: 768px) {
+  .product-details {
+    width: 100%;
+  }
+  #carouselIndicators {
+    width: 100% !important;
+  }
+  #description {
+    font-size: 85%;
+  }
+  #description h6 {
+    font-size: 80%;
+  }
+}
+.heroIMG {
+  border: 1px solid white;
+}
+.swal2-popup {
+  font-size: 0.85rem !important;
+}
+.review-star {
+  position: relative;
+  display: inline-block;
+  /* border: none; */
+  font-size: 14px;
+  /* margin: 50px auto; */
+  /* left: 50%;
+transform: translateX(-50%); */
+}
+
+.review-star input {
+  border: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  opacity: 0;
+}
+
+.review-star label {
+  position: relative;
+  float: right;
+  color: #c8c8c8;
+}
+
+.review-star label:before {
+  margin: 3px;
+  content: "★";
+  display: inline-block;
+  font-size: 1.7em;
+  color: #ccc;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.review-star input:checked ~ label:before {
+  color: #ffc107;
+}
+
+.review-star label:hover ~ label:before {
+  color: #ffdb70;
+}
+
+.review-star label:hover:before {
+  color: #ffc107;
+}
+@media screen and (min-width: 768px) {
+  .card_wrap {
+    display: flex;
+  }
+  .cardMargin {
+    margin: 0.5em;
+    width: calc(100% / 3);
+  }
+}
+@media screen and (max-width: 768px) {
+  .card:not(:first-child) {
+    display: none;
+  }
+}
+.card {
+  border: none;
+  border-radius: 0;
+  box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+}
+.carousel-inner {
+  padding: 1em;
+}
+
+.carousal-row {
+  width: 79%;
+}

@@ -1,0 +1,88 @@
+<%- include('../layouts/header') %>
+<div class="container">
+  <div class="line-break text-center py-4">
+    <span class="shadow-heading">Welcome to </span
+    ><span class="brand-name">LAP<span style="color: red;">4</span>YOU</span>
+  </div>
+  <div class="text-center my-5">
+    EMPOWER YOURSELF WITH THE PERFECT LAPTOP COMPANION BY <b>LAP<span style="color: red;">4</span>YOU</b>
+    <p class="text-danger mt-0 pt-4 fw-bold"><%= locals.errorMessage %></p>
+  </div>
+  <div class="row mb-5">
+    <div class="col-lg-5 mx-auto mb-5">
+      <form action="/users/signUp" method="post">
+        <div class="mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="form-holder"
+            name="name"
+            placeholder="Name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            class="form-control"
+            id="inputNumber"
+            onkeyup="numberValidator()"
+            name="number"
+            placeholder="Contact Number"
+            required
+            type="number"
+          />
+          <span
+            id="numberInvalid"
+            class="text-danger rounded"
+            style="font-size: 0.75rem; text-transform: none"
+          ></span>
+        </div>
+
+        <div class="mb-3">
+          <input
+            class="form-control"
+            id="inputMail"
+            name="email"
+            placeholder="e-Mail"
+            onkeyup="mailValidator()"
+            required
+            type="email"
+          />
+          <span
+            id="mailInvalid"
+            class="text-danger rounded"
+            style="font-size: 0.75rem; text-transform: none"
+          ></span>
+        </div>
+        <div class="mb-3">
+          <input
+            type="password"
+            class="form-control"
+            id="inputPassword"
+            placeholder="Password"
+            onkeyup="passwordValidator()"
+            name="password"
+            required
+          />
+          <span
+            id="passwordInvalid"
+            class="text-danger rounded"
+            style="font-size: 0.75rem; text-transform: none"
+          ></span>
+        </div>
+        <input
+          type="submit"
+          id="submitButton"
+          class="btn btn-dark w-100"
+          value="Send OTP"
+        />
+      </form>
+      <div class="form-footer d-flex justify-content-end">
+        <a href="/users/signIn"> Already have an account?</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%- include('../layouts/footer') %>

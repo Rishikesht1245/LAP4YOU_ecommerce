@@ -1,0 +1,74 @@
+<%- include('../layouts/header') %> <%- include('../layouts/user-links') %>
+
+<div class="container mx-auto">
+  <div class="line-break text-center py-4">
+    <span class="shadow-heading">Your Wishlist</span>
+  </div>
+  <div class="row justify-content-center m-3" id="wishlist">
+    <div class="col-lg-6">
+      <% if(userWishlist!= null && userWishlist.products.length !=0){%> <%
+      userWishlist.products.forEach((product) => {%>
+      <div class="row rounded my-2 p-3" style="border: 1px solid #dbdbdb">
+        <div class="prod-img text-center col-lg-3">
+          <img
+            src="/public/img/products/<%=product.thumbnail%>"
+            alt=""
+            height="150px"
+          />
+        </div>
+        <div
+          class="col-lg-9 prod-details d-flex flex-grow-1 flex-column justify-content-between"
+        >
+          <h5>
+            <a href="/products/<%=product._id%>" style="color: black !important"
+              ><%=product.name%></a
+            >
+          </h5>
+          <h6><%=product.brand%></h6>
+          <span style="font-size: 0.85rem"> Price: <%=product.price%></span>
+          <div class="d-flex justify-content-between mt-2">
+            <a
+              href="/products/<%=product._id%>"
+              style="
+                color: black !important;
+                background-color: #dbdbdb;
+                font-size: 0.75rem;
+              "
+              class="button-div btn-light btn btn-sm"
+              >View product</a
+            >
+            <button
+              onclick="addToCartFromWishlist('<%=product._id%>')"
+              class="btn btn-secondary btn-sm text-white mx-2 button-div"
+            >
+              <span style="letter-spacing: 1px; font-size: 0.75rem"
+                >→ cart</span
+              >
+            </button>
+            <button
+              class="btn btn-sm text-white button-div"
+              style="background-color: #dbdbdb; color: black !important"
+              onclick="removeFromWishlist('<%=product._id%>')"
+            >
+              <span style="letter-spacing: 1px; font-size: 0.75rem"
+                >Remove</span
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+      <%})%> <%}else{%>
+      <h5 class="text-center my-4 fw-light">
+        No products on your wishlist yet.
+      </h5>
+      <div class="text-center my-4 fw-bold">
+        <a href="/" class="fst-italic"
+          >Continue shopping <i class="fa fa-arrow-right"></i
+        ></a>
+      </div>
+      <%}%>
+    </div>
+  </div>
+</div>
+<script src="/public/js/user/wishlist.js"></script>
+<%- include('../layouts/footer') %>
