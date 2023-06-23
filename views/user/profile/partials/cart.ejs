@@ -22,18 +22,17 @@
         <div
           class="col-lg-8 prod-details d-flex flex-grow-1 flex-column justify-content-between"
         >
-          <h5><a href="/products/<%=product.name._id%>" style="color: black !important;"><%=product.name.name%></a></h5>
-          <h6 class="text-secondary"><%=product.name.brand.name%></h6>
-          <span
-            style="text-transform: none; font-size: 0.85rem; font-weight: 700"
-          >
-            Price: <%=product.name.price%></span
-          >
+          <h5><a href="/products/<%=product.name._id%>" class="ms-5" style="color: black !important;"><%=product.name.name%></a></h5>
+          <h6 class="text-secondary ms-5"><%=product.name.brand.name%></h6>
+          <span style="text-transform: none; font-size: 0.85rem; font-weight: 700" class="ms-5 text-secondary">
+            Price: <%=product.price%></span>
+            <span style="text-transform: none; font-size: 0.85rem; font-weight: 700" class="ms-5 text-secondary">
+              Variant: <%=product.ramCapacity %> <%= product.ssdCapacity %></span>
           <div class="d-flex justify-content-end mt-2">
             <div class="counter d-flex p-1 align-items-center rounded mx-4">
               <button
                 class="btn btn-sm btn-light button-div"
-                onclick='reduceCount("<%=product.name._id%>","<%=i%>")'
+                onclick='reduceCount("<%=product._id%>","<%=i%>")'
               >
                 <i class="fa fa-minus"></i>
               </button>
@@ -42,7 +41,7 @@
               >
               <button
                 class="btn btn-sm btn-light button-div"
-                onclick='addCount("<%=product.name._id%>","<%=i%>")'
+                onclick='addCount("<%=product._id%>","<%=i%>", "<%= product.ramCapacity %>", "<%=product.name._id%>")'
               >
                 <i class="fa fa-plus h-100"></i>
               </button>
@@ -51,7 +50,7 @@
               <button class="btn button-div btn-sm text-white btn-dark">
                 <span
                   style="font-size: 0.8rem; letter-spacing: 1px"
-                  onclick="removeFromCart('<%=product.name._id%>')"
+                  onclick="removeFromCart('<%=product._id%>')"
                   >Remove</span
                 >
               </button>
@@ -103,4 +102,5 @@
   </div>
 </div>
 <script src="/public/js/singleProduct.js"></script>
+<script src="/public/js/user/cart.js"></script>
 <%- include('../layouts/footer') %>

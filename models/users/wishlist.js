@@ -5,12 +5,10 @@ const wishlistSchema = new mongoose.Schema({
             type : mongoose.Types.ObjectId,
             ref : "UserDetails",
       },
-      products : [
-            {
-                  type: mongoose.Types.ObjectId,
-                  ref:"Products",
-            },
-      ],
+      products: [{
+            type: mongoose.Types.ObjectId,
+            ref: "products",
+          }],   
 });
 
 

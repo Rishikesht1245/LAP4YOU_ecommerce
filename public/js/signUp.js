@@ -48,8 +48,8 @@ function passwordValidator() {
 }
 
 // otp expiration couter
-window.onload = () =>{
-  let counter = 60;
+window.onload = () => {
+  let counter = localStorage.getItem('counter') || 60;
   let countdownInterval;
 
   function startCounter() {
@@ -59,16 +59,19 @@ window.onload = () =>{
 
   function updateCounter() {
     counter--;
+    localStorage.setItem('counter', counter); // Corrected line
     $('#resend-button').text(`OTP Expires in ${counter}s`);
     if (counter <= 0) {
       clearInterval(countdownInterval);
       $('#resend-button').prop('disabled', false);
       $('#resend-button').text('Resend OTP');
+      localStorage.removeItem('counter');
     }
   }
 
   startCounter();
-}
+};
+
 
 
   

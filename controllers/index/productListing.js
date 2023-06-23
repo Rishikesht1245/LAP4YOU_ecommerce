@@ -153,6 +153,10 @@ exports.search = async (req, res) => {
 exports.category = async(req, res) => {
       try {
             let listing;
+            let currentUser;
+            if(req.session.userId){
+                  currentUser = await userCLTN.findOne({_id : req.session.userId});
+             }
             if(req.params.id == 'newReleases'){
                   if(req.session.listing){
                         listing = req.session.listing;
@@ -163,6 +167,8 @@ exports.category = async(req, res) => {
                         listing,
                         documentTitle : 'New Releases | LAP4YOU',
                         listingName : 'New Releases',
+                        session : req.session.userId,
+                        currentUser
                   });
             } else{
                   let currentCategory = await categoryCLTN.findById(req.params.id);
@@ -178,6 +184,8 @@ exports.category = async(req, res) => {
                         listing,
                         documentTitle : `${currentCategory.name} | LAP4YOU`,
                         listingName : `${currentCategory.name}`,
+                        session : req.session.userId,
+                        currentUser,
                   });
             }
       } catch (error) {

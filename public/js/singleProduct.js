@@ -22,12 +22,19 @@ window.onload=() =>{
 
 
 // ======================= Adding to CART =================================//
-function addToCart(productID) {
+function addToCart(productID, productDetails) {
+  const ramCapacity = $('#ramCapacitySelect').val();
+  let ssdPrice = JSON.parse(productDetails).find((details) => details.ramCapacity == ramCapacity);
+  const ssdCapacity = ssdPrice.ssdCapacity;
+  const price = ssdPrice.price;
   $.ajax({
     url: "/users/cart",
     method: "post",
     data: {
       id: productID,
+      price : price,
+      ramCapacity : ramCapacity,
+      ssdCapacity : ssdCapacity,
     },
     success: (res) => {
       if (res.success === "countAdded") {
@@ -56,5 +63,57 @@ function addToCart(productID) {
         window.location.href = "/users/signIn";
       }
     },
+  });
+}
+
+
+// ============= Update price according to the selected ram and ssd =================
+function updatePrice(ramDetails) {
+  const ramSelect = $('#ramCapacitySelect').val();
+  console.log(ramSelect) // ram size only
+  let priceElement;
+  priceElement = JSON.parse(ramDetails).find((ram) => ram.ramCapacity == ramSelect).price;
+  const price = $('#price');
+  price.text(priceElement);
+}
+
+
+
+//========================= adding product to wish list ===============================
+function addToWishlist(productId){
+  $.ajax({
+    url : '/users/wishlist',
+    method : 'patch',
+    data : {
+      id : productId
+    },
+    success : (res) => {
+      if(res.data.message === 0){
+        $("#wishlistHeart").html('<i class="fa fa-heart text-white">');
+        Swal.fire({
+          toast: true,
+          icon: "error",
+          position: "top-right",
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+          animation: true,
+          title: "Removed from wishlist",
+        });
+      }
+      else if(res.data.message === 1){
+        $('#wishlistHeart').html('<i class="fa fa-heart text-danger">');
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-right",
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+          animation: true,
+          title: "Added to wishlist",
+        });
+      }
+    }
   });
 }

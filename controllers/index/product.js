@@ -3,6 +3,7 @@ const userCLTN = require('../../models/users/userDetails');
 const reviewCLTN = require('../../models/users/review');
 const wishlistCLTN = require('../../models/users/wishlist');
 const moment = require('moment');
+const { category } = require('./productListing');
 
 // single Product page
 exports.view = async(req, res) => {
@@ -14,9 +15,10 @@ exports.view = async(req, res) => {
             let productExistInWishlist = null;
             if(currentUser){
                   productExistInWishlist = await wishlistCLTN.findOne({
-                        customer : currentUser._id,
-                        product : productDetails._id,
-                  });
+                        customer: currentUser._id,
+                        products: { $in: [productDetails._id] },
+                      });                      
+                  productExistInWishlist = productExistInWishlist ? productExistInWishlist.products : null;
             }
             let reviews = await reviewCLTN.find({product: productDetails._id})
                   .sort({_createdAt : -1})
@@ -24,12 +26,14 @@ exports.view = async(req, res) => {
                         path : 'customer',
                         select : 'name photo',
                   });
-            console.log(reviews);
             const numberOfReviews = reviews.length;
             reviews = reviews.slice(0,6);
             if(reviews == ""){
                   reviews = null;
             }
+            const categoryId = productDetails.category._id;
+            let similarProducts = await productCLTN.find({ 'category': categoryId }).populate(['category', 'brand']);
+            similarProducts = similarProducts.filter((product) => product.name != productDetails.name)
             res.render('index/product', {
                   session : req.session.userId,
                   documentTitle : productDetails.name,
@@ -38,7 +42,8 @@ exports.view = async(req, res) => {
                   productExistInWishlist,
                   reviews,
                   numberOfReviews,
-                  moment
+                  moment,
+                  similarProducts,
             });
       } catch(error){
             console.log('Error in Single Product Page : ' + error);

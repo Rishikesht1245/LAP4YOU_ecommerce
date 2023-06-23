@@ -10,6 +10,7 @@ const imageUpload = require('../utilities/imageUpload');
 const imageProcessor = require('../utilities/imageProcessor');
 const address = require('../controllers/user/address');
 const cart = require('../controllers/user/cart');
+const wishlist = require('../controllers/user/wishlist');
 
 //========================== SIGN IN ============================
 router
@@ -85,9 +86,23 @@ router
       .route('/cart')
       .get(sessionCheck, cart.viewAll)
       .post(sessionCheck, cart.addToCart)
+      .delete(sessionCheck, cart.remove);
+
+// add and reduct count
+router
+      .route('/cart/count')
+      .put(sessionCheck, cart.addCount)
+      .delete(sessionCheck, cart.reduceCount);
 
 
-//===================== LOG OUT ================================
+// ==================== WISH LIST MANAGEMENT ===============================
+router
+      .route('/wishlist')
+      .get(sessionCheck, wishlist.viewAll)
+      .patch(sessionCheck, wishlist.addOrRemove)
+      .delete(sessionCheck, wishlist.remove);
+
+//===================== LOG OUT =================================
 router.get('/signOut',sessionCheck,signOut.signOut);
 
 

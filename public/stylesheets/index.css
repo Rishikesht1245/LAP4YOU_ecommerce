@@ -8,6 +8,9 @@ html {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border: 1.4px solid white !important;
 }
+.button-div{
+  color: black;
+}
 .button-div:active {
   color: white !important;
   font-weight: 400;
@@ -21,6 +24,8 @@ html {
 }
 .product-details {
   width: 80%;
+  background: linear-gradient(135deg, #ECECEC 0%, #FFFFFF 100%);
+
 }
 @media all and (max-width: 768px) {
   .product-details {
@@ -37,8 +42,9 @@ html {
   }
 }
 .heroIMG {
-  border: 1px solid white;
+  mix-blend-mode: multiply;
 }
+  
 .swal2-popup {
   font-size: 0.85rem !important;
 }

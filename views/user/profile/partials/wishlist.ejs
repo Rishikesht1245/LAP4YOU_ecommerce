@@ -9,7 +9,7 @@
       <% if(userWishlist!= null && userWishlist.products.length !=0){%> <%
       userWishlist.products.forEach((product) => {%>
       <div class="row rounded my-2 p-3" style="border: 1px solid #dbdbdb">
-        <div class="prod-img text-center col-lg-3">
+        <div class="prod-img text-center col-lg-5">
           <img
             src="/public/img/products/<%=product.thumbnail%>"
             alt=""
@@ -17,25 +17,24 @@
           />
         </div>
         <div
-          class="col-lg-9 prod-details d-flex flex-grow-1 flex-column justify-content-between"
+          class="col-lg-6 prod-details d-flex flex-grow-1 flex-column justify-content-between"
         >
-          <h5>
+          <h5 class="ms-5">
             <a href="/products/<%=product._id%>" style="color: black !important"
               ><%=product.name%></a
             >
           </h5>
-          <h6><%=product.brand%></h6>
-          <span style="font-size: 0.85rem"> Price: <%=product.price%></span>
+          <h6 class="ms-5"><%=product.brand.name%></h6>
+          <span style="font-size: 0.85rem" class="ms-5"> Price: <%=product.RAMSSD[0].price%></span>
           <div class="d-flex justify-content-between mt-2">
             <a
               href="/products/<%=product._id%>"
               style="
-                color: black !important;
-                background-color: #dbdbdb;
                 font-size: 0.75rem;
               "
-              class="button-div btn-light btn btn-sm"
-              >View product</a
+              class="button-div btn-light btn btn-sm ms-5  bg-success text-white text-center pt-1
+              "
+              >View</a
             >
             <button
               onclick="addToCartFromWishlist('<%=product._id%>')"
@@ -46,11 +45,10 @@
               >
             </button>
             <button
-              class="btn btn-sm text-white button-div"
-              style="background-color: #dbdbdb; color: black !important"
+              class="btn btn-sm text-white button-div bg-danger"
               onclick="removeFromWishlist('<%=product._id%>')"
             >
-              <span style="letter-spacing: 1px; font-size: 0.75rem"
+              <span  style="letter-spacing: 1px; font-size: 0.75rem"
                 >Remove</span
               >
             </button>
