@@ -11,6 +11,7 @@ const banners = require('../controllers/admin/banner');
 const customer = require('../controllers/admin/customer');
 const signOut = require('../controllers/admin/signOut');
 const session = require('express-session');
+const coupon = require('../controllers/admin/coupon');
 
 // ====================== SIGN IN ===========================//
 
@@ -130,6 +131,17 @@ router
       .patch(sessionCheck, customer.changeAccess)
 
 
+
+// ================ COUPONS ===================================
+
+// view coupon page
+router.get('/coupon_management', sessionCheck, coupon.page);
+
+//adding new coupon 
+router.post('/coupon_management/addNew', sessionCheck, coupon.addNew);
+
+//change activity 
+router.get('/coupon_management/changeActivity', sessionCheck, coupon.changeActivity);
 
 //======================= LOG OUT ==============================
 router.get('/signOut',sessionCheck, signOut.signOut);

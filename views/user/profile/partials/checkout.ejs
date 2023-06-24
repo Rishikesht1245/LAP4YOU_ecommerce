@@ -27,7 +27,7 @@
         <%=defaultAddress.building%></br><%=defaultAddress.address%> - <%=defaultAddress.pincode%></br><%=defaultAddress.country%></br></span>
       <div class="d-flex justify-content-between mt-2">
         <span style="font-size: 0.85rem;text-transform: None;">
-          Alternate No: <%=defaultAddress.contactNumber%>
+          Contact No: <%=defaultAddress.contactNumber%>
         </span>
           <!-- Button trigger modal -->
         <button type="button" class="btn btn-sm btn-dark text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="font-size: 0.7rem; letter-spacing: 2px;">
@@ -86,6 +86,7 @@
           ₹<span id="couponDiscount"> 0</span>
         </div>
       </div>
+      <!-- HIDDEN INPUT FIELD FOR ATTACHING IN FORM -->
       <input type="number" name="couponDiscount" value="" id="inputCouponDiscount" hidden>
       <div class="d-flex justify-content-between fw-bold p-1">
         <span>Final Price:</span>
@@ -93,6 +94,7 @@
           ₹<span id="finalPrice"> <%= userCart.totalPrice%></span>
         </div>
       </div>
+      <!-- HIDDEN FINAL PRICE FOR SUBMITTING -->
       <input type="number" name="finalPrice" value="<%= userCart.totalPrice%>" id="inputFinalPrice" hidden>
     </div>
     <div class="order-summary rounded p-3 my-3 d-flex flex-column" style="border: 1px solid #dbdbdb; font-size: 0.9rem;">
@@ -119,7 +121,7 @@
                  <span style="text-transform: None;">
                   <%=address.building%></br><%=address.address%> - <%=address.pincode%></br><%=address.country%></br></span>
                   <span style="font-size: 0.85rem;text-transform: None;">
-                    Alternate No: <%=address.contactNumber%>
+                    Contact No: <%=address.contactNumber%>
                   </span>
               </label>
             </div>

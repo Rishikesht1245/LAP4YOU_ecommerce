@@ -45,7 +45,7 @@ exports.addToCart = async (req, res) => {
                   });
             
             if(wishlistCheck){
-                  await wishlistCLTN.findByIdAndUpdate( wishlist._id, // particular users wishlist document
+                  await wishlistCLTN.findByIdAndUpdate( wishlistCheck._id, // particular users wishlist document
                         {$pull : {products : productId}},
                   );
             }

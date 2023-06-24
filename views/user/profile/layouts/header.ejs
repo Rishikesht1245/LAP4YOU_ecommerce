@@ -18,6 +18,8 @@
       href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"
     />
     <link rel="shortcut icon" type="image/jpg" href="/public/img/lap4you-favicon.png" />
+    <!-- include cropper js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css">
     <title><%= locals.documentTitle %></title>
     <style>
         html {
@@ -44,6 +46,23 @@
         /* font-weight: 400; */
         box-shadow: inset 0 6px 10px 0 rgba(0, 0, 0, 0.2),
           0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+      .hide{
+        display: none;
+      }
+      .result{
+        width: 400px;
+        height: 400px;
+        
+      }
+      .img-result{
+        height: 200px;
+        width: 200px;
+        object-fit: cover;
+      }
+      .cropped{
+        width: 100%;
+        height: auto;
       }
     </style>
   </head>

@@ -12,7 +12,7 @@ exports.viewAll = async(req, res) => {
                         populate:{
                               path : 'brand',
                               model : 'brands'
-                        }
+                        },
                   });
             res.render('user/profile/partials/wishlist', {
                   documentTitle : 'User Wishlist | LAP4YOU',

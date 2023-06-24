@@ -1,5 +1,6 @@
-// banners making api call for delete and changeActivity for Banner
+// ============================= BANNER  ===========================
 
+// banners making api call for delete and changeActivity for Banner
 //Change Activity
 function changeActivity(id, active){
   $.ajax({
@@ -25,7 +26,7 @@ function deleteBanner(id){
   });
 }
 
-// ============================= BANNER END ===========================
+
 
 
 // ========================= CUSTOMER CHANGE ACCESS ===================
@@ -43,8 +44,6 @@ function changeAccess(id, access){
     }
   });
 }
-//=======================================================================
-
 
 // ====================== SWEET ALERT CONFIRMATION ======================
 function showConfirmation(e,itemName,action) {

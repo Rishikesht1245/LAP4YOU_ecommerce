@@ -13,11 +13,12 @@ const multerFilter = (req, file, cb) => {
       }
 }
 
+console.log('Reached multer');
 //calling the multer function
 
 const upload = multer({
       storage : multerStorage,
-      fileFilter : multerFilter
+      fileFilter : multerFilter,
 });
 
 module.exports = upload;

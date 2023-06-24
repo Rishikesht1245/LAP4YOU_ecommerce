@@ -36,14 +36,76 @@
               "
               >View</a
             >
+            <!-- MODAL Button -->
             <button
-              onclick="addToCartFromWishlist('<%=product._id%>')"
+           
               class="btn btn-secondary btn-sm text-white mx-2 button-div"
+              data-bs-toggle="modal"
+              data-bs-target="#wishlistModal"
             >
               <span style="letter-spacing: 1px; font-size: 0.75rem"
                 >→ cart</span
               >
             </button>
+
+            <!-- MODAL FOR RAM AND SSD SELECTION -->
+            <div
+        class="modal fade"
+        id="wishlistModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        data-bs-backdrop="static"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title fs-5" id="exampleModalLabel">
+                SELECT THE VARIANT
+              </h4>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <!-- ---------SELECT VARIANT INSIDE MODAL ----------- -->
+
+              <div class="description-heading">
+                <h6 class="fw-bold">RAM SSD VARIANTS</h6>
+                <select class="form-select" id="ramCapacitySelect" onchange="updatePrice('<%= JSON.stringify(product.RAMSSD) %>')">
+                  <% product.RAMSSD.forEach(function(ramSSD) { %>
+                    <option value="<%= ramSSD.ramCapacity %>"><%= ramSSD.ramCapacity %>   <%= ramSSD.ssdCapacity %></option>
+                  <% }); %>
+                </select>
+              </div>
+
+              <div class="description-heading">
+                <h6 class="fw-bold mt-3">Price</h6>
+                <p id="price"><%= product.RAMSSD[0].price %></p>
+              </div>
+          </div>
+
+          <!-- MODAL FOOTER -->
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button class="btn btn-success" onclick="addToCartFromWishlist('<%=product._id%>', '<%= JSON.stringify(product.RAMSSD) %>')">
+              Proceed to Cart
+            </button>
+          </div>
+
+          </div>
+          </div>
+          </div>
+
             <button
               class="btn btn-sm text-white button-div bg-danger"
               onclick="removeFromWishlist('<%=product._id%>')"
@@ -69,4 +131,5 @@
   </div>
 </div>
 <script src="/public/js/user/wishlist.js"></script>
+<script src="/public/js/singleProduct.js"></script>
 <%- include('../layouts/footer') %>

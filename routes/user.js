@@ -11,15 +11,16 @@ const imageProcessor = require('../utilities/imageProcessor');
 const address = require('../controllers/user/address');
 const cart = require('../controllers/user/cart');
 const wishlist = require('../controllers/user/wishlist');
+const checkOut = require('../controllers/user/checkOut');
 
-//========================== SIGN IN ============================
+//========================== SIGN IN ==============================
 router
       .route('/signIn')
       .get(signIn.signInPage)
       .post(signIn.signInVerification); 
 
 
-//========================== SIGN UP ============================
+//========================== SIGN UP ===============================
 router
       .route('/signUp')
       .get(signUp.signUpPage)
@@ -27,14 +28,14 @@ router
 
 router.get('/signUp/resendOTP', signUp.resendOTP);
 
-//========================== OTP ===============================
+//========================== OTP ====================================
 router
       .route('/otp_verification')
       .get(signUp.otpPage)
       .post(signUp.otpVerification);
 
 
-//=====================PASSWORD HANDLERS =======================
+//=====================PASSWORD HANDLERS ==============================
 router
       .route('/forgotPassword')
       .get(forgotPassword.forgotPasswordPage)
@@ -53,18 +54,18 @@ router
 
 
 
-//==================== User Profile Route =======================
+//==================== User Profile Route ===============================
 router
       .route('/profile')
       .get(sessionCheck,profile.profilePafge)
       .post(
             sessionCheck,
-            imageUpload.single('photo'),
+            imageUpload.single('croppedImage'),
             imageProcessor.profilePic,
             profile.updateProfile
       );
 
-//================ User Addresses Route =========================
+//================ User Addresses Route =================================
 router.get('/addresses', sessionCheck, address.viewAll)
 
 //adding new address     
@@ -81,7 +82,7 @@ router.get('/addresses/changeRole', sessionCheck, address.defaultToggler);
 
 
 
-// =================== CART MANAGEMENT =========================
+// =================== CART MANAGEMENT =================================
 router
       .route('/cart')
       .get(sessionCheck, cart.viewAll)
@@ -102,7 +103,20 @@ router
       .patch(sessionCheck, wishlist.addOrRemove)
       .delete(sessionCheck, wishlist.remove);
 
-//===================== LOG OUT =================================
+
+// ============================= CHECK OUT =================================
+router
+      .route('/cart/checkout')  
+      .get(sessionCheck, checkOut.view)
+      .put(sessionCheck, checkOut.coupon)
+      .post(sessionCheck, checkOut.checkOut);
+
+// changing default address 
+router.post('/cart/checkout/changeDefaultAddress', sessionCheck, checkOut.defaultAddress);
+
+
+
+//===================== LOG OUT ============================================
 router.get('/signOut',sessionCheck,signOut.signOut);
 
 
