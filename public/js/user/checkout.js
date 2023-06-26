@@ -1,4 +1,5 @@
 function checkCoupon() {
+  event.preventDefault(); // Prevent default form submission
   $.ajax({
     url: "/users/cart/checkout",
     method: "put",
@@ -13,4 +14,4 @@ function checkCoupon() {
       $("#inputFinalPrice").val(res.data.finalPrice);
     },
   });
-}
+};

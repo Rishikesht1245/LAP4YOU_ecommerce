@@ -32,6 +32,9 @@ exports.signInVerification = async(req, res)=> {
                   if(userFind.access == true){
                         if(hashedCheck){
                               req.session.userId = userFind._id;
+                              if(req.session.currentWishlistUrl){
+                                    res.redirect(req.session.currentWishlistUrl);
+                              }
                               res.redirect('/');
                         }
                         else{

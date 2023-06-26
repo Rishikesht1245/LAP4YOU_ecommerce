@@ -44,6 +44,8 @@ function changeAccess(id, access){
     }
   });
 }
+//=======================================================================
+
 
 // ====================== SWEET ALERT CONFIRMATION ======================
 function showConfirmation(e,itemName,action) {
@@ -66,4 +68,45 @@ function showConfirmation(e,itemName,action) {
           window.location.href=url;
         }
   })
-}
+};
+
+//====================IMAGE PREVIEWS ============================
+        function thumbnailPreview(event){
+          const thumbnailPreview = document.getElementById("thumbnail-preview");
+          // Clear previous previews
+          thumbnailPreview.src = '';
+          // Thumbnail preview
+          if (event.target.files) {
+            const thumbnailUrl = URL.createObjectURL(event.target.files[0]);
+            thumbnailPreview.src = thumbnailUrl;
+          }
+        }
+
+        function frontImagePreview(event){
+          const frontPreview = document.getElementById("front-preview");
+          frontPreview.src = '';
+          if(event.target.files){
+            frontPreview.src = URL.createObjectURL(event.target.files[0]);
+          }
+        }
+
+        function imagesPreview(event){
+            for(let i = 1; i <= 3; i++){
+              var imagePreview = document.getElementById("images"+i);
+              imagePreview.src = '';
+              if(event.target.files){
+                imagePreview.src = URL.createObjectURL(event.target.files[i-1]);
+              }
+            }
+        }
+
+  // banner preview
+        function bannerPreview(event){
+          console.log('reached')
+          const banner_preview = document.getElementById('banner-preview');
+          banner_preview.src = '';
+          if(event.target.files){
+            banner_preview.src = URL.createObjectURL(event.target.files[0]);
+          }
+        }
+//===========================================================================

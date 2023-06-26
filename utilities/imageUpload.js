@@ -13,7 +13,6 @@ const multerFilter = (req, file, cb) => {
       }
 }
 
-console.log('Reached multer');
 //calling the multer function
 
 const upload = multer({

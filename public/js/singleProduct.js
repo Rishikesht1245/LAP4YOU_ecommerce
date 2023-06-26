@@ -80,15 +80,17 @@ function updatePrice(ramDetails) {
 
 
 //========================= adding product to wish list ===============================
-function addToWishlist(productId){
+function addToWishlist(productId) {
+  var currentURL = window.location.href;
   $.ajax({
-    url : '/users/wishlist',
-    method : 'patch',
-    data : {
-      id : productId
+    url: "/users/wishlist",
+    method: "patch",
+    data: {
+      id: productId,
+      url : currentURL,
     },
-    success : (res) => {
-      if(res.data.message === 0){
+    success: (res) => {
+      if (res.data.message === 0) {
         $("#wishlistHeart").html('<i class="fa fa-heart text-white">');
         Swal.fire({
           toast: true,
@@ -100,9 +102,8 @@ function addToWishlist(productId){
           animation: true,
           title: "Removed from wishlist",
         });
-      }
-      else if(res.data.message === 1){
-        $('#wishlistHeart').html('<i class="fa fa-heart text-danger">');
+      } else if (res.data.message === 1) {
+        $("#wishlistHeart").html('<i class="fa fa-heart text-danger">');
         Swal.fire({
           toast: true,
           icon: "success",
@@ -113,7 +114,9 @@ function addToWishlist(productId){
           animation: true,
           title: "Added to wishlist",
         });
+      } else {
+        window.location.href = "/users/signIn";
       }
-    }
+    },
   });
 }

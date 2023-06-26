@@ -10,8 +10,8 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/public/stylesheets/landingPage.css" />
     <link rel="stylesheet" href="/public/stylesheets/index.css">
+    <link rel="stylesheet" href="/public/stylesheets/landingPage.css" />
     <link rel="stylesheet" href="/public/stylesheets/userStyle.css" />
     <link rel="preconnect" href="https://rsms.me/" />
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
@@ -179,10 +179,10 @@
                 <p class="shadow-details text-white">Model: <%=productDetails.model%></p>
               </div>
               <div class="buy-cart row text-center justify-content-around p-0">
-                <div id="buyNow" class="button-div rounded col-5 border p-2  d-flex align-items-center justify-content-center" onclick="buyNow('<%=productDetails._id%>')">
+                <div id="buyNow" class="button-div rounded col-5 border p-2  d-flex align-items-center justify-content-center" onclick="buyNow('<%=productDetails._id%>')" style="background-color: rgb(242, 127, 5); color: white; outline: none;">
                   <span style="font-size: 0.8rem; font-weight: bold;">Buy Now</span>
                 </div>
-                <div id="addToCart" class="button-div rounded col-5 border p-2  d-flex align-items-center justify-content-center" onclick="addToCart('<%=productDetails._id%>', '<%= JSON.stringify(productDetails.RAMSSD) %>')">
+                <div id="addToCart" class="button-div1 rounded col-5 border p-2  d-flex align-items-center justify-content-center" onclick="addToCart('<%=productDetails._id%>', '<%= JSON.stringify(productDetails.RAMSSD) %>')" style="color: rgb(242, 127, 5); background-color: #f3f4f5;">
                   <span style="font-size: 0.8rem; font-weight: bold;">Add to cart</span>
                 </div>
               </div>

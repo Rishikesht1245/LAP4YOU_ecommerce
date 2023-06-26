@@ -60,7 +60,9 @@
                           placeholder="Title"
                           name="title"
                           required
+                          
                         />
+                       
                       </div>
                     <div class="mb-3">
                         <label for="thumbnail" class="px-1" style="font-size: 0.75rem;">Upload Image</label>
@@ -69,7 +71,11 @@
                         id="form-holder"
                         name="bannerImage"
                         type="file"
+                        onchange="bannerPreview(event)"
                       />
+                      <div>
+                        <p><img src="" alt="" style="width: 150px;" id="banner-preview"></p>
+                      </div>
                     </div>
                     <div class="mb-3">
                         <input

@@ -69,8 +69,9 @@
             id="couponCode"
             placeholder="Coupon Code"
             name = "couponCode"
-            onkeyup="checkCoupon()"
+            required
           />
+          <button class="btn btn-danger w-100 mt-3 btn-sm" onclick="checkCoupon()"> Apply Coupon</button>
         </div>
         <span id="couponMessage" class="bg-light px-2 rounded m-2">
         </span>
@@ -98,7 +99,7 @@
       <input type="number" name="finalPrice" value="<%= userCart.totalPrice%>" id="inputFinalPrice" hidden>
     </div>
     <div class="order-summary rounded p-3 my-3 d-flex flex-column" style="border: 1px solid #dbdbdb; font-size: 0.9rem;">
-      <button type="submit" onclick="return confirm('Proceed to payment ?')" class="text-white btn btn-dark btn-sm" <% if(defaultAddress == 0){%>style="background-color: grey;" disabled<%}%>>Place Order</button>
+      <button type="submit" style="background-color: rgb(235, 94, 6); border: none;" onclick="return confirm('Proceed to payment ?')" class="text-white btn btn-dark btn-sm" <% if(defaultAddress == 0){%>style="background-color: grey;" disabled<%}%>>Place Order</button>
     </div>
   </form>
   </div>

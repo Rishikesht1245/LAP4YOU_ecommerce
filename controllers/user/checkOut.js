@@ -101,7 +101,6 @@ exports.coupon = async (req, res) => {
                         if(coupon.active == true){
                               // toJSON()returns JSON complaint string re[resentation]
                               const currentTime = new Date().toJSON();
-                              console.log(currentTime)
                               if(currentTime > coupon.startingDate.toJSON()){
                                     if(currentTime < coupon.expiryDate.toJSON()){
                                           discountPercentage = coupon.discount;

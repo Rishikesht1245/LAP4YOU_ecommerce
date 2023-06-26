@@ -60,7 +60,11 @@
                         name="thumbnail"
                         type="file"
                         required
+                        onchange="thumbnailPreview(event)"
                       />
+                      <div>
+                          <p> <img src=""  id="thumbnail-preview" style="width: 150px;"></p>
+                      </div>
                     </div>
                     <div class="mb-3">
                       <label for="frontImage" class="px-1" style="font-size: 0.75rem;">Upload Front Image</label>
@@ -70,7 +74,11 @@
                       name="frontImage"
                       type="file"
                       required
+                      onchange="frontImagePreview(event)"
                     />
+                    <div>
+                        <p> <img src=""  id="front-preview" style="width: 150px;"></p>
+                    </div>
                   </div>
                     <div class="mb-3">
                       <label for="images" class="px-1" style="font-size: 0.75rem;">Upload 3 Images</label>
@@ -81,9 +89,17 @@
                       type="file"
                       multiple
                       required
+                      onchange="imagesPreview(event)"
                     />
                     <p id="error-message" style="font-size:0.7rem" class="text-danger fw-bold"></p>
+                    <!-- image preview -->
+                    <div>
+                        <span><img src="" alt="" id="images1" style="width: 150px;"> </span>
+                        <span><img src="" alt="" id="images2" style="width: 150px;"> </span>
+                        <span><img src="" alt="" id="images3" style="width: 150px;"> </span>
+                    </div>
                   </div>
+
                     <div class="mb-3">
                       <select id="inputState" class="form-control" name="category" required> 
                         <option value="">Choose category</option> 
@@ -251,11 +267,11 @@
               </td>
               <td >
                 <div class="text-center d-flex flex-column">
-                  <a href="/admin/product_management/edit?id=<%= item._id %>" onclick="return confirm('Proceed to edit <%= item.name %> ?')" class="btn btn-dark text-white btn-sm my-1">Edit</a>
+                  <a href="/admin/product_management/edit?id=<%= item._id %>" onclick="showConfirmation(event, '<%= item.name %>', 'edit')" class="btn btn-dark text-white btn-sm my-1">Edit</a>
                 <% if(item.listed==true){ %> 
-                <a href="/admin/product_management/changeListing?id=<%= item._id %>" onclick="return confirm('Proceed to change listing of <%= item.name %> ?')" class="btn btn-danger text-white btn-sm  my-1">Unlist</a>
+                <a href="/admin/product_management/changeListing?id=<%= item._id %>" onclick="showConfirmation(event, '<%= item.name %>', 'Change Listing')" class="btn btn-danger text-white btn-sm  my-1">Unlist</a>
               <% }else{ %>
-                <a href="/admin/product_management/changeListing?id=<%= item._id %>" onclick="return confirm('Proceed to change listing of <%= item.name %> ?')" class="btn btn-success text-white btn-sm my-1">List</a>
+                <a href="/admin/product_management/changeListing?id=<%= item._id %>" onclick="showConfirmation(event, '<%= item.name %>', 'Change Listing')" class="btn btn-success text-white btn-sm my-1">List</a>
                 <% } %>
                 </div>
               </td>
@@ -310,4 +326,6 @@
             });
 
       </script>
+
+      
       <%- include('../layouts/footer') %>

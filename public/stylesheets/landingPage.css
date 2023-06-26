@@ -18,6 +18,18 @@ html {
   box-shadow: inset 0 6px 10px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+.btn-div1:hover{
+  color:black;
+  font-weight: 400;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border: 1.4px solid white !important;
+}
+.button-div1:active {
+  color: white !important;
+  font-weight: 400;
+  box-shadow: inset 0 6px 10px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 html {
   scroll-behavior: smooth;
 }

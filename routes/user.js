@@ -99,9 +99,9 @@ router
 // ==================== WISH LIST MANAGEMENT ===============================
 router
       .route('/wishlist')
+      .patch(wishlist.addOrRemove)
       .get(sessionCheck, wishlist.viewAll)
-      .patch(sessionCheck, wishlist.addOrRemove)
-      .delete(sessionCheck, wishlist.remove);
+      .delete(wishlist.remove); // no need for session check as it need message to be sent as null
 
 
 // ============================= CHECK OUT =================================

@@ -179,20 +179,28 @@
           </a>
           <ul class="dropdown-menu">
             <li>
-              <span class="dropdown-item" onclick="filter('gaming')">Gaming</span>
+              <label class="dropdown-item">
+                <input type="radio" name="filterOption" onclick="filter('gaming')"> Gaming
+              </label>
             </li>
             <li>
-              <span class="dropdown-item" onclick="filter('student')">Student</span>
+              <label class="dropdown-item">
+                <input type="radio" name="filterOption" onclick="filter('student')"> Student
+              </label>
             </li>
             <li>
-              <span class="dropdown-item" onclick="filter('business')">Business</span>
+              <label class="dropdown-item">
+                <input type="radio" name="filterOption" onclick="filter('business')"> Business
+              </label>
             </li>
-            <!-- <li>
-              <span class="dropdown-item" onclick="removeFilter('none')"
-                >NO Filter</span
-              >
-            </li> -->
+            <li>
+              <label class="dropdown-item">
+                <input type="radio" name="filterOption" onclick="removeFilter('none')"> NO Filter
+              </label>
+            </li>
           </ul>
+          
+          
         </div>
 
         <span
@@ -213,19 +221,16 @@
           </a>
           <ul class="dropdown-menu">
             <li>
-              <span class="dropdown-item" onclick="sortBy('newReleases')"
-                >New releases</span
-              >
+              <label class="dropdown-item" onclick="sortBy('newReleases')">
+                  <input type="radio" name="sortOptions"> New releases</label>
             </li>
             <li>
-              <span class="dropdown-item" onclick="sortBy('ascending')"
-                >Price: Low to High</span
-              >
+                <label class="dropdown-item" onclick="sortBy('ascending')">
+                  <input type="radio" name="sortOptions"> Price: Low to High</label>
             </li>
             <li>
-              <span class="dropdown-item" onclick="sortBy('descending')"
-                >Price: High to low</span
-              >
+              <label class="dropdown-item" onclick="sortBy('descending')">
+                <input type="radio" name="sortOptions"> Price: High to low</label>
             </li>
             <!-- <li><a class="dropdown-item" href="#"></a></li> -->
           </ul>
