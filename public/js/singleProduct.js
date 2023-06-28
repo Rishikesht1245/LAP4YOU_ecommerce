@@ -120,3 +120,86 @@ function addToWishlist(productId) {
     },
   });
 }
+
+// ===================== IMAGE ZOOMING ===============================
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const zoomableImage = document.getElementById('zoomable-image');
+    mediumZoom(zoomableImage);
+  });
+
+  
+//====================== DYNAMIC IMAGE CHANGING =======================
+  // Add event listeners to the small images
+const smallImages = document.querySelectorAll('.small-image');
+smallImages.forEach((image) => {
+  image.addEventListener('click', () => {
+    const mainImage = document.getElementById('zoomable-image');
+    const newImageSrc = image.dataset.image; // forEach
+    mainImage.src = newImageSrc;
+  });
+});
+
+
+// add review
+function reviewAdd(productId) {
+
+
+  Swal.fire({
+    showCloseButton: true,
+    showConfirmButton: true,
+    html: `<form id="reviewForm">
+<div class="mb-3">
+  <label for="review" class="form-label">Post a review</label>
+  <input name="review" class="form-control" id="review pattern='^[A-Z]{1,30}$" >
+</div>
+<input type="text" name="product" value="${productId}" hidden>
+<div class="mb-3">
+  <div class="review-star">
+    <input type="checkbox" name="rating" id="st1" value="5" />
+    <label for="st1"></label>
+    <input type="checkbox" name="rating" id="st2" value="4" />
+    <label for="st2"></label>
+    <input type="checkbox" name="rating" id="st3" value="3" />
+    <label for="st3"></label>
+    <input type="checkbox" name="rating" id="st4" value="2" />
+    <label for="st4"></label>
+    <input type="checkbox" name="rating" id="st5" value="1" />
+    <label for="st5"></label>
+  </div>
+</div>
+</form>`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "/users/reviews",
+        method: "post",
+        data: $("#reviewForm").serialize(),
+        success: (res) => {
+          $("section").load(location.href + " section");
+          $("#addReview").hide();
+        },
+      });
+    }
+  });
+}
+
+
+// helpgul review
+function helpful(reviewId){
+  $.ajax({
+    url : '/users/reviews',
+    method : 'patch',
+    data : {
+      id : reviewId
+    },
+    success : (res) => {
+      console.log(res.message);
+      if(res.message === 1){
+        $("#helpful" + reviewId).load(location.href + (" #helpful" +reviewId));
+      } else{
+        window.location.replace('/users/signIn');
+      }
+    }
+  })
+}

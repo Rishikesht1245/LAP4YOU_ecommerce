@@ -7,14 +7,14 @@
     <div class="col-lg-10 mx-auto" id="invoice">
         <a class="navbar-brand d-flex align-items-center justify-content-center mt-2 mb-4" href="/">
             <img
-              src="/public/img/timeless-logo.png"
+              src="/public/img/lap4you-logo.png"
               alt="Logo"
               width="40"
               height="40"
               class="d-inline-block align-text-top"
             />
             <div class="brand-name ms-3">
-              <span>TIMELESS</span>
+              <span>LAP<span style="color: red;">4</span>YOU</span>
             </div>
           </a>
         <div class="name mb-2 row" style="border-bottom: 1px solid #dbdbdb; font-size: 0.8rem;">
@@ -78,7 +78,7 @@
                     Price:
                 </h6>
                 <span>
-                    <%=currentOrder.price%>
+                    <%=currentOrder.totalPrice%>
                 </span>
             </span>
             <span class="d-flex justify-content-between">
@@ -106,15 +106,19 @@
     </div>
   </div>
 </div>
-<div class="d-flex justify-content-around mt-2" >
-    <a href="/users/orders" style="font-size: 0.7rem;" class="col-3 btn btn-dark d-flex align-items-center justify-content-center px-2 mb-3 text-white"
-    ><i class="fa fa-arrow-left mx-1"></i> Back to all orders</a
+<div class="d-lg-flex justify-content-around mt-2" >
+    <a href="/users/orders" style="font-size: 0.7rem;" class="col-lg-3 col-sm-12 btn btn-dark d-flex align-items-center justify-content-center px-2 mb-3 text-white"
+    ><i class="fa fa-arrow-left mx-1"></i>all orders</a
   > 
-  <%if(currentOrder.status !== 'Cancelled'){%> <button style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2.5px;" class="col-3 btn btn-danger d-flex align-items-center justify-content-center px-2 mb-3 text-white"
+  <%if(currentOrder.status !== 'Cancelled' && currentOrder.delivered != true){%> <button style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2.5px;" class="col-sm-12  btn btn-danger d-flex align-items-center justify-content-center px-2 mb-3 text-white col-lg-3 "
   onclick="cancelOrder('<%=currentOrder._id%>')">Cancel Order</button
 > <% }%>
-  <button style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2.5px;" class="col-3 btn btn-dark d-flex align-items-center justify-content-center px-2 mb-3 text-white"
-    onclick="printInvoice('invoice')"><i class="fa fa-download"></i>Download Invoice</button
+<%if(currentOrder.delivered === true){%>
+  <button style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2.5px;" class="col-lg-3 col-sm-12   btn btn-sm btn-danger d-flex align-items-center justify-content-center px-2 mb-3 text-white"
+onclick="returnOrder('<%=currentOrder._id%>')">Return Order</button>
+<%}%>
+  <button style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2.5px;" class="col-lg-3 col-sm-12   btn btn-dark d-flex align-items-center justify-content-center px-2 mb-3 text-white"
+    onclick="printInvoice('invoice')"><i class="fa fa-download"></i>Invoice</button
   > 
 </div>
 </div>

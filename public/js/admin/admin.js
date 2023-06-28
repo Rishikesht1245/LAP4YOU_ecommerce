@@ -1,5 +1,7 @@
 // ============================= BANNER  ===========================
 
+const orderCLTN = require("../../../models/users/order");
+
 // banners making api call for delete and changeActivity for Banner
 //Change Activity
 function changeActivity(id, active){
@@ -44,31 +46,68 @@ function changeAccess(id, access){
     }
   });
 }
-//=======================================================================
+
 
 
 // ====================== SWEET ALERT CONFIRMATION ======================
-function showConfirmation(e,itemName,action) {
+function showConfirmation(e, itemName, action) {
   e.preventDefault();
-  const name=itemName
-  console.log('Reached edit page')
-  var url = e.currentTarget.getAttribute('href')
-  
+  const name = itemName;
+
   Swal.fire({
-      icon: 'question',
-      title:"<h5 style=color='white'>"+ `Are you sure to ${action} ${name} ?`+"</h5>",
-      showCancelButton: true,
-      background:'white',
-      iconColor:'blue',
-      confirmButtonColor: 'green',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes'
+    title: `<h5 style="color: white">Are you sure to ${action} ${name}?</h5>`,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    confirmButtonColor: '#4CAF50',
+    cancelButtonText: 'No',
+    cancelButtonColor: '#d33',
+    customClass: {
+      popup: 'swal-popup',
+      title: 'swal-title',
+    },
+    background: '#333',
+    confirmButtonClass: 'btn-lg btn-success',
+    cancelButtonClass: 'btn-lg btn-danger',
   }).then((result) => {
-      if (result.value) {
-          window.location.href=url;
-        }
-  })
-};
+    if (result.isConfirmed) {
+      const url = e.currentTarget.getAttribute('href');
+      window.location.href = url;
+    }
+  });
+}
+
+
+function showFormConfirmation(e, itemName, action) {
+  e.preventDefault();
+  const name = itemName;
+  
+  const form = e.target.form;
+
+  Swal.fire({
+    title: `<h5 style="color: white">Are you sure to ${action} ${name}?</h5>`,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    confirmButtonColor: '#4CAF50',
+    cancelButtonText: 'No',
+    cancelButtonColor: '#d33',
+    customClass: {
+      popup: 'swal-popup',
+      title: 'swal-title',
+    },
+    background: '#333',
+    confirmButtonClass: 'btn-lg btn-success',
+    cancelButtonClass: 'btn-lg btn-danger',
+  }).then((result) => {
+    if (result.isConfirmed && form) {
+      form.submit();
+    }
+  });
+}
+
+
+
 
 //====================IMAGE PREVIEWS ============================
         function thumbnailPreview(event){
@@ -109,4 +148,55 @@ function showConfirmation(e,itemName,action) {
             banner_preview.src = URL.createObjectURL(event.target.files[0]);
           }
         }
-//===========================================================================
+
+
+
+// ==================== Deliver Order ======================================
+function deliverOrder(orderId, i){
+  $.ajax({
+    url : '/admin/orders',
+    method : 'patch',
+    data : {
+      id : orderId
+    },
+    success : (res) =>{
+      if(res.data.delivered === 1){
+        $("#deliver" + i).load(location.href + " #deliver" +i);
+      }
+    }
+  });
+}
+
+// cancel order api call
+function cancelOrder(orderId){
+  console.log("Reached");
+  $.ajax({
+    url : '/admin/orders/cancel/' + orderId,
+    method : "patch",
+    success : (res) => {
+      if(res.success.message === 'cancelled'){
+        $("#orderDetails").load(location.href + " #orderDetails");
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-right",
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+          animation: true,
+          title: "Order cancelled",
+        });
+      }
+    },
+  });
+}
+
+//=============== PRINT INVOICE ================================
+function printInvoice(id){
+  const printContents = document.getElementById(id).innerHTML;
+  let originalContents = document.body.innerHTML;
+
+  document.body.innerHTML = printContents;
+  window.print();
+  document.body.innerHTML = originalContents;
+}

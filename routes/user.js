@@ -12,6 +12,8 @@ const address = require('../controllers/user/address');
 const cart = require('../controllers/user/cart');
 const wishlist = require('../controllers/user/wishlist');
 const checkOut = require('../controllers/user/checkOut');
+const orders = require('../controllers/user/orders');
+const review = require('../controllers/user/review');
 
 //========================== SIGN IN ==============================
 router
@@ -114,7 +116,29 @@ router
 // changing default address 
 router.post('/cart/checkout/changeDefaultAddress', sessionCheck, checkOut.defaultAddress);
 
+// result page after payment
+router.get('/cart/checkout/:id', checkOut.result);
 
+
+
+//===================== ORDERS ==============================================
+router.get('/orders', sessionCheck, orders.viewAll);
+
+router
+      .route('/orders/:id')
+      .get(sessionCheck, orders.viewOrderDetails)
+      .patch(sessionCheck, orders.cancelOrder)
+
+//return order  // pending
+router
+      .route('/orders/return')
+
+
+//=================== REVIEWS =============================================
+router
+      .route('/reviews')
+      .post(sessionCheck, review.addNew)
+      .patch(sessionCheck, review.helpful);
 
 //===================== LOG OUT ============================================
 router.get('/signOut',sessionCheck,signOut.signOut);

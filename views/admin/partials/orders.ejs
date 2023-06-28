@@ -31,11 +31,12 @@
         <td><%= item.customer.name %><br /><%= item.customer.email %></td>
         <td style="width: 20%">
           <b>Bill:</b> <%= item.finalPrice %><br /><b>Discount Price:</b> <%=
-          item.discountPrice %><br /><b>Price:</b> <%= item.price %>
+          item.discountPrice %><br />
+          <b>Price:</b> <%= allOrders.price[i]%>
         </td>
         <td class="text-center" style="width: 20%">
           <div id="deliver<%=i%>">
-            <%if(item.status === 'In-transit'){%>
+            <%if(item.status == 'In-transist'){%>
               <% if (item.delivered != true) {%>
                 <button
                   class="btn btn-sm btn-dark w-100"

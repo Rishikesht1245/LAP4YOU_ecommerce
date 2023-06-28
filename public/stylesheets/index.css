@@ -41,9 +41,9 @@ html {
     font-size: 80%;
   }
 }
-.heroIMG {
+/* .heroIMG {
   mix-blend-mode: multiply;
-}
+} */
   
 .swal2-popup {
   font-size: 0.85rem !important;
@@ -122,4 +122,36 @@ transform: translateX(-50%); */
 
 .carousal-row {
   width: 79%;
+}
+
+
+.zoomable-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.zoomable-image {
+  aspect-ratio: 1.4;
+  transition: transform 0.2s;
+}
+
+.small-images {
+  display: flex;
+  justify-content: center;
+  
+}
+
+.small-image {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+  margin: 0 5px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  border : 2px solid white;
+}
+
+.small-image:hover {
+  opacity: 1;
 }

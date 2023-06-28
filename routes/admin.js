@@ -12,6 +12,7 @@ const customer = require('../controllers/admin/customer');
 const signOut = require('../controllers/admin/signOut');
 const session = require('express-session');
 const coupon = require('../controllers/admin/coupon');
+const order = require('../controllers/admin/order');
 
 // ====================== SIGN IN ===========================//
 
@@ -142,6 +143,20 @@ router.post('/coupon_management/addNew', sessionCheck, coupon.addNew);
 
 //change activity 
 router.get('/coupon_management/changeActivity', sessionCheck, coupon.changeActivity);
+
+
+
+// ====================== ORDERS ===============================
+
+//view all orders
+router
+      .route('/orders')
+      .get(sessionCheck, order.viewAll)
+      .patch(sessionCheck, order.deliver);
+
+router.patch('/orders/cancel/:id',sessionCheck, order.cancelOrder);
+
+router.get('/orders/:id', sessionCheck, order.details);
 
 //======================= LOG OUT ==============================
 router.get('/signOut',sessionCheck, signOut.signOut);
