@@ -1,6 +1,7 @@
 const orderCLTN = require('../../models/users/order');
 const moment = require('moment');
-
+const returnCLTN = require('../../models/users/return');
+const { order } = require('paypal-rest-sdk');
 
 // view orders page 
 exports.viewAll = async( req, res) => {
@@ -33,7 +34,7 @@ exports.viewOrderDetails = async (req,res) => {
                   .sort("");
             const totalPrice = currentOrder.summary.reduce((total, order) => total + order.totalPrice, 0);
             currentOrder.totalPrice = totalPrice;
-            console.log(totalPrice);
+            console.log(currentOrder);
             if(currentOrder){
                   res.render('user/profile/partials/orderDetails', {
                         documentTitle : "LAP4YOU | eCommerce",
@@ -66,6 +67,33 @@ exports.cancelOrder = async(req, res) => {
             
       } catch (error) {
             console.log("Error in Cancel Order Page : " + error);
+      }
+}
+
+
+// return order
+exports.returnOrder = async(req, res) => {
+    
+      try {
+            // insert return data to the return collection
+            req.body.customer = req.session.userId;
+            const newReturn = new returnCLTN(req.body);
+            await newReturn.save();
+            console.log('Returned Data saved')
+      
+            //change status of product to returned from order collection
+            await orderCLTN.findByIdAndUpdate(req.body.orderId, {
+                  $set : {
+                        status : "Returned",
+                        returnedOn : Date.now(),
+                  },
+            });
+            console.log('Status Changed');
+
+            //redirece to the order details page after return
+            res.redirect(`/users/orders/${req.body.orderId}`)
+      } catch (error) {
+            console.log("Error in Order Return : "+ error);
       }
 }
 

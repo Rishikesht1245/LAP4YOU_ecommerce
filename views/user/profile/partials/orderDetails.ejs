@@ -101,7 +101,10 @@
 
       </div>
       <div class="form-footer py-0 row justify-content-between">
-        <span class="col-lg-8 my-1" style="font-weight: 500">Order Status: <%if(currentOrder.delivered==true){%>Delivered on <%=moment(currentOrder.orderedOn).format('MMMM Do YYYY, h:mm:ss a')%><%}else{%><b><%=currentOrder.status%></b><%}%></span>
+        <span class="col-lg-8 my-1" style="font-weight: 500">Order Status: <%if(currentOrder.delivered==true && currentOrder.status ==="Delivered"){%>
+          Delivered on <%=moment(currentOrder.deliveredOn).format('MMMM Do YYYY, h:mm:ss a')%>
+          <%}else if(currentOrder.status === "Returned"){%><b>Returned On <%=moment(currentOrder.returnedOn)%></b><%} 
+          else {%><b><%=currentOrder.status%></b><%}%></span>
         
     </div>
   </div>
@@ -110,12 +113,113 @@
     <a href="/users/orders" style="font-size: 0.7rem;" class="col-lg-3 col-sm-12 btn btn-dark d-flex align-items-center justify-content-center px-2 mb-3 text-white"
     ><i class="fa fa-arrow-left mx-1"></i>all orders</a
   > 
-  <%if(currentOrder.status !== 'Cancelled' && currentOrder.delivered != true){%> <button style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2.5px;" class="col-sm-12  btn btn-danger d-flex align-items-center justify-content-center px-2 mb-3 text-white col-lg-3 "
+  <%if(currentOrder.status !== 'Cancelled' && currentOrder.delivered != true && currentOrder.status !== 'Refunded'){%> <button style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2.5px;" class="col-sm-12  btn btn-danger d-flex align-items-center justify-content-center px-2 mb-3 text-white col-lg-3 "
   onclick="cancelOrder('<%=currentOrder._id%>')">Cancel Order</button
 > <% }%>
-<%if(currentOrder.delivered === true){%>
-  <button style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2.5px;" class="col-lg-3 col-sm-12   btn btn-sm btn-danger d-flex align-items-center justify-content-center px-2 mb-3 text-white"
-onclick="returnOrder('<%=currentOrder._id%>')">Return Order</button>
+
+
+<%if(currentOrder.delivered === true && currentOrder.status !== "Returned"){%>
+  <button
+          type="button"
+          style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2.5px;"
+          class="col-sm-12  btn btn-danger d-flex align-items-center justify-content-center px-2 mb-3 text-white col-lg-3"
+          onclick="checkValid('<%= currentOrder.deliveredOn %>')"
+        >Return Order
+  </button>
+  <!-- modal for return form -->
+  <div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Return Product 
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+          
+          <!-- -------------------- -->
+
+
+          <form action="/users/orders/return" method="POST">
+            <input type="text" value="<%=currentOrder._id%>" hidden name="orderId">
+            <input type="text" value="<%=currentOrder.summary[0].product._id%>" hidden name="product">
+              
+              <div class="mb-3">
+                <label for="reason" class="px-1" style="font-size: 0.75rem;">Reason :</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="reason"
+                    placeholder="Reason for Return"
+                    name="reason"
+                    required 
+                  />
+                 
+                </div>
+              <div class="mb-3">
+                  <label for="accountNo" class="px-1" style="font-size: 0.75rem;">Bank Acc No :</label>
+                <input
+                  class="form-control"
+                  id="accountNo"
+                  placeholder="Bank Account Number"
+                  name="accountNo"
+                  type="number"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="bankName" class="px-1" style="font-size: 0.75rem;">Bank Name :</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="bankName"
+                    placeholder="Bank Name"
+                    name="bankName"
+                  />
+                </div>
+              <div class="mb-3">
+                <label for="ifscCode" class="px-1" style="font-size: 0.75rem;">IFSC Code :</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="ifscCode"
+                    placeholder="IFSC Code"
+                    name="ifscCode"
+                  />
+                </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal">
+            Cancel
+          </button>
+            <button type="submit" class="btn btn-success">
+              Submit Request
+            </button>
+            </form>
+
+
+<!-- ------------------- -->
+      
+      </div>
+    </div>
+  </div>
+</div>
 <%}%>
   <button style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2.5px;" class="col-lg-3 col-sm-12   btn btn-dark d-flex align-items-center justify-content-center px-2 mb-3 text-white"
     onclick="printInvoice('invoice')"><i class="fa fa-download"></i>Invoice</button
@@ -123,5 +227,4 @@ onclick="returnOrder('<%=currentOrder._id%>')">Return Order</button>
 </div>
 </div>
 <%}%>
-<script src="/public/js/user/order.js"></script>
 <%- include('../layouts/footer') %>

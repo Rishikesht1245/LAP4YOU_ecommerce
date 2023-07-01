@@ -1,6 +1,10 @@
 const { order } = require('paypal-rest-sdk');
 const orderCLTN = require('../../models/users/order');
 const moment = require('moment');
+const orderReviewCLTN = require('../../models/users/orderReview');
+const returnCLTN = require('../../models/users/return');
+const productCLTN = require('../../models/admin/productDetails');
+const mongoose = require('mongoose');
 
 
 //view orders
@@ -17,7 +21,7 @@ exports.viewAll = async(req, res) => {
 
             const totalPrice = allOrders.map((order) => order.summary.reduce((total, value)=> total += value.totalPrice, 0));
             allOrders.price = totalPrice;
-      
+            console.log(allOrders);
             res.render('admin/partials/orders', {
                   documentTitle : "LAP4YOU | eCommerce",
                   session : req.session.admin,
@@ -31,15 +35,77 @@ exports.viewAll = async(req, res) => {
 
 
 // deliver order
-exports.deliver = async(req, res) => {
+exports.changeOrderStatus = async(req, res) => {
       try {
+            // find the order by Id 
+            const order = await orderCLTN.findById(req.body.id)
+                                   .populate('customer', 'name, email');
+
+            //extract product id and customer id
+            const productIds = order.summary.map(product => product.product);
+
+            const customerId = order.customer._id;
+            // insert data to the order reviewCLTN
+           const orderReviews = productIds.map((productId) => {
+                  return  new orderReviewCLTN({
+                        customer : customerId,
+                        product : productId,
+                        delivered : true,
+                  });
+           });
+
+           await orderReviewCLTN.insertMany(orderReviews);
+
             await orderCLTN.findByIdAndUpdate(req.body.id, {
                   $set:{
-                        delivered : true,
-                        deliveredOn : Date.now(),
+                        delivered : req.body.delivered,
+                        status : req.body.status,
+                        deliveredOn : req.body.deliveredOn,
                   }
             });
 
+            if(req.body.status == "Refunded"){
+                  console.log("Reached 1")
+                  const currentOrder = await orderCLTN.findById(req.body.id);
+                  const quantity = currentOrder.totalQuantity;
+                  const userId = currentOrder.customer;
+                  const returnedProducts  = await returnCLTN.findOne({customer : userId, isReturned : false});
+                  console.log(returnedProducts);
+                  const returnedProductId = returnedProducts._id; // document id
+                  const productId = returnedProducts.product; // product id
+                  const price = req.body.price;
+                  console.log("Reached 2")
+                 
+                 
+
+                  // increasing the stock once order is returned
+                  console.log(productId);
+                  console.log(price);
+                  await productCLTN.updateOne(
+                        {
+                          _id: productId,
+                          "RAMSSD.price": price,
+                        },
+                        {
+                          $inc: {
+                            "RAMSSD.$.quantity": quantity,
+                          }
+                        }
+                      );
+                  console.log('Increased the count');
+
+                  // changeing returned status to true
+                  await returnCLTN.findByIdAndUpdate(returnedProductId, {
+                        $set :{
+                              isReturned : true,
+                        }
+                  });
+                  res.json({
+                        data : {
+                              delivered : 1,
+                        }
+                  });
+            } 
             res.json({
                   data : {
                         delivered : 1,

@@ -80,15 +80,15 @@
   <div class="row my-3" id="charts">
     <div class="col-lg-6">
       
-      <canvas id="myChart"></canvas>
+      <canvas id="myChart" style="min-width: 200px; min-height: 400px;"></canvas>
     </div>
     <div class="col-lg-6">
-      <canvas id="myChart2"></canvas>
+      <canvas id="myChart2"  style="min-width: 200px; min-height: 400px;"></canvas>
     </div>
   </div>
   <h6 class="text-center mt-5 mb-3" >Order Status</h6>
   <div class="col-lg-4 mx-auto">
-    <canvas id="myChart3"></canvas>
+    <canvas id="myChart3"  style="min-width: 500px; min-height: 500px;"></canvas>
   </div>
  
 </div>
@@ -139,7 +139,7 @@
     </table>
     <%}%>
     <div class=" text-center my-3">
-      <a class="btn btn-sm btn-dark text-white" href="/admin/salesReport">Download Sales Report</a>
+      <button class="btn btn-sm btn-dark text-white" onclick="exportToExcel('xlsx', 'salesReport.xlsx')">Download Sales Report</button>
     
     </div> 
 </div>
@@ -160,6 +160,9 @@
     <span>Copyright © 2023 | LAP4YOU | Made by <a class="text-grey" href="https://rishikesht1245.github.io/Rishikesh_website/">Rishikesh T</a></span>
   </div>
 </footer>
+<!-- include xlsx cdn -->
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+<!-- include chart js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/public/js/admin/dashboard.js"></script>
     <script
@@ -167,6 +170,7 @@
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
       crossorigin="anonymous"
     ></script>
+    <!-- include sweet alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
   if ( window.history.replaceState ) {

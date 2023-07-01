@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const couponCLTN = require('../../models/admin/coupon');
 const orderCLTN = require('../../models/users/order');
 const paypal = require('paypal-rest-sdk');
+const productCLTN = require('../../models/admin/productDetails');
 
 // paypal configuration
 paypal.configure({
@@ -268,8 +269,7 @@ exports.checkOut = async (req, res) => {
                   finalPrice: req.body.finalPrice,
                   discountPrice : req.body.couponDiscount,
             };
-            console.log(orderDetails);
-            console.log(orderDetails.totalQuantity);
+
             req.session.orderDetails = orderDetails;
 
             const transactionID = Math.floor(
@@ -339,10 +339,10 @@ exports.result = async (req, res) => {
       try {
             if(req.session.transactionID){
                   const couponUsed = req.session.couponUsed;
-                  console.log(couponUsed);
+
                   req.session.transactionID = false;
                   const orderDetails = new orderCLTN(req.session.orderDetails);
-                  orderDetails.save();
+                  await orderDetails.save();
                   if(couponUsed){
                         await userCLTN.findByIdAndUpdate( req.session.userId, {
                               $push:{
@@ -367,6 +367,24 @@ exports.result = async (req, res) => {
                               $set : { products : [], totalPrice : 0, totalQuantity : 0},
                         }
                   );
+
+                  // reducing the stock of the product once the order is placed successfully.
+                  const orders = req.session.orderDetails;                
+                  orders.summary.forEach(async (product) => {
+                    await productCLTN.updateOne(
+                      {
+                        _id: product.product,
+                        "RAMSSD.price": product.totalPrice
+                      },
+                      {
+                        $inc: {
+                          "RAMSSD.$.quantity": -product.quantity
+                        }
+                      }
+                    );
+                  });
+             
+
                   const orderResult = "Order Placed";
                   res.render("user/profile/partials/orderResult", {
                         documentTitle : orderResult,

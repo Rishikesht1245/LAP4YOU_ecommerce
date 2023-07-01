@@ -1,7 +1,9 @@
 <%- include('../layouts/header') %> <%- include('../layouts/head-links') %>
 <div class="container line-break-top line-break text-center py-3">
   <span class="shadow-heading">All Orders</span>
+  <a href="/orders/return">Returned Orders</a>
 </div>
+
 <div class="container my-3">
   <% if(allOrders !=null) { %>
   <table
@@ -36,26 +38,35 @@
         </td>
         <td class="text-center" style="width: 20%">
           <div id="deliver<%=i%>">
-            <%if(item.status == 'In-transist'){%>
-              <% if (item.delivered != true) {%>
-                <button
-                  class="btn btn-sm btn-dark w-100"
-                  onclick="deliverOrder('<%=item._id%>','<%=i%>')"
-                >
-                  <i class="fa fa-truck text-warning"></i><span>Deliver</span>
+            <% if (item.status == 'In-transit') { %>
+                <button class="btn btn-sm btn-dark w-100" onclick="ChangeOrderStatus('<%=item._id%>','<%=i%>', 'Out for delivery', false, '<%=item.summary[0].totalPrice%>')">
+                  <i class="fa fa-truck text-warning"></i>
+                  <span>Out for Delivery</span>
                 </button>
-                <%}else{%>
-                <span
-                  ><i class="fa fa-check text-success"></i
-                  ><span>Delivered</span> <%} %> <br /><% if (item.delivered ==
-                  true) {%>
-                  <span><%=moment(item.deliveredOn).format('lll')%></span>
-                  <%}%></span
-                >
-              <%} else {%>
-                <%=item.status%>
-                <%}%>
-            </div>
+             
+            <% } else if (item.status == 'Out for delivery') { %>
+              <button class="btn btn-sm btn-dark w-100" onclick="ChangeOrderStatus('<%=item._id%>','<%=i%>', 'Delivered', true, '<%=item.summary[0].totalPrice%>')">
+                <i class="fa fa-truck text-warning"></i>
+                <span>Deliver</span>
+              </button>
+              <% } else if(item.status == 'Delivered') { %>
+                <span>
+                  <i class="fa fa-check text-success"></i>
+                  <span>Delivered</span>
+                  <% if (item.delivered) { %>
+                    <span><%= moment(item.deliveredOn).format('lll') %></span>
+                  <% } %>
+                </span>
+            <% } else if(item.status == 'Returned') { %>
+              <button class="btn btn-sm btn-dark w-100" onclick="ChangeOrderStatus('<%=item._id%>','<%=i%>', 'Refunded', false, '<%=item.summary[0].totalPrice%>')">
+                <i class="fa fa-recycle text-warning"></i>
+                <span>Refund</span>
+              </button>
+            <%} else { %>
+              <%= item.status %>
+            <% } %>
+          </div>
+          
         </td>
         <td><%= moment(item.orderedOn).format('lll') %> <br /></td>
       </tr>

@@ -267,11 +267,11 @@
               </td>
               <td >
                 <div class="text-center d-flex flex-column">
-                  <a href="/admin/product_management/edit?id=<%= item._id %>" onclick="showConfirmation(event, '<%= item.name %>', 'edit')" class="btn btn-dark text-white btn-sm my-1">Edit</a>
+                  <a href="/admin/product_management/edit?id=<%= item._id %>" onclick="showProductConfirmation(event, this, '<%= item.name %>', 'edit')" class="btn btn-dark text-white btn-sm my-1">Edit</a>
                 <% if(item.listed==true){ %> 
-                <a href="/admin/product_management/changeListing?id=<%= item._id %>" onclick="showConfirmation(event, '<%= item.name %>', 'Change Listing')" class="btn btn-danger text-white btn-sm  my-1">Unlist</a>
+                <a href="/admin/product_management/changeListing?id=<%= item._id %>" onclick="showProductConfirmation(event, this, '<%= item.name %>', 'Change Listing')" class="btn btn-danger text-white btn-sm  my-1">Unlist</a>
               <% }else{ %>
-                <a href="/admin/product_management/changeListing?id=<%= item._id %>" onclick="showConfirmation(event, '<%= item.name %>', 'Change Listing')" class="btn btn-success text-white btn-sm my-1">List</a>
+                <a href="/admin/product_management/changeListing?id=<%= item._id %>" onclick="showProductConfirmation(event, this, '<%= item.name %>', 'Change Listing')" class="btn btn-success text-white btn-sm my-1">List</a>
                 <% } %>
                 </div>
               </td>

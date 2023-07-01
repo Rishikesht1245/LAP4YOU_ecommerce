@@ -27,7 +27,8 @@ router
 // admin dashboard routes
 router
       .route('/dashboard')
-      .get(sessionCheck,dashboard.view);
+      .get(sessionCheck,dashboard.view)
+      .put(sessionCheck, dashboard.chartData);
 
 
 // ====================== CATEGORIES ===========================//
@@ -152,7 +153,7 @@ router.get('/coupon_management/changeActivity', sessionCheck, coupon.changeActiv
 router
       .route('/orders')
       .get(sessionCheck, order.viewAll)
-      .patch(sessionCheck, order.deliver);
+      .patch(sessionCheck, order.changeOrderStatus);
 
 router.patch('/orders/cancel/:id',sessionCheck, order.cancelOrder);
 

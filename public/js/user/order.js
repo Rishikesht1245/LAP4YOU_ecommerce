@@ -40,3 +40,26 @@ function handleClickEvent(event) {
 
 
 
+// return form validation  --- checking for 10 days difference
+function checkValid(deliveredOn){
+
+  const deliveredDate = new Date(deliveredOn);
+  const currentDate = new Date();
+
+  const differenceInTime = currentDate.getTime() - deliveredDate.getTime();
+  const differenceInDays = Math.ceil(differenceInTime/( 1000 * 3600 * 24))
+  console.log(differenceInDays);
+  if(differenceInDays <= 10){
+    $("#exampleModal").modal('show');
+  }else{
+    swal.fire({
+      icon: 'warning',
+      title: 'Unable to Return',
+      text: 'The return period of 10 days has already expired.',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'OK'
+    });
+  }
+
+}
+

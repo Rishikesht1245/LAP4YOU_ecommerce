@@ -81,7 +81,7 @@ function showConfirmation(e, itemName, action) {
 function showFormConfirmation(e, itemName, action) {
   e.preventDefault();
   const name = itemName;
-  
+
   const form = e.target.form;
 
   Swal.fire({
@@ -105,6 +105,36 @@ function showFormConfirmation(e, itemName, action) {
     }
   });
 }
+
+function showProductConfirmation(e, element, itemName, action) {
+  e.preventDefault();
+  const name = itemName;
+
+  Swal.fire({
+    title: `<h5 style="color: white">Are you sure to ${action} ${name}?</h5>`,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    confirmButtonColor: '#4CAF50',
+    cancelButtonText: 'No',
+    cancelButtonColor: '#d33',
+    customClass: {
+      popup: 'swal-popup',
+      title: 'swal-title',
+    },
+    background: '#333',
+    confirmButtonClass: 'btn-lg btn-success',
+    cancelButtonClass: 'btn-lg btn-danger',
+  }).then((result) => {
+    if (result.isConfirmed) {
+     // Get the href value from the element's href attribute
+     const href = element.getAttribute('href');
+     // Route to the href
+     window.location.href = href;
+    }
+  });
+}
+
 
 
 
@@ -140,29 +170,54 @@ function showFormConfirmation(e, itemName, action) {
         }
 
   // banner preview
-        function bannerPreview(event){
-          console.log('reached')
-          const banner_preview = document.getElementById('banner-preview');
-          banner_preview.src = '';
-          if(event.target.files){
-            banner_preview.src = URL.createObjectURL(event.target.files[0]);
+function bannerPreview(event){
+      console.log('reached')
+      const banner_preview = document.getElementById('banner-preview');
+      banner_preview.src = '';
+      if(event.target.files){
+          banner_preview.src = URL.createObjectURL(event.target.files[0]);
+       }
+}
+
+
+
+// ==================== Deliver, out for delivery, and refund  Order ======================================
+function ChangeOrderStatus(orderId, i, status, delivered, price){
+  console.log(price);
+  let deliveredOn = delivered ? Date.now() : null;
+  Swal.fire({
+    title: `<h5 style="color: white">Are you sure to make the status ${status} </h5>`,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    confirmButtonColor: '#4CAF50',
+    cancelButtonText: 'No',
+    cancelButtonColor: '#d33',
+    customClass: {
+      popup: 'swal-popup',
+      title: 'swal-title',
+    },
+    background: '#333',
+    confirmButtonClass: 'btn-lg btn-success',
+    cancelButtonClass: 'btn-lg btn-danger',
+  }).then((result) => {
+    if(result.isConfirmed){
+      $.ajax({
+        url : '/admin/orders',
+        method : 'patch',
+        data : {
+          id : orderId,
+          status : status,
+          delivered : delivered,
+          deliveredOn : deliveredOn,
+          price : price,
+        },
+        success : (res) =>{
+          if(res.data.delivered === 1){
+            $("#deliver" + i).load(location.href + " #deliver" +i);
           }
         }
-
-
-
-// ==================== Deliver Order ======================================
-function deliverOrder(orderId, i){
-  $.ajax({
-    url : '/admin/orders',
-    method : 'patch',
-    data : {
-      id : orderId
-    },
-    success : (res) =>{
-      if(res.data.delivered === 1){
-        $("#deliver" + i).load(location.href + " #deliver" +i);
-      }
+      });
     }
   });
 }

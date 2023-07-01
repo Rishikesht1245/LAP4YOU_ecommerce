@@ -35,10 +35,18 @@ function addCount(cartId, i, ramCapacity, productId){
                   productId : productId, // products._name._id in cart
             },
             success : (res) => {
-                  $(`#cartCount${i}`).html(res.data.currentProduct.quantity);
-                  $(`#totalItems`).html(res.data.userCart.totalQuantity);
-                  $(`#totalPrice`).html("₹ " + res.data.userCart.totalPrice);
-            }
+                if(res.data.message === 'countAdded' ){
+                      $("#cart").load(location.href + " #cart")
+                }else if(res.data.message === 'outOfStock'){
+                  swal.fire({
+                        icon: 'error',
+                        title: 'Out of Stock',
+                        text: 'This product is currently out of stock.',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                      });
+                }
+            } 
       });
 };
 
@@ -52,9 +60,7 @@ function reduceCount(cartId, i){
                   cartId : cartId,
             },
             success : (res) => {
-                  $(`#cartCount${i}`).html(res.data.currentProduct.quantity);
-                  $(`#totalItems`).html(res.data.userCart.totalQuantity);
-                  $(`#totalPrice`).html("₹ " + res.data.userCart.totalPrice);
+                  $(`#cart`).load(location.href + " #cart")
             }
       });
 }

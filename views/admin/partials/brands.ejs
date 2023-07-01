@@ -25,14 +25,14 @@
             <td class="text-center">
               <a
                 href="/admin/brands/edit?id=<%= item._id%>"
-                onclick="showConfirmation(event, '<%= item.name %>', 'edit')"
+                onclick="showProductConfirmation(event, this, '<%= item.name %>', 'edit')"
                 ><i
                 class="py-1 fa fa-edit fa-lg text-dark"
               ></i>
               </a>
               <a
                 href="/admin/brands/delete_brand?id=<%= item._id%>"
-                onclick="showConfirmation(event, '<%= item.name %>', 'delete')"
+                onclick="showProductConfirmation(event, this, '<%= item.name %>', 'delete')"
                 ><i
                   class="py-1 fa fa-trash fa-lg text-danger"
                   aria-hidden="true"

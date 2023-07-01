@@ -3,7 +3,8 @@ const userCLTN = require('../../models/users/userDetails');
 const reviewCLTN = require('../../models/users/review');
 const wishlistCLTN = require('../../models/users/wishlist');
 const moment = require('moment');
-const { category } = require('./productListing');
+const category = require('./productListing');
+const orderReviewCLTN = require('../../models/users/orderReview');
 
 // single Product page
 exports.view = async(req, res) => {
@@ -34,6 +35,7 @@ exports.view = async(req, res) => {
             const categoryId = productDetails.category._id;
             let similarProducts = await productCLTN.find({ 'category': categoryId }).populate(['category', 'brand']);
             similarProducts = similarProducts.filter((product) => product.name != productDetails.name)
+            const accessToReview = await orderReviewCLTN.findOne({customer : req.session.userId, product : req.params.id, deliverd : true});
             res.render('index/product', {
                   session : req.session.userId,
                   documentTitle : productDetails.name,
@@ -44,6 +46,7 @@ exports.view = async(req, res) => {
                   numberOfReviews,
                   moment,
                   similarProducts,
+                  accessToReview,
             });
       } catch(error){
             console.log('Error in Single Product Page : ' + error);

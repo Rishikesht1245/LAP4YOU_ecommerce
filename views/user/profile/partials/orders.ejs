@@ -22,8 +22,7 @@
             <span class="mb-1"><b><%=i+1%>.</b> Order ID: <%=order._id%></span>
 
             <span class="mb-1" style="color: green"
-              ><% if(order.delivered==true){%>Delivered<%}else{%>Not
-              Delivered<%}%></span
+              ><%=order.status%></span
             >
           </div>
 

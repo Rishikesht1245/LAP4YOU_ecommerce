@@ -20,7 +20,6 @@ exports.addNew = async (req, res) => {
 exports.helpful = async(req, res) => {
       try {
             if(req.session.userId !=undefined){
-                  console.log('reached if')
                   await reviewCLTN.findByIdAndUpdate(req.body.id, {
                         $inc:{
                               helpful : 1

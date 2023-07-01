@@ -26,7 +26,7 @@ const orderSchema = new mongoose.Schema({
       delivered : { type : Boolean, default : false},
       status : {
             type : String,
-            default : "In-transist",
+            default : "In-transit",
       },
       modeOfPayment : String,
       couponUsed : {type : mongoose.Types.ObjectId, ref : "Coupons"},
@@ -35,6 +35,7 @@ const orderSchema = new mongoose.Schema({
       discountPrice : {type : Number, default : 0},
       orderedOn : {type : Date, default : Date.now()},
       deliveredOn : {type : Date, default:null},
+      returnedOn : {type : Date, default:null},
 });
 
 const orderCLTN = new mongoose.model('Orders', orderSchema);

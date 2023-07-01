@@ -131,7 +131,7 @@ router
 
 //return order  // pending
 router
-      .route('/orders/return')
+      .post('/orders/return', sessionCheck, orders.returnOrder);
 
 
 //=================== REVIEWS =============================================
@@ -139,6 +139,7 @@ router
       .route('/reviews')
       .post(sessionCheck, review.addNew)
       .patch(sessionCheck, review.helpful);
+
 
 //===================== LOG OUT ============================================
 router.get('/signOut',sessionCheck,signOut.signOut);

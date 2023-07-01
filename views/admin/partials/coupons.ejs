@@ -142,9 +142,9 @@
               <td><%= moment(item.expiryDate).format('ll') %></td>
               <td class="text-center d-flex flex-column">
                 <% if(item.active==true){ %> 
-                <a href="/admin/coupon_management/changeActivity?id=<%= item._id %>" onclick="showConfirmation(event, 'status', 'change')" class="btn btn-success text-white btn-sm  my-1">Active</a>
+                <a href="/admin/coupon_management/changeActivity?id=<%= item._id %>" onclick="showProductConfirmation(event,this, 'status', 'change')" class="btn btn-success text-white btn-sm  my-1">Active</a>
               <% }else{ %>
-                <a href="/admin/coupon_management/changeActivity?id=<%= item._id %>" onclick="showConfirmation(event, 'status', 'change')" class="btn btn-danger text-white btn-sm my-1">In-active</a>
+                <a href="/admin/coupon_management/changeActivity?id=<%= item._id %>" onclick="showProductConfirmation(event,this, 'status', 'change')" class="btn btn-danger text-white btn-sm my-1">In-active</a>
                 <% } %></td>
             </tr>
             <% }) %>

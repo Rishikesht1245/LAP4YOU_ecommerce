@@ -397,7 +397,8 @@
     </div>
 <%}%>
   <%if(session){%>
-    <button class=" btn btn-sm btn-dark mb-3 col-lg-2 mb-4" id="addReview" onclick="reviewAdd('<%=productDetails._id%>')">Add a review</button>
+    <button class="btn btn-sm btn-dark mb-3 col-lg-2 mb-4" id="addReview" onclick="checkAccess('<%= JSON.stringify(accessToReview) %>', '<%= productDetails._id %>')">Add a review</button>
+
   <%}%> 
       <%if(similarProducts){%>
          <!-- similar Products -->

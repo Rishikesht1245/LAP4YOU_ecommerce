@@ -30,7 +30,6 @@ exports.viewAll = async (req, res) => {
 
 
 // adding products to the cart
-
 exports.addToCart = async (req, res) => {
       try {
             const userId = req.session.userId;
@@ -38,68 +37,88 @@ exports.addToCart = async (req, res) => {
             const price = parseInt(req.body.price);
             const ramCapacity = req.body.ramCapacity;
             const ssdCapacity = req.body.ssdCapacity;
-            // check if product present wishlist
-            const wishlistCheck = await wishlistCLTN.findOne({
-                        customer : userId, 
-                        products : new mongoose.Types.ObjectId(productId),
-                  });
-            
-            if(wishlistCheck){
-                  await wishlistCLTN.findByIdAndUpdate( wishlistCheck._id, // particular users wishlist document
-                        {$pull : {products : productId}},
-                  );
+
+            //check if product in stock
+            const productToAdd = await productCLTN.findOne({_id : productId, 'RAMSSD.price' : price});
+            let isProductInStock = productToAdd.RAMSSD.find((ramssd) => ramssd.price == price).quantity;
+
+            //current quantity of product in users cart
+            let quantityInCart = await cartCLTN.findOne({customer : userId, 'products.name' : productId});
+            if(quantityInCart){
+                  quantityInCart = quantityInCart.products.find((product) => product.ramCapacity == ramCapacity).quantity;
             }
-      
-            const userCart = await cartCLTN.findOne({customer : userId});
-            const product = await productCLTN.findOne({_id : productId});
-            //checking if product already exist in cart
-            const productExist = await cartCLTN.findOne({
-                  _id : userCart._id, 
-                  products:{
-                        $elemMatch : {name : new mongoose.Types.ObjectId(productId), ramCapacity: ramCapacity}
+
+            if(isProductInStock > quantityInCart){
+                  // check if product present wishlist
+                  const wishlistCheck = await wishlistCLTN.findOne({
+                              customer : userId, 
+                              products : new mongoose.Types.ObjectId(productId),
+                        });
+                  
+                  if(wishlistCheck){
+                        await wishlistCLTN.findByIdAndUpdate( wishlistCheck._id, // particular users wishlist document
+                              {$pull : {products : productId}},
+                        );
                   }
-            });
-      
-            if(productExist){
-                  await cartCLTN.updateOne({
+            
+                  const userCart = await cartCLTN.findOne({customer : userId});
+                  const product = await productCLTN.findOne({_id : productId});
+                  //checking if product already exist in cart
+                  const productExist = await cartCLTN.findOne({
                         _id : userCart._id, 
                         products:{
-                              $elemMatch : {name : new mongoose.Types.ObjectId(productId)}
+                              $elemMatch : {name : new mongoose.Types.ObjectId(productId), ramCapacity: ramCapacity}
                         }
-                  },{
-                        $inc:{
-                              'products.$.quantity' : 1,
-                              totalPrice : price,
-                              totalQuantity : 1,
-                              'products.$.price' : price
-                        },
                   });
+            
+                  if(productExist){
+                        await cartCLTN.updateOne({
+                              _id : userCart._id, 
+                              products:{
+                                    $elemMatch : {name : new mongoose.Types.ObjectId(productId)}
+                              }
+                        },{
+                              $inc:{
+                                    'products.$.quantity' : 1,
+                                    totalPrice : price,
+                                    totalQuantity : 1,
+                                    'products.$.price' : price,
+                              },
+                        });
+
+                        res.json({
+                              success:'countAdded',
+                              message : 1,
+                        });
+                  } else{
+                        await cartCLTN.findByIdAndUpdate(userCart._id, {
+                              $push : {
+                                    products : [
+                                          {
+                                                name: new mongoose.Types.ObjectId(productId),
+                                                price : price,
+                                                ramCapacity : ramCapacity,
+                                                ssdCapacity: ssdCapacity,
+                                          },
+                                    ]
+                              },
+                              $inc : {
+                                    totalPrice : price,
+                                    totalQuantity : 1,
+                              } 
+                        });
+                  }
+
                   res.json({
-                        success:'countAdded',
+                        success : 'addedToCart',
                         message : 1,
                   });
-            } else{
-                  await cartCLTN.findByIdAndUpdate(userCart._id, {
-                        $push : {
-                              products : [
-                                    {
-                                          name: new mongoose.Types.ObjectId(productId),
-                                          price : price,
-                                          ramCapacity : ramCapacity,
-                                          ssdCapacity: ssdCapacity,
-                                    },
-                              ]
-                        },
-                        $inc : {
-                              totalPrice : price,
-                              totalQuantity : 1,
-                        } 
+            }else{
+                  res.json({
+                        success : 'outOfStock',
+                        message : 0,
                   });
             }
-            res.json({
-                  success : 'addedToCart',
-                  message : 1,
-            });
       } catch (error) {
             console.log('Error in Add Cart Page : ' + error);
       }
@@ -122,6 +141,9 @@ exports.remove = async(req, res) => {
                         $match : {'products._id' : new mongoose.Types.ObjectId(req.body.id)}
                   },
             ]);
+            let productId = productToRemove[0].products.name;
+            let quantity = productToRemove[0].products.quantity;
+            let price = productToRemove[0].products.price
             await cartCLTN.updateOne
                   ({customer : new mongoose.Types.ObjectId(userId)}, 
                         {
@@ -135,6 +157,8 @@ exports.remove = async(req, res) => {
                                     totalQuantity : -productToRemove[0].products.quantity,
                                },
                         });
+
+
             res.json({
                   success : 'removed'
             });
@@ -155,36 +179,56 @@ exports.addCount = async(req, res) => {
             
             const product = await productCLTN.findById(productId);
             const productPrice = product.RAMSSD.find((item) => item.ramCapacity == ramCapacity).price;
-            // updating the count in cart collection
-            await cartCLTN.findOneAndUpdate(
-                  { 
-                        customer : userId,
-                        products : {
-                              $elemMatch:{_id : new mongoose.Types.ObjectId(productIdInCart)}
-                        },
-                  }, {
-                        $inc: {
-                              'products.$.quantity' : 1,
-                              totalQuantity : 1,
-                              totalPrice : productPrice,
-                              'products.$.price' : productPrice,
-                        }
-                  },
-            );
 
-            const userCart = await cartCLTN.findOne({
-                  customer: userId
-            });
-            const allProducts = await userCart.products;
-            //current product 
-            const currentProduct = allProducts.find((item) => 
-                  item._id == productIdInCart);
-            res.json({
-                  data: {
-                        currentProduct,
-                        userCart,
-                  },
-            });
+            //check if product in stock
+            const productToAdd = await productCLTN.findOne({_id : productId, 'RAMSSD.price' : productPrice});
+            let isProductInStock = productToAdd.RAMSSD.find((ramssd) => ramssd.price == productPrice).quantity;
+
+            //current quantity of product in users cart
+            let quantityInCart = await cartCLTN.findOne({customer : userId, 'products.name' : productId});
+            if(quantityInCart){
+                  quantityInCart = quantityInCart.products.find((product) => product.ramCapacity == ramCapacity).quantity;
+            }
+            
+            if(isProductInStock > quantityInCart){
+                  // updating the count in cart collection
+                  await cartCLTN.findOneAndUpdate(
+                        { 
+                              customer : userId,
+                              products : {
+                                    $elemMatch:{_id : new mongoose.Types.ObjectId(productIdInCart)}
+                              },
+                        }, {
+                              $inc: {
+                                    'products.$.quantity' : 1,
+                                    totalQuantity : 1,
+                                    totalPrice : productPrice,
+                                    'products.$.price' : productPrice,
+                              }
+                        },
+                  );
+      
+                  const userCart = await cartCLTN.findOne({
+                        customer: userId
+                  });
+                  const allProducts = await userCart.products;
+                  //current product 
+                  const currentProduct = allProducts.find((item) => 
+                        item._id == productIdInCart);
+                  res.json({
+                        data: {
+                              message:'countAdded',
+                              currentProduct,
+                              userCart,
+                        },
+                  });
+            }else{
+                  res.json({
+                        data :{
+                              message:'outOfStock'
+                        }
+                  });
+            }
       } catch(error){
             console.log('Error in Add product count in Cart : ' + error);
       }

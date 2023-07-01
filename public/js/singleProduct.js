@@ -59,7 +59,15 @@ function addToCart(productID, productDetails) {
           animation: true,
           title: "Added to cart",
         });
-      } else {
+      } else if(res.success === "outOfStock"){
+        swal.fire({
+          icon: 'error',
+          title: 'Out of Stock',
+          text: 'This product is currently out of stock.',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK'
+        });
+      }else {
         window.location.href = "/users/signIn";
       }
     },
@@ -140,7 +148,7 @@ smallImages.forEach((image) => {
   });
 });
 
-
+// ===================== REVIEWS ======================================
 // add review
 function reviewAdd(productId) {
 
@@ -186,7 +194,7 @@ function reviewAdd(productId) {
 
 
 // helpgul review
-function helpful(reviewId){
+function helpful(reviewId, ){
   $.ajax({
     url : '/users/reviews',
     method : 'patch',
@@ -202,4 +210,22 @@ function helpful(reviewId){
       }
     }
   })
+}
+
+
+// checking add review access 
+ function checkAccess(accessToReview, productId){
+  accessToReview = JSON.parse(accessToReview); // Convert the string back to an object
+  if(accessToReview){
+    if(accessToReview.delivered == true){
+      reviewAdd(productId);
+    }
+  } else {
+    Swal.fire({
+      showCloseButton: true,
+      showConfirmButton: true,
+      html:`<h6>Haven't Purchased this Product?</h6> <br>
+            <small>Sorry! You are not allowed to review this product since you haven't bought it on LAP4YOU.</small>`
+    });
+  }
 }
