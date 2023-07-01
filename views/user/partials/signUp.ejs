@@ -70,6 +70,22 @@
             style="font-size: 0.75rem; text-transform: none"
           ></span>
         </div>
+        <div class="mb-3">
+          <input
+            type="password"
+            class="form-control"
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            onkeyup="passwordMatch()"
+            name="confirmPassword"
+            required
+          />
+          <span
+            id="passwordmatch"
+            class="text-danger rounded"
+            style="font-size: 0.75rem; text-transform: none"
+          ></span>
+        </div>
         <input
           type="submit"
           id="submitButton"

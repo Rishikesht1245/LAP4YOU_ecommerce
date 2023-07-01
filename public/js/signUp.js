@@ -47,6 +47,21 @@ function passwordValidator() {
   }
 }
 
+// confirm password match
+function passwordMatch(){
+  const inputPassword = $("#inputPassword").val();
+  const confirmPassword = $("#confirmPassword").val();
+  if(inputPassword !== confirmPassword){
+    $("#submitButton").prop("disabled", true);
+    $("#passwordmatch").html(
+      '<i class="fa fa-exclamation"></i>Password doesnot match'
+    );
+  }else{
+    $("#submitButton").prop("disabled", false);
+    $("#passwordmatch").empty();
+  }
+}
+
 // otp expiration couter
 window.onload = () => {
   let counter = localStorage.getItem('counter') || 60;

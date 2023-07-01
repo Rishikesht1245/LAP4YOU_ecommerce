@@ -1,10 +1,11 @@
 // ============= ajax call for filtering products ========================//
-function filter(filterBy){
+function filter(filterBy, brandId){
   $.ajax({
     url:'/products',
     type:'patch',
     data : {
-      filterBy : filterBy
+      filterBy : filterBy,
+      brandId : brandId,
     },
     success : (res) => {
       swal.fire({

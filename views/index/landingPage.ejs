@@ -240,13 +240,13 @@
         <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
           <% newReleases.forEach((product,i)=>{%>
           <div class="col">
-            <div class="card h-100 border-0 rounded">
+            <div class="card h-75 border-0 rounded">
               <a href="/products/<%=product._id%>"
                 ><img
                   src="../../public/img/products/<%=product.thumbnail%>"
-                  class="card-img-top p-4 h-70"
+                  class="card-img-top px-4 py-2 h-50"
                   alt="..."
-                  style="object-fit: scale-down;"
+                  style="object-fit: scale-down; aspect-ratio: 0.9;"
                 />
                 <div class="card-body">
                   <h6 class="card-title text-black"><%=product.name%></h6>
@@ -289,12 +289,13 @@
         <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
           <% gaming.forEach((product,i)=>{%>
           <div class="col">
-            <div class="card h-100 border-0 p-3">
+            <div class="card h-75 border-0 rounded">
               <a href="/products/<%=product._id%>"
                 ><img
                   src="../../public/img/products/<%=product.thumbnail%>"
-                  class="card-img-top p-2 h-75"
+                  class="card-img-top px-4 py-2 h-50"
                   alt="..."
+                  style="object-fit: scale-down; aspect-ratio: 0.9;"
                 />
                 <div class="card-body">
                   <h6 class="card-title text-black"><%=product.name%></h6>
@@ -303,6 +304,7 @@
                       font-weight: bold;
                       color: #7f7f7f;
                       font-size: 0.75rem;
+                     
                     "
                     class="my-2"
                     ><%=product.brand.name%></span
@@ -331,12 +333,13 @@
         >
           <% student.forEach((product,i)=>{%>
           <div class="col">
-            <div class="card h-100 border-0 p-3">
+            <div class="card h-75 border-0">
               <a href="/products/<%=product._id%>"
                 ><img
                   src="../../public/img/products/<%=product.thumbnail%>"
-                  class="card-img-top p-2 h-75"
+                  class="card-img-top px-4 py-2 h-50"
                   alt="..."
+                  style="object-fit: scale-down; aspect-ratio: 0.9;"
                 />
                 <div class="card-body">
                   <h6 class="card-title text-black"><%=product.name%></h6>
@@ -373,12 +376,13 @@
         >
           <% business.forEach((product,i)=>{%>
           <div class="col">
-            <div class="card h-100 border-0 p-3">
+            <div class="card h-75 border-0 ">
               <a href="/products/<%=product._id%>"
                 ><img
                   src="../../public/img/products/<%=product.thumbnail%>"
-                  class="card-img-top p-2 h-70"
+                  class="card-img-top px-4 py-2 h-50"
                   alt="..."
+                  style="object-fit: scale-down; aspect-ratio: 0.9;"
                 />
                 <div class="card-body">
                   <h6 class="card-title text-black"><%=product.name%></h6>
@@ -407,6 +411,7 @@
          <!-- SERVICES
         ================================================== -->
         <section class="pt-0 pb-0 my-5">
+          <div class="line-break text-center">
           <div class="container">
               <div class="row mt-n4">
                   <div class="col-md-6 col-lg-4 mt-4 text-start">
@@ -444,6 +449,7 @@
                   </div>
               </div>
           </div>
+        </div>
       </section>
 
       </div>

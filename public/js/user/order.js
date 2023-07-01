@@ -45,10 +45,10 @@ function checkValid(deliveredOn){
 
   const deliveredDate = new Date(deliveredOn);
   const currentDate = new Date();
-
+ 
   const differenceInTime = currentDate.getTime() - deliveredDate.getTime();
   const differenceInDays = Math.ceil(differenceInTime/( 1000 * 3600 * 24))
-  console.log(differenceInDays);
+ 
   if(differenceInDays <= 10){
     $("#exampleModal").modal('show');
   }else{

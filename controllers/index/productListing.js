@@ -1,3 +1,4 @@
+const brandCLTN = require('../../models/admin/brandDetails');
 const categoryCLTN = require('../../models/admin/categoryDetails');
 const productCLTN = require('../../models/admin/productDetails');
 const userCLTN = require('../../models/users/userDetails');
@@ -14,12 +15,15 @@ exports.collection = async (req, res) => {
             if(!listing){
                   listing = await productCLTN.find({listed : true}).populate('brand');
             }
+
+            const brands = await brandCLTN.find({isDeleted : false});
             res.render('index/productListing', {
                   session : req.session.userId,
                   documentTitle : 'LAP4YOU',
                   currentUser,
                   listing,
                   listingName,
+                  brands,
             });
       } catch(error){
             console.log('Error in Collection Page :' +error );
@@ -42,20 +46,48 @@ exports.currentFilter = async(req, res) => {
             if(req.session.filtered){
                   allProducts = await productCLTN.find({listed : true}).populate('brand'); 
             }
+
+            if(req.session.listingName){
+                  allProducts = await productCLTN.find({listed : true}).populate('brand category');
+            }
             switch(req.body.filterBy){
-                  case 'gaming':
+                  case 'HP': 
+                        if(req.session.listing){
+                                    currentFilter = allProducts.filter(
+                                    (product) => ((product.brand._id == req.body.brandId) && product.category.name == req.session.listingName));
+                              break;
+                        } else{
+                              currentFilter = allProducts.filter(
+                              (product) => product.brand._id == req.body.brandId);
+                              break
+                        }
+                       
+                   case 'LENOVO':
+                        if(req.session.listing){
+                              currentFilter = allProducts.filter(
+                              (product) => ((product.brand._id == req.body.brandId) && product.category.name == req.session.listingName));
+                              break;
+                        } else{
+                              currentFilter = allProducts.filter(
+                              (product) => product.brand._id == req.body.brandId);
+                              break;
+                  }
+                   case 'APPLE':
                         currentFilter = allProducts.filter(
-                              (product) => product.category == '64888a004cb3b3a4b1bb8be3');
+                              (product) => product.brand._id == req.body.brandId);
                         break;
-                  case 'student': 
-                        currentFilter = allProducts.filter(
-                              (product) => product.category == '648d930bca2707bb62f29e01'
-                        );
+                  case 'ASUS':
+                        if(req.session.listing){
+                              currentFilter = allProducts.filter(
+                              (product) => ((product.brand._id == req.body.brandId) && product.category.name == req.session.listingName));
                         break;
-                  case 'business':
+                        } else{
+                               currentFilter = allProducts.filter(
+                               (product) => product.brand._id == req.body.brandId);
+                        }
+                  case 'DELL':
                         currentFilter = allProducts.filter(
-                              (product) => product.category == '648d9311ca2707bb62f29e06'
-                        );
+                              (product) => product.brand._id == req.body.brandId);
                         break;
                   case 'none':
                         currentFilter = null;
@@ -172,20 +204,23 @@ exports.category = async(req, res) => {
                   });
             } else{
                   let currentCategory = await categoryCLTN.findById(req.params.id);
-                  if(req.session.listing){
-                        listing = req.session.listing;
-                  } else{
-                        listing = await productCLTN.find({
-                              category : currentCategory._id,
-                              listed: true,
-                        }).populate('brand');
-                  }
+                  
+                  listing = await productCLTN.find({
+                         category : currentCategory._id,
+                        listed: true,
+                  }).populate('brand');
+                 
+
+                  const brands = await brandCLTN.find({isDeleted : false});
+                  const listingName = currentCategory.name;
+                  req.session.listingName = listingName;
                   res.render('index/productListing', {
                         listing,
                         documentTitle : `${currentCategory.name} | LAP4YOU`,
                         listingName : `${currentCategory.name}`,
                         session : req.session.userId,
                         currentUser,
+                        brands,
                   });
             }
       } catch (error) {

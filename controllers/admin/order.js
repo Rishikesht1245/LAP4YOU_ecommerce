@@ -37,25 +37,7 @@ exports.viewAll = async(req, res) => {
 // deliver order
 exports.changeOrderStatus = async(req, res) => {
       try {
-            // find the order by Id 
-            const order = await orderCLTN.findById(req.body.id)
-                                   .populate('customer', 'name, email');
-
-            //extract product id and customer id
-            const productIds = order.summary.map(product => product.product);
-
-            const customerId = order.customer._id;
-            // insert data to the order reviewCLTN
-           const orderReviews = productIds.map((productId) => {
-                  return  new orderReviewCLTN({
-                        customer : customerId,
-                        product : productId,
-                        delivered : true,
-                  });
-           });
-
-           await orderReviewCLTN.insertMany(orderReviews);
-
+            // update the data to orderCLTN for all status
             await orderCLTN.findByIdAndUpdate(req.body.id, {
                   $set:{
                         delivered : req.body.delivered,
@@ -63,24 +45,21 @@ exports.changeOrderStatus = async(req, res) => {
                         deliveredOn : req.body.deliveredOn,
                   }
             });
-
+           
+            // if status is refunded increase the stock, change access to review 
             if(req.body.status == "Refunded"){
-                  console.log("Reached 1")
+                 
                   const currentOrder = await orderCLTN.findById(req.body.id);
+                  console.log(currentOrder)
                   const quantity = currentOrder.totalQuantity;
                   const userId = currentOrder.customer;
                   const returnedProducts  = await returnCLTN.findOne({customer : userId, isReturned : false});
-                  console.log(returnedProducts);
+                  
                   const returnedProductId = returnedProducts._id; // document id
                   const productId = returnedProducts.product; // product id
                   const price = req.body.price;
-                  console.log("Reached 2")
                  
-                 
-
                   // increasing the stock once order is returned
-                  console.log(productId);
-                  console.log(price);
                   await productCLTN.updateOne(
                         {
                           _id: productId,
@@ -100,17 +79,49 @@ exports.changeOrderStatus = async(req, res) => {
                               isReturned : true,
                         }
                   });
+
+                  // change review access to false 
+
+                  await orderReviewCLTN.updateOne({customer : userId, product : productId}, 
+                        {delivered : false}
+                  );
+
                   res.json({
                         data : {
                               delivered : 1,
                         }
                   });
-            } 
-            res.json({
-                  data : {
-                        delivered : 1,
+            } else{
+
+                   // find the order by Id 
+                  const order = await orderCLTN.findById(req.body.id)
+                                                .populate('customer', 'name, email');
+
+                  //extract product id and customer id
+                  const productIds = order.summary.map(product => product.product);
+      
+                  const customerId = order.customer._id;
+
+                  // insert data to the order reviewCLTN when product is delivered
+                  if(req.body.status === "Delivered"){
+                        const orderReviews = productIds.map((productId) => {
+                               return  new orderReviewCLTN({
+                                     customer : customerId,
+                                     product : productId,
+                                     delivered : true,
+                               });
+                        });
+
+                        await orderReviewCLTN.insertMany(orderReviews);
                   }
-            });
+                  
+                  res.json({
+                        data : {
+                              delivered : 1,
+                        }
+                  });
+            }
+
       } catch (error) {
             console.log('Error in Product Delivery :  '+ error);
       }
