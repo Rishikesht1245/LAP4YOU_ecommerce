@@ -37,101 +37,104 @@
 <script src="/public/js/admin/admin.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Image Cropping -->
-<!-- Cropper js cdn -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Cropper js cdn -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js" integrity="sha512-6lplKUSl86rUVprDIjiW8DuOniNX8UDoRATqZSds/7t6zCQZfaCe3e5zcGaQwxa8Kpn5RTM9Fvl3X2lLV4grPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="/public/js/user/order.js"></script>
-<!-- image cropper -->
+
+<!-- Image cropping -->
 <script>
-  $(document).ready(function (){
-    let result = $(".result"),
-        img_result = $(".img-result"),
-        save = $(".btn-save"),
-        cropped = $(".cropped"),
-        file_input = $("#file-input"),
-        btn_submit = $(".btn-submit")
-    let input = $("<input>")
-          .attr("id", "cropped-image")
-          .attr("type" ,"hidden")
-          .attr("name" , "croppedImage");
-    let cropper;
+    var bs_modal = $('#modal');
+    var image = document.getElementById('image');
+    var cropper, reader, file;
 
-    
-    file_input.on('change', function(e){
-      //instantiate fileReader for reading files from user's system
-      const reader = new FileReader();
-      reader.onload = function(e){
-        if(e.target.result){
-          // create a new image element for displaying the cropping
-          let img = document.createElement("img");
-          img.id ="image";
-          img.src = e.target.result;
-
-          result.removeClass('hide');
-          // clearing previous results
-          result.html("");
-
-          //Append new image
-          result.append(img);
-
-          //show save button
-          save.removeClass('hide');
-
-          // initialise cropper 
-          cropper = new Cropper(img);
-        }
+    $("body").on("change", ".image", function(e) {
+      var files = e.target.files;
+      var done = function(url) {
+        image.src = url;
+        bs_modal.modal('show');
       };
 
-      // reading the file input after initialising the prerequisites
-      reader.readAsDataURL(e.target.files[0]);
+      if (files && files.length > 0) {
+        file = files[0];
+
+        if (URL) {
+          done(URL.createObjectURL(file));
+        } else if (FileReader) {
+          reader = new FileReader();
+          reader.onload = function(e) {
+            done(reader.result);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
     });
 
-    save.on('click', () => {
-      //get the canvas with the cropped image data
-      let canvas = cropper.getCroppedCanvas();
-      //convert the canvas to a Blob object representing the file
+    bs_modal.on('shown.bs.modal', function() {
+      cropper = new Cropper(image, {
+        aspectRatio: 1,
+        viewMode: 3,
+        preview: '.preview'
+      });
+    }).on('hidden.bs.modal', function() {
+      cropper.destroy();
+      cropper = null;
+    });
+
+    $("#crop").click(function() {
+      canvas = cropper.getCroppedCanvas({
+        width: 160,
+        height: 160,
+      });
+
       canvas.toBlob(function(blob) {
-        // Create a new FormData object
-        let formData = new FormData();
+        var file = new File([blob], 'croppedImage.png', { type: 'image/png' });
+        var formData = new FormData();
 
-        // Append the cropped image file to the FormData object
-        formData.append('croppedImage', blob);
+        formData.append('croppedImage', file);
+        formData.append('name', $("#form-holder").val());
 
-        // Append other data to the FormData object
-        formData.append('name', $('#form-holder').val());
-        // Append more fields if needed
-
-        // Append the FormData object to the hidden input field
-        input.val(""); // Clear the value of the input field before appending
-        $("form").append(input);
-        input.prop("value", formData); // Set the FormData object as the value
-
-        //show cropped image
-        img_result.removeClass('hide');
-        cropped.attr('src', canvas.toDataURL());
-        result.addClass('hide');
-        save.addClass('hide');
-
-  
-      }, 'image/png');
-    });
-
-    btn_submit.on('submit', () => {
-      $.ajax({
-          url:'/users/profile',
-          method : 'post',
-          data: input.serialize(),
+        $.ajax({
+          url: "/users/profile",
+          type: "POST",
+          data: formData,
           processData: false,
           contentType: false,
-          success: (res) => {
-            location.href = '/users/profile'
+          success: function(data) {
+            bs_modal.modal('hide');
           }
         });
-    });
-        
-  })
-</script>
 
+        var previewImage = $(".preview-img");
+        $(".preview-img").removeClass('hide');
+        previewImage.attr("src", URL.createObjectURL(file));
+      });
+    });
+
+    $(".btn-submit").click(function(event) {
+      event.preventDefault();
+      Swal.fire({
+        title: `<h5 style="color: white">Are you sure to update the details?</h5>`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        confirmButtonColor: '#4CAF50',
+        cancelButtonText: 'No',
+        cancelButtonColor: '#d33',
+        customClass: {
+          popup: 'swal-popup',
+          title: 'swal-title',
+        },
+        background: '#256',
+        confirmButtonClass: 'btn-lg btn-success',
+        cancelButtonClass: 'btn-lg btn-danger',
+      }).then((result) => {
+        if(result.isConfirmed){
+          window.location = '/users/profile'
+        }
+      });
+    });
+</script>
 </body>
 </html>

@@ -49,7 +49,7 @@
 </div>
 <%}%>
 
-  <!-- Modal -->
+  <!-- Modal  for update account -->
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -58,7 +58,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cl    ose"></button>
         </div>
         <div class="modal-body">
-          <form action="" method="" enctype="multipart/form-data">
+          <form action="" method="" enctype="multipart/form-data" id="updateForm">
             <div class="mb-3">
               <input
                 type="text"
@@ -73,28 +73,54 @@
                 <label for="form-holder" style="font-size: 0.75rem">Upload your image</label>
                 <input
                   type="file"
-                  class="form-control"
+                  class="form-control image"
                   id="file-input"
                   placeholder="photo"
                   name = "photo"
                   />
-                </div> 
-                <!-- section for cropping -->
-                <div class="mb3 result hide">
-
-                </div>
-                <!-- section for showing the result -->
-                <div class="mb3 img-result hide">
-                  <img src="" alt="" class="cropped">
-                </div>
-                <button type="button" class="btn btn-save bg-success text-white hide">SAVE</button>
+                </div>  
+                
+                
+                    <img src="" alt="" class="preview-img hide">
+                
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-dark btn-submit">Save Changes</button>
+          <button type="submit" class="btn btn-dark btn-submit">Update Account</button>
         </form>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Modal for cropping -->
+  <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Crop image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="img-container">
+                    <div class="row">
+                        <div class="col-md-8">  
+                            <!--  default image where we will set the src via jquery-->
+                            <img id="image">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="preview"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="crop">Crop</button>
+            </div>
+        </div>
+    </div>
+</div>
 <%- include('../layouts/footer') %>

@@ -2,7 +2,6 @@ const sharp = require('sharp');
 
 // saving image after compressing
 exports.profilePic = async (req, res, next) => {
-      console.log('reached processor');
       if(!req.file){
             next();
       }
