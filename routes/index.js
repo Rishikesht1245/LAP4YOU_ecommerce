@@ -27,4 +27,7 @@ router
 //================= Categories section ==============================//
 router.get('/categories/:id', productListing.category);
 
+
+
+
 module.exports = router;

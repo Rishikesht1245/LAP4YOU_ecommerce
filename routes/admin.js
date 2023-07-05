@@ -13,6 +13,7 @@ const signOut = require('../controllers/admin/signOut');
 const session = require('express-session');
 const coupon = require('../controllers/admin/coupon');
 const order = require('../controllers/admin/order');
+const exportToExcel = require('../utilities/exportToExcel');
 
 // ====================== SIGN IN ===========================//
 
@@ -29,6 +30,8 @@ router
       .route('/dashboard')
       .get(sessionCheck,dashboard.view)
       .put(sessionCheck, dashboard.chartData);
+      
+router.put('/dashboard/:id', sessionCheck, dashboard.doughNutData);
 
 
 // ====================== CATEGORIES ===========================//
@@ -158,6 +161,11 @@ router
 router.patch('/orders/cancel/:id',sessionCheck, order.cancelOrder);
 
 router.get('/orders/:id', sessionCheck, order.details);
+
+
+// ====================== SALES REPORT =========================
+router.get('/salesReport', exportToExcel.download);
+
 
 //======================= LOG OUT ==============================
 router.get('/signOut',sessionCheck, signOut.signOut);

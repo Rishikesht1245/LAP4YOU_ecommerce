@@ -8,12 +8,12 @@ const productSchema = new mongoose.Schema({
       },
       category :{
             type : mongoose.Types.ObjectId,
-            ref:categoryCLTN,
+            ref:"categories",
             required : true,
       },
       brand : {
             type : mongoose.Types.ObjectId,
-            ref:brandCLTN,
+            ref:"brands",
             required :true,
       },
       model : {

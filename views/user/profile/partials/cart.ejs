@@ -22,12 +22,16 @@
         <div
           class="col-lg-8 prod-details d-flex flex-grow-1 flex-column justify-content-between" id="cart<%=product._id%>"
         >
-          <h5><a href="/products/<%=product.name._id%>" class="ms-5" style="color: black !important;"><%=product.name.name%></a></h5>
-          <h6 class="text-secondary ms-5"><%=product.name.brand.name%></h6>
-          <span style="text-transform: none; font-size: 0.85rem; font-weight: 700" class="ms-5 text-secondary" id="productPrice">
+          <h5><a href="/products/<%=product.name._id%>" class="ms-5 ps-5" style="color: black !important;"><%=product.name.name%></a></h5>
+          <h6 class="text-secondary ms-5 ps-5"><%=product.name.brand.name%></h6>
+          <span style="text-transform: none; font-size: 0.85rem; font-weight: 700" class="ms-5 ps-5 text-secondary" id="productPrice">
             Price: <%=product.price%></span>
-            <span style="text-transform: none; font-size: 0.85rem; font-weight: 700" class="ms-5 text-secondary">
+            <span style="text-transform: none; font-size: 0.85rem; font-weight: 700" class="ms-5 ps-5 text-secondary">
               Variant: <%=product.ramCapacity %> <%= product.ssdCapacity %></span>
+              <%if(product.quantity > quantityInStock[i]){%> 
+                <span style="text-transform: none; font-size: 1 rem; font-weight: 700" class="ms-5 mt-3 ps-5 text-danger">
+                  Out of Stock</span>
+              <%}%>
           <div class="d-flex justify-content-end mt-2">
             <div class="counter d-flex p-1 align-items-center rounded mx-4">
               <button
@@ -87,6 +91,7 @@
           href="/users/cart/checkout"
           type="submit"
           class="text-white btn btn-dark btn-sm button-div"
+          onclick="proceedToCheckout(event, '<%=JSON.stringify(userCart)%>', '<%=JSON.stringify(quantityInStock)%>')"
           >Proceed to checkout</a
         >
       </div>

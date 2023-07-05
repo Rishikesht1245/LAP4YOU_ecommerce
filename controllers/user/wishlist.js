@@ -57,7 +57,7 @@ exports.addOrRemove = async (req, res) => {
                         });
                   }
             }else{
-                  req.session.currentWishlistUrl = req.body.url;
+                  req.session.currentUrl = req.body.url;
                   res.json({
                         data :{
                               message : null

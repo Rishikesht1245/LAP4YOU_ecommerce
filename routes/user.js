@@ -88,7 +88,7 @@ router.get('/addresses/changeRole', sessionCheck, address.defaultToggler);
 router
       .route('/cart')
       .get(sessionCheck, cart.viewAll)
-      .post(sessionCheck, cart.addToCart)
+      .post( cart.addToCart)
       .delete(sessionCheck, cart.remove);
 
 // add and reduct count
@@ -118,6 +118,12 @@ router.post('/cart/checkout/changeDefaultAddress', sessionCheck, checkOut.defaul
 
 // result page after payment
 router.get('/cart/checkout/:id', checkOut.result);
+
+//call back from razor pay
+router.post('/cart/checkout/:id', async(req, res) => {
+      const transactionID = req.params.id;
+      res.redirect(`/users/cart/checkout/${transactionID}`);
+});
 
 
 

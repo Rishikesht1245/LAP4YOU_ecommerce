@@ -185,12 +185,13 @@
                 </button>
               </div>
               <h3 class="fw-light shadow-product-heading  text-white"><%=productDetails.name%></h3>
-              <p class="shadow-details text-white">Price: Starts From ₹ <%=productDetails.RAMSSD[0].price%></p>
+              <p class="shadow-details text-white">Price: Starts From ₹ <span class="text-danger " style="text-decoration: line-through;"><%=productDetails.RAMSSD[0].price + 1000%></span></p>
+              <p class="shadow-details text-white">Offer Price:₹ <%=productDetails.RAMSSD[0].price%></p>
               <div class="model-case d-flex">
                 <p class="shadow-details text-white">Model: <%=productDetails.model%></p>
               </div>
               <div class="buy-cart row text-center justify-content-around p-0">
-                <div id="buyNow" class="button-div rounded col-5 border p-2  d-flex align-items-center justify-content-center" onclick="buyNow('<%=productDetails._id%>')" style="background-color: rgb(242, 127, 5); color: white; outline: none;">
+                <div id="buyNow" class="button-div rounded col-5 border p-2  d-flex align-items-center justify-content-center" onclick="buyNow('<%=productDetails._id%>', '<%= JSON.stringify(productDetails.RAMSSD) %>')" style="background-color: rgb(242, 127, 5); color: white; outline: none;">
                   <span style="font-size: 0.8rem; font-weight: bold;">Buy Now</span>
                 </div>
                 <div id="addToCart" class="button-div1 rounded col-5 border p-2  d-flex align-items-center justify-content-center" onclick="addToCart('<%=productDetails._id%>', '<%= JSON.stringify(productDetails.RAMSSD) %>')" style="color: rgb(242, 127, 5); background-color: #f3f4f5;">
@@ -207,19 +208,19 @@
               <div class="col-3 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Sales Package</h6>
-                  <p><%=productDetails.salesPackage%></p>
+                  <p class="fs-7"><%=productDetails.salesPackage%></p>
                 </div>
               </div>
               <div class="col-3 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Series</h6>
-                  <p><%=productDetails.series%></p>
+                  <p class="fs-7"><%=productDetails.series%></p>
                 </div>
               </div>
               <div class="col-3 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Type</h6>
-                  <p><%=productDetails.category.name%></p>
+                  <p class="fs-7"><%=productDetails.category.name%></p>
                 </div>
               </div>
             </div>
@@ -228,15 +229,15 @@
               <div class="col-3 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Processor</h6>
-                  <p><%=productDetails.processor%></p>
+                  <p class="fs-7"><%=productDetails.processor%></p>
                 </div>
               </div>
               <div class="col-3 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">RAM SSD VARIANTS</h6>
-                  <select class="form-select" id="ramCapacitySelect" onchange="updatePrice('<%= JSON.stringify(productDetails.RAMSSD) %>')">
+                  <select class="form-select fs-7" id="ramCapacitySelect" onchange="updatePrice('<%= JSON.stringify(productDetails.RAMSSD) %>')">
                     <% productDetails.RAMSSD.forEach(function(ramSSD) { %>
-                      <option value="<%= ramSSD.ramCapacity %>"><%= ramSSD.ramCapacity %>   <%= ramSSD.ssdCapacity %></option>
+                      <option class="fs-7" value="<%= ramSSD.ramCapacity %>"><%= ramSSD.ramCapacity %>   <%= ramSSD.ssdCapacity %></option>
                     <% }); %>
                   </select>
                 </div>
@@ -244,7 +245,7 @@
               <div class="col-3 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Price</h6>
-                  <p id="price"><%= productDetails.RAMSSD[0].price %></p>
+                  <p class="fs-7" id="price"><%= productDetails.RAMSSD[0].price %></p>
                 </div>
               </div>
             </div>
@@ -253,19 +254,19 @@
               <div class="col-3 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Warranty</h6>
-                  <p><%=productDetails.warranty%></p>
+                  <p class="fs-7"><%=productDetails.warranty%></p>
                 </div>
               </div>
               <div class="col-3 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Screen Size</h6>
-                  <p><%=productDetails.screenSize%></p>
+                  <p class="fs-7"><%=productDetails.screenSize%></p>
                 </div>
               </div>
               <div class="col-3 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Operating System</h6>
-                  <p><%=productDetails.operatingSystem%></p>
+                  <p class="fs-7"><%=productDetails.operatingSystem%></p>
                 </div>
               </div>
             </div>
@@ -408,29 +409,30 @@
         <div class="text-center d-flex justify-content-center flex-column my-3">
           <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
             <% similarProducts.forEach((product,i)=>{%>
-            <div class="col">
-              <div class="card h-100 border-0 p-3">
-                <a href="/products/<%=product._id%>"
-                  ><img
-                    src="../../public/img/products/<%=product.thumbnail%>"
-                    class="card-img-top p-2 h-75"
-                    alt="..."
-                  />
-                  <div class="card-body">
-                    <h6 class="card-title text-black"><%=product.name%></h6>
-                    <span
-                      style="
-                        font-weight: bold;
-                        color: #7f7f7f;
-                        font-size: 0.75rem;
-                      "
-                      class="my-2"
-                      ><%=product.brand.name%></span
-                    >
-                  </div></a
-                >
+              <div class="col-lg-3 mx-2">
+                <div class="card h-100 border-0">
+                  <a href="/products/<%=product._id%>"
+                    ><img
+                      src="/public/img/products/<%=product.thumbnail%>"
+                      class="card-img-top px-4 pt-2 h-75"
+                      alt="..."
+                      style="object-fit: scale-down; aspect-ratio: 1;"
+                    />
+                    <div class="card-body h-50">
+                      <h6 class="card-title text-dark"><%=product.name%></h6>
+                      <span
+                        style="
+                          font-weight: bold;
+                          color: #7f7f7f;
+                          font-size: 0.75rem;
+                        "
+                        ><%=product.brand.name%></span
+                      >
+                      <br>
+                    </div></a
+                  >
+                </div>
               </div>
-            </div>
             <%})%>
           </div>
           <span

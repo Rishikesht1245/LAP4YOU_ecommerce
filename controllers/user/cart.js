@@ -18,9 +18,13 @@ exports.viewAll = async (req, res) => {
             },
           })
           .exec();
+         
+        const quantityInStock = userCart.products.map((item, i)=> item.name.RAMSSD[0].quantity);
+        console.log(quantityInStock);
         res.render("user/profile/partials/cart", {
           userCart,
           documentTitle: "Your Cart | LAP4YOU",
+          quantityInStock,
         });
       } catch (error) {
         console.log("Error rendering all addresses: " + error);
@@ -32,22 +36,33 @@ exports.viewAll = async (req, res) => {
 // adding products to the cart
 exports.addToCart = async (req, res) => {
       try {
+            console.log('re')
             const userId = req.session.userId;
             const productId = req.body.id;
             const price = parseInt(req.body.price);
             const ramCapacity = req.body.ramCapacity;
             const ssdCapacity = req.body.ssdCapacity;
+            console.log(req.body.url)
 
+            if(!req.session.userId){
+                  req.session.currentUrl = req.body.url;
+                  res.json({
+                        success : null,
+                  })
+            }
             //check if product in stock
             const productToAdd = await productCLTN.findOne({_id : productId, 'RAMSSD.price' : price});
-            let isProductInStock = productToAdd.RAMSSD.find((ramssd) => ramssd.price == price).quantity;
-
+            let isProductInStock = productToAdd.RAMSSD.find((ramssd) => ramssd.price == price);
+            isProductInStock = isProductInStock.quantity;
+            
             //current quantity of product in users cart
-            let quantityInCart = await cartCLTN.findOne({customer : userId, 'products.name' : productId});
+            let quantityInCart = await cartCLTN.findOne({customer : userId, 'products.name' : productId, 'products.ramCapacity' : ramCapacity});
             if(quantityInCart){
-                  quantityInCart = quantityInCart.products.find((product) => product.ramCapacity == ramCapacity).quantity;
+                  quantityInCart = quantityInCart.products.find((product) => product.ramCapacity == ramCapacity);
+                  quantityInCart = quantityInCart.quantity;
             }
-
+           
+            // checking enough stock 
             if(isProductInStock > quantityInCart){
                   // check if product present wishlist
                   const wishlistCheck = await wishlistCLTN.findOne({
@@ -63,6 +78,7 @@ exports.addToCart = async (req, res) => {
             
                   const userCart = await cartCLTN.findOne({customer : userId});
                   const product = await productCLTN.findOne({_id : productId});
+                  
                   //checking if product already exist in cart
                   const productExist = await cartCLTN.findOne({
                         _id : userCart._id, 
@@ -70,12 +86,13 @@ exports.addToCart = async (req, res) => {
                               $elemMatch : {name : new mongoose.Types.ObjectId(productId), ramCapacity: ramCapacity}
                         }
                   });
+                  console.log(productExist)
             
                   if(productExist){
                         await cartCLTN.updateOne({
                               _id : userCart._id, 
                               products:{
-                                    $elemMatch : {name : new mongoose.Types.ObjectId(productId)}
+                                    $elemMatch : {name : new mongoose.Types.ObjectId(productId),ramCapacity: ramCapacity}
                               }
                         },{
                               $inc:{

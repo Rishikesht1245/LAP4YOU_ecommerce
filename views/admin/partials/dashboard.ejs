@@ -80,15 +80,49 @@
   <div class="row my-3" id="charts">
     <div class="col-lg-6">
       
-      <canvas id="myChart" style="min-width: 200px; min-height: 400px;"></canvas>
+      <canvas id="myChart" ></canvas>
     </div>
     <div class="col-lg-6">
-      <canvas id="myChart2"  style="min-width: 200px; min-height: 400px;"></canvas>
+      <canvas id="myChart2"  ></canvas>
     </div>
   </div>
   <h6 class="text-center mt-5 mb-3" >Order Status</h6>
+  <div class="dropdown">
+    <a
+      class="btn btn-dark btn-sm dropdown-toggle"
+      href="#"
+      role="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      Select Period
+    </a>
+    <ul class="dropdown-menu">
+      <li>
+        <label class="dropdown-item" onclick="doughNut(1)">
+            <input type="radio" id="newReleases" name="sortOptions" checked>Today</label>
+      </li>
+      <li>
+        <label class="dropdown-item" onclick="doughNut(7)">
+            <input type="radio" id="newReleases" name="sortOptions"> Last Week</label>
+      </li>
+      <li>
+          <label class="dropdown-item" onclick="doughNut(30)">
+            <input type="radio" id="ascending" name="sortOptions"> Last Month</label>
+      </li>
+      <li>
+        <label class="dropdown-item" onclick="doughNut(90)">
+          <input type="radio" id="descending" name="sortOptions"> Last 3 Months</label>
+      </li>
+      <li>
+        <label class="dropdown-item" onclick="doughNut(180)">
+          <input type="radio" id="descending" name="sortOptions"> Last 6 Months</label>
+      </li>
+    </ul>
+  </div>
+</div>
   <div class="col-lg-4 mx-auto">
-    <canvas id="myChart3"  style="min-width: 500px; min-height: 500px;"></canvas>
+    <canvas id="myChart3" ></canvas>
   </div>
  
 </div>
@@ -139,7 +173,7 @@
     </table>
     <%}%>
     <div class=" text-center my-3">
-      <button class="btn btn-sm btn-dark text-white" onclick="exportToExcel('xlsx', 'salesReport.xlsx')">Download Sales Report</button>
+      <a class="btn btn-sm btn-dark text-white" href="/admin/salesReport">Download Sales Report</a>
     
     </div> 
 </div>

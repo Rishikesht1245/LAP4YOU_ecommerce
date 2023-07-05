@@ -215,15 +215,15 @@
           <ul class="dropdown-menu">
             <li>
               <label class="dropdown-item" onclick="sortBy('newReleases')">
-                  <input type="radio" name="sortOptions"> New releases</label>
+                  <input type="radio" id="newReleases" name="sortOptions"> New releases</label>
             </li>
             <li>
                 <label class="dropdown-item" onclick="sortBy('ascending')">
-                  <input type="radio" name="sortOptions"> Price: Low to High</label>
+                  <input type="radio" id="ascending" name="sortOptions"> Price: Low to High</label>
             </li>
             <li>
               <label class="dropdown-item" onclick="sortBy('descending')">
-                <input type="radio" name="sortOptions"> Price: High to low</label>
+                <input type="radio" id="descending" name="sortOptions"> Price: High to low</label>
             </li>
             <!-- <li><a class="dropdown-item" href="#"></a></li> -->
           </ul>
@@ -294,8 +294,19 @@
         </div>
         <%}%>
       </div>
+      
     </section>
-
+    <div class="text-center my-3">
+      <%if(listingName == 'Collections'){%>
+        <a 
+        href="/products?query=viewMore"
+        class="btn btn-outline-dark py-2 px-3 mt-5"
+        style="font-size: 0.75rem"
+        >SHOW MORE</a
+      >
+      <%}%>
+     
+    </div>
     <footer class="bg-theme">
       <div
         class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around"

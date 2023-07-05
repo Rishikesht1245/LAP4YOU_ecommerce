@@ -33,7 +33,7 @@ const orderSchema = new mongoose.Schema({
       price : Number,
       finalPrice : Number,
       discountPrice : {type : Number, default : 0},
-      orderedOn : {type : Date, default : Date.now()},
+      orderedOn : {type : Date, default : new Date()},
       deliveredOn : {type : Date, default:null},
       returnedOn : {type : Date, default:null},
 });

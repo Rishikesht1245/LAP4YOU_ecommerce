@@ -1,17 +1,29 @@
 const couponCLTN = require('../../models/admin/coupon');
+const categoryCLTN = require('../../models/admin/categoryDetails');
+const productCLTN = require('../../models/admin/productDetails');
 const moment = require('moment');
 
 
 // view all coupons
 exports.page = async(req, res) => {
       try {
-            const coupons = await couponCLTN.find();
+            const coupons = await couponCLTN.find().populate('product category');
+
+            console.log(coupons)
+
+            // for category and product based filtration
+            const categories = await categoryCLTN.find({isDeleted : false});
+            const products = await productCLTN.find();
+
             res.render('admin/partials/coupons', {
                   session: req.session.adminId,
                   documentTitle : 'Coupon Management | LAP4YOU',
                   coupons,
-                  moment
-            })
+                  moment,
+                  categories,
+                  products,
+            });
+
       } catch (error) {
             console.log('Error in Coupon Management Page '+error);
       }
@@ -20,10 +32,14 @@ exports.page = async(req, res) => {
 // adding new coupon
 exports.addNew = async(req,res) => {
       try {
+            const selectedProducts = JSON.parse(req.body.selectedProducts);
+           
             const newCoupon = new couponCLTN({
                   name : req.body.name,
                   code : req.body.code,
                   discount : req.body.discount,
+                  product : selectedProducts,
+                  category : req.body.category,
                   startingDate : req.body.startingDate,
                   expiryDate : req.body.expiryDate,
             });

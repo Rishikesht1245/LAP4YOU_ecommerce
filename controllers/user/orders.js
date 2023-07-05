@@ -2,6 +2,8 @@ const orderCLTN = require('../../models/users/order');
 const moment = require('moment');
 const returnCLTN = require('../../models/users/return');
 const { order } = require('paypal-rest-sdk');
+const productCLTN = require('../../models/admin/productDetails');
+const sendMail = require('../../utilities/nodeMailer');
 
 // view orders page 
 exports.viewAll = async( req, res) => {
@@ -52,6 +54,26 @@ exports.viewOrderDetails = async (req,res) => {
 
 exports.cancelOrder = async(req, res) => {
       try {
+
+            console.log("Cancel Order");
+            const orderDetails = await orderCLTN.findById(req.params.id);
+            const productIds = orderDetails.summary.map((order) => order.product);
+            const quantity = orderDetails.summary.map((order) => order.quantity);
+            const price = orderDetails.summary.map((order) => order.totalPrice);
+            console.log(quantity);
+            console.log(productIds);
+            //Increasing the count of product when cancelled
+            for(let i = 0; i< productIds.length; i++){
+                  await productCLTN.updateOne(
+                        {_id : productIds[i], 'RAMSSD.price': price[i]},
+                        {
+                               $inc : {
+                                    'RAMSSD.$.quantity' : quantity[i]
+                               }
+                        });
+            }
+            console.log("Increased the count");
+
             await orderCLTN.findByIdAndUpdate(req.params.id, 
                  { $set : {
                         status : "Cancelled",
@@ -64,6 +86,9 @@ exports.cancelOrder = async(req, res) => {
                         message : "cancelled"
                   }
             });
+
+            const adminSubject = `Order has been cancelled by ${req.session.email}`
+            sendMail ('lap4you.ecommerce@gmail.com', adminSubject, 'cancelled', 'admin', req.params.id);
             
       } catch (error) {
             console.log("Error in Cancel Order Page : " + error);

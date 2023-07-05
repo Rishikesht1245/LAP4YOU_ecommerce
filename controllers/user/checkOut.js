@@ -5,6 +5,8 @@ const couponCLTN = require('../../models/admin/coupon');
 const orderCLTN = require('../../models/users/order');
 const paypal = require('paypal-rest-sdk');
 const productCLTN = require('../../models/admin/productDetails');
+const razorpay = require('razorpay');
+const sendMail = require('../../utilities/nodeMailer');
 
 // paypal configuration
 paypal.configure({
@@ -12,6 +14,12 @@ paypal.configure({
       client_id: process.env.PAYPAL_CLIENTID,
       client_secret: process.env.PAYPAL_SECRET,
 });
+
+//razor pay configuration
+const razorpayInstance = new razorpay({
+      key_id: process.env.RAZORPAY_KEYID,
+      key_secret: process.env.RAZORPAY_KEYSECRET,
+  });
 
 
 //view checkout page
@@ -78,7 +86,9 @@ exports.coupon = async (req, res) => {
             const couponCode = req.body.couponCode;
             const userCart = await cartCLTN.findOne({
                   customer : req.session.userId,
-            });
+            }).populate('products.name');
+            
+          
             const cartPrice = userCart.totalPrice;
       
             if(couponCode == ''){
@@ -100,45 +110,66 @@ exports.coupon = async (req, res) => {
             const coupon = await couponCLTN.findOne({
                   code : couponCode,
             });
-      
+            
+            const couponCategory = coupon.category;
+            const couponProducts = coupon.product;
+          
             if(coupon){
+                  // check if coupon is applicable or not based on product and category
+                  let isApplicable = false;
+                  userCart.products.forEach((product, i) => {
+                        for(let i = 0; i < couponProducts.length; i++){
+                              if(product.name._id.equals(couponProducts[i]) || product.name.category.equals(couponCategory)){
+                                    isApplicable = true;
+                                    return;
+                              }
+                        }
+                  });
+                  
+                  console.log(isApplicable);
                   const alreadyUsedCoupon = await userCLTN.findOne({
                         _id : req.session.userId,
                         couponsUsed : coupon._id,
                   });
-                  // id coupon is not used check coupons status, and validity
-                  if(!alreadyUsedCoupon){
-                        if(coupon.active == true){
-                              // toJSON()returns JSON complaint string re[resentation]
-                              const currentTime = new Date().toJSON();
-                              if(currentTime > coupon.startingDate.toJSON()){
-                                    if(currentTime < coupon.expiryDate.toJSON()){
-                                          discountPercentage = coupon.discount;
-                                          discountPrice = (discountPercentage/100)* cartPrice;
-                                          discountPrice = Math.floor(discountPrice);
-                                          finalPrice = cartPrice - discountPrice;
-                                          //coupon applied Case
+                  //if coupon applicable
+                  if(isApplicable){
+                        // id coupon is not used check coupons status, and validity
+                        if(!alreadyUsedCoupon){
+                              if(coupon.active == true){
+                                    // toJSON()returns JSON complaint string re[resentation]
+                                    const currentTime = new Date().toJSON();
+                                    if(currentTime > coupon.startingDate.toJSON()){
+                                          if(currentTime < coupon.expiryDate.toJSON()){
+                                                discountPercentage = coupon.discount;
+                                                discountPrice = (discountPercentage/100)* cartPrice;
+                                                discountPrice = Math.floor(discountPrice);
+                                                finalPrice = cartPrice - discountPrice;
+                                                //coupon applied Case
+                                                couponCheck = 
+                                                       '<b>Coupon Applied <i class="fa fa-check text-success" aria-hidden="true"></i></b></br>' +
+                                                       coupon.name;
+                                          } else{
+                                                couponCheck =
+                                                      "<b style='font-size:0.75rem; color: red'>Coupon expired<i class='fa fa-stopwatch'></i></b>";
+                                          }
+                                    }else{
                                           couponCheck = 
-                                                 '<b>Coupon Applied <i class="fa fa-check text-success" aria-hidden="true"></i></b></br>' +
-                                                 coupon.name;
-                                    } else{
-                                          couponCheck =
-                                                "<b style='font-size:0.75rem; color: red'>Coupon expired<i class='fa fa-stopwatch'></i></b>";
+                                                      `<b style='font-size:0.75rem; color: green'>Coupon starts on </b><br/><p style="font-size:0.75rem;">${coupon.startingDate}</p>`;
                                     }
                               }else{
-                                    couponCheck = 
-                                                `<b style='font-size:0.75rem; color: green'>Coupon starts on </b><br/><p style="font-size:0.75rem;">${coupon.startingDate}</p>`;
+                                    couponCheck =
+                                                "<b style='font-size:0.75rem; color: red'>Invalid Coupon !</i></b>";
                               }
                         }else{
                               couponCheck =
-                                          "<b style='font-size:0.75rem; color: red'>Invalid Coupon !</i></b>";
+                                          "<b style='font-size:0.75rem; color: grey'>Coupon already used !</i></b>";
                         }
                   }else{
-                        couponCheck =
-                                    "<b style='font-size:0.75rem; color: grey'>Coupon already used !</i></b>";
+                        couponCheck = "<b style='font-size:0.75rem; color :red'>Coupon is not applicable for this product</b>";
                   }
+
             }else{
-                  couponCheck = "<b style='font-size:0.75rem'>Coupon not found</b>";
+                  couponCheck = "<b style='font-size:0.75rem; color :red'>Coupon not found</b>";
             }
             
             res.json({
@@ -328,6 +359,27 @@ exports.checkOut = async (req, res) => {
                               }
                         }
                   );
+            } else if(req.body.paymentMethod === "RazorPay"){
+                  const options = {
+                        amount: orderDetails.finalPrice * 100,  // paise to rupees
+                        currency: 'INR',
+                        receipt: transactionID //any unique id
+                    };
+
+                    razorpayInstance.orders.create(options, (error, order) => {
+                        console.log(order);
+
+                        if(error){
+                              console.log(error, 'Error on razorpay')
+                        } else{
+                              console.log('success', order);
+                              res.json({
+                                    order : JSON.stringify(order),
+                              });
+                        }
+                    });
+
+                  
             }
       } catch (error) {
             console.log("Error checking out : " + error);
@@ -369,21 +421,33 @@ exports.result = async (req, res) => {
                   );
 
                   // reducing the stock of the product once the order is placed successfully.
-                  const orders = req.session.orderDetails;                
-                  orders.summary.forEach(async (product) => {
-                    await productCLTN.updateOne(
-                      {
-                        _id: product.product,
-                        "RAMSSD.price": product.totalPrice
-                      },
-                      {
-                        $inc: {
-                          "RAMSSD.$.quantity": -product.quantity
+                  const orders = req.session.orderDetails;
+
+                  for (const product of orders.summary) {
+                    try {
+                      await productCLTN.updateOne(
+                        {
+                          _id: product.product,
+                          "RAMSSD.price": (product.totalPrice/product.quantity)
+                        },
+                        {
+                          $inc: {
+                            "RAMSSD.$.quantity": (-1 * product.quantity)
+                          }
                         }
-                      }
-                    );
-                  });
-             
+                      );
+                    } catch (error) {
+                      console.log(error);
+                    }
+                  }
+                  
+                  console.log('Reduced the count of the product');
+                  const userSubject = `The expected delivery will be on ${new Date(new Date().getTime() + 7*3600*24*1000)} Thanks for Choosing LAP4YOU`
+                  const adminSubject = `A new order has been placed by ${req.session.email}`
+                  //sending mail to uer
+                  sendMail (req.session.email, userSubject,'placed','users', orderDetails._id);
+                  //sending mail to admin
+                  sendMail ('lap4you.ecommerce@gmail.com', adminSubject, 'placed', 'admin', orderDetails._id);
 
                   const orderResult = "Order Placed";
                   res.render("user/profile/partials/orderResult", {

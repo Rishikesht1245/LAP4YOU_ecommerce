@@ -21,7 +21,6 @@ exports.viewAll = async(req, res) => {
 
             const totalPrice = allOrders.map((order) => order.summary.reduce((total, value)=> total += value.totalPrice, 0));
             allOrders.price = totalPrice;
-            console.log(allOrders);
             res.render('admin/partials/orders', {
                   documentTitle : "LAP4YOU | eCommerce",
                   session : req.session.admin,
@@ -46,33 +45,37 @@ exports.changeOrderStatus = async(req, res) => {
                   }
             });
            
-            // if status is refunded increase the stock, change access to review 
+            // if status is refunded or cancelled increase the stock, change access to review 
             if(req.body.status == "Refunded"){
-                 
+                 console.log("Refund");
                   const currentOrder = await orderCLTN.findById(req.body.id);
-                  console.log(currentOrder)
-                  const quantity = currentOrder.totalQuantity;
-                  const userId = currentOrder.customer;
-                  const returnedProducts  = await returnCLTN.findOne({customer : userId, isReturned : false});
+                 
+                  // retruned product details 
+                  const productIds = currentOrder.summary.map((order) => order.product);
+                  const quantity = currentOrder.summary.map((order) => order.quantity);
+                  const price = currentOrder.summary.map((order) => order.totalPrice);
                   
+                  // customer id for changing review access
+                  const userId = currentOrder.customer;
+                  
+                  // returned collection details for making isReturned to true.
+                  const returnedProducts  = await returnCLTN.findOne({customer : userId, isReturned : false});
                   const returnedProductId = returnedProducts._id; // document id
                   const productId = returnedProducts.product; // product id
-                  const price = req.body.price;
                  
                   // increasing the stock once order is returned
-                  await productCLTN.updateOne(
-                        {
-                          _id: productId,
-                          "RAMSSD.price": price,
-                        },
-                        {
-                          $inc: {
-                            "RAMSSD.$.quantity": quantity,
-                          }
-                        }
-                      );
-                  console.log('Increased the count');
+                  for(let i = 0; i< productIds.length; i++){
+                        await productCLTN.updateOne(
+                              {_id : productIds[i], 'RAMSSD.price': price[i]},
+                              {
+                                     $inc : {
+                                          'RAMSSD.$.quantity' : quantity[i]
+                                     }
+                              });
+                  }
+                  console.log("Increased the count");
 
+                 
                   // changeing returned status to true
                   await returnCLTN.findByIdAndUpdate(returnedProductId, {
                         $set :{
@@ -81,7 +84,6 @@ exports.changeOrderStatus = async(req, res) => {
                   });
 
                   // change review access to false 
-
                   await orderReviewCLTN.updateOne({customer : userId, product : productId}, 
                         {delivered : false}
                   );
@@ -150,7 +152,24 @@ exports.details = async(req, res) => {
 // cancel Orders
 exports.cancelOrder = async(req, res) => {
       try {
+            console.log("Cancel Order");
             const orderDetails = await orderCLTN.findById(req.params.id);
+            const productIds = orderDetails.summary.map((order) => order.product);
+            const quantity = orderDetails.summary.map((order) => order.quantity);
+            const price = orderDetails.summary.map((order) => order.totalPrice);
+            console.log(quantity);
+            console.log(productIds);
+            for(let i = 0; i< productIds.length; i++){
+                  await productCLTN.updateOne(
+                        {_id : productIds[i], 'RAMSSD.price': price[i]},
+                        {
+                               $inc : {
+                                    'RAMSSD.$.quantity' : quantity[i]
+                               }
+                        });
+            }
+            console.log("Increased the count");
+            
           
                   await orderCLTN.findByIdAndUpdate(req.params.id, {
                         $set : {

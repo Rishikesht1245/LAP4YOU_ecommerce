@@ -155,3 +155,7 @@ transform: translateX(-50%); */
 .small-image:hover {
   opacity: 1;
 }
+
+.fs-7{
+  font-size: 0.85rem;
+}

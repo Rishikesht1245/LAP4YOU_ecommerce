@@ -4,6 +4,9 @@ const couponSchema = new mongoose.Schema({
       name : String,
       code : String,
       discount : Number,
+      product :[ {   type: mongoose.Types.ObjectId,
+                     ref: "products",},],
+      category : {type : mongoose.Types.ObjectId, ref : "categories"},
       startingDate : Date,
       expiryDate : Date,
       active: {

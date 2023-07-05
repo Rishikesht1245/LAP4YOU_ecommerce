@@ -34,7 +34,7 @@
         Change Address
         </button>
       </div>
-      <form action="/users/cart/checkout" method="post">
+      <form action="/users/cart/checkout" method="post" id="checkout-form">
       <input type="text" name="addressID" value="<%=defaultAddress._id%>" hidden>
       <%}else{%>
         <h6 class="text-danger mt-3" style="text-transform: none;">You have not added any addresses.</h6>
@@ -52,9 +52,14 @@
         </label>
       </div>
       <div class="form-check d-flex align-items-center" style="font-size: 0.85rem;">
+        <input class="form-check-input" type="radio" name="paymentMethod" value="RazorPay" id="flexRadioDefault3">
+        <label class="form-check-label mx-2" for="flexRadioDefault2"><b><svg style="color: rgb(63, 194, 238); height:20px" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Razorpay</title><path d="M22.436 0l-11.91 7.773-1.174 4.276 6.625-4.297L11.65 24h4.391l6.395-24zM14.26 10.098L3.389 17.166 1.564 24h9.008l3.688-13.902Z" fill="#3fc2ee"></path></svg> RazorPay</b>
+        </label>
+      </div>
+      <div class="form-check d-flex align-items-center" style="font-size: 0.85rem;">
         <input class="form-check-input" type="radio" name="paymentMethod" value="COD" id="flexRadioDefault1" >
         <label class="form-check-label mx-2" for="flexRadioDefault1">
-          Cash on delivery
+          <b>Cash on delivery</b>
         </label>
       </div>
       
@@ -98,7 +103,7 @@
       <input type="number" name="finalPrice" value="<%= userCart.totalPrice%>" id="inputFinalPrice" hidden>
     </div>
     <div class="order-summary rounded p-3 my-3 d-flex flex-column" style="border: 1px solid #dbdbdb; font-size: 0.9rem;">
-      <button type="submit" style="background-color: rgb(235, 94, 6); border: none;" onclick="showFormConfirmation(event, '', 'Place Order' )" class="text-white btn btn-dark btn-sm" <% if(defaultAddress == 0){%>style="background-color: grey;" disabled<%}%>>Place Order</button>
+      <button type="submit" style="background-color: rgb(235, 94, 6); border: none;"  onclick="showFormConfirmation(event, '', 'Place Order' )" class="text-white btn btn-dark btn-sm" <% if(defaultAddress == 0){%>style="background-color: grey;" disabled<%}%>>Place Order</button>
     </div>
   </form>
   </div>
@@ -139,5 +144,6 @@
     </div>
   </div>
 </div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="/public/js/user/checkout.js"></script>
 <%- include('../layouts/footer') %>

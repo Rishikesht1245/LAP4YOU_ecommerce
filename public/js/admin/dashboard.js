@@ -1,3 +1,48 @@
+// 3rd chart doughNut 
+const ctz = document.getElementById("myChart3");
+let doughnutChart = new Chart(ctz, {
+      type: "doughnut",
+      data: {
+        labels: ["In-Transit", "Delivered", "Cancelled" , "Returned", "Refunded"],
+        datasets: [
+          {
+            label: "Order Status",
+            data: [],
+
+            backgroundColor: [
+              "rgb(255, 205, 86,0.9)",
+              "rgb(34,139,34,0.9)",
+              "rgb(255,80,66,0.9)",
+              "rgb(0, 0, 255, 0.9)",
+              "rgb(230, 80, 255, 0.9)"
+            ],
+            hoverOffset: 10,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          xAxes: [
+            {
+              gridLines: {
+                display: false,
+              },
+            },
+          ],
+          yAxes: [
+            {
+              gridLines: {
+                display: false,
+              },
+            },
+          ],
+        },
+      },
+    });
+
+
+
+
 $.ajax({
       url:'/admin/dashboard',
       method : 'put',
@@ -87,14 +132,14 @@ $.ajax({
                     label: "Orders",
                     data: totalOrders,  // array which contains 12 elements corresponding to 12 months
                     borderWidth: 1,
-                    backgroundColor: "rgba(54, 162, 235, 0.2)",
+                    backgroundColor:  "rgb(255,80,66,0.9)",
                     borderColor: "rgb(54, 162, 235)",
                   },
                   {
                     label: "Products sold",
                     data: productsPerMonth,
                     borderWidth: 1,
-                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    backgroundColor:   "rgb(34,139,34,0.9)",
                     borderColor: "rgb(75, 192, 192)",
                   },
                 ],
@@ -108,55 +153,31 @@ $.ajax({
               },
             });
 
-            // 3rd chart doghnut chart for order status
-            const inTransit = res.data.inTransit;
-            const cancelled = res.data.cancelled;
-            const delivered = res.data.delivered;
-            const returned = res.data.returnedOrders;
-            const refunded = res.data.refunded;
-            const ctz = document.getElementById("myChart3");
-            new Chart(ctz, {
-              type: "doughnut",
-              data: {
-                labels: ["In-Transit", "Delivered", "Cancelled" , "Returned", "Refunded"],
-                datasets: [
-                  {
-                    label: "Order Status",
-                    data: [inTransit, delivered, cancelled, returned, refunded],
-        
-                    backgroundColor: [
-                      "rgb(255, 205, 86,0.9)",
-                      "rgb(34,139,34,0.9)",
-                      "rgb(255,80,66,0.9)",
-                      "rgb(0, 0, 255, 0.9)",
-                      "rgb(230, 80, 255, 0.9)"
-                    ],
-                    hoverOffset: 10,
-                  },
-                ],
-              },
-              options: {
-                scales: {
-                  xAxes: [
-                    {
-                      gridLines: {
-                        display: false,
-                      },
-                    },
-                  ],
-                  yAxes: [
-                    {
-                      gridLines: {
-                        display: false,
-                      },
-                    },
-                  ],
-                },
-              },
-            });
-
+            doughnutChart.data.datasets[0].data = [res.data.inTransit, res.data.delivered, 
+              res.data.cancelled, res.data.returnedOrders, res.data.refunded,];
+    
+              doughnutChart.update();
       }
 });
+
+
+
+
+  // ajax call for doughnut chart 
+  function doughNut(period){
+    console.log("dougnut front")
+    $.ajax({
+      url : '/admin/dashboard/' + period,
+      method : 'put',
+      success: (res)=> {
+       
+        doughnutChart.data.datasets[0].data = [res.data.inTransit, res.data.delivered, 
+          res.data.cancelled, res.data.returnedOrders, res.data.refunded,];
+
+          doughnutChart.update();
+      }
+    });
+  }
 
 // data table initialization
 $(function () {
@@ -171,12 +192,12 @@ $(function () {
 
 
 
-//downloading sales report in excel format 
-function exportToExcel(type, fileName, dl) {
-      var element = document.getElementById('dataTable');
-      var wb = XLSX.utils.table_to_book(element, { sheet: "salesReport" });
-      return dl ?
-        XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
-        XLSX.writeFile(wb, fileName || ('MySheetName.' + (type || 'xlsx')));
-   }
+// //downloading sales report in excel format using xlsx library
+// function exportToExcel(type, fileName, dl) {
+//       var element = document.getElementById('dataTable');
+//       var wb = XLSX.utils.table_to_book(element, { sheet: "salesReport" });
+//       return dl ?
+//         XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
+//         XLSX.writeFile(wb, fileName || ('MySheetName.' + (type || 'xlsx')));
+//    }
     

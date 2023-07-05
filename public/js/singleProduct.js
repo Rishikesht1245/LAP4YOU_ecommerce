@@ -21,12 +21,13 @@ window.onload=() =>{
 //===================================================================================
 
 
-// ======================= Adding to CART =================================//
-function addToCart(productID, productDetails) {
+// ======================= BUY NOW ========================================//
+function buyNow(productID, productDetails) {
   const ramCapacity = $('#ramCapacitySelect').val();
   let ssdPrice = JSON.parse(productDetails).find((details) => details.ramCapacity == ramCapacity);
   const ssdCapacity = ssdPrice.ssdCapacity;
   const price = ssdPrice.price;
+  let currentURL = window.location.href;
   $.ajax({
     url: "/users/cart",
     method: "post",
@@ -35,6 +36,36 @@ function addToCart(productID, productDetails) {
       price : price,
       ramCapacity : ramCapacity,
       ssdCapacity : ssdCapacity,
+      url : currentURL,
+    },
+    success: (res) => {
+      console.log(res.success);
+      if (res.success) {
+        window.location.href = "/users/cart";
+      } else {
+        window.location.href = "/users/signIn";
+      }
+    },
+  });
+}
+
+// ======================= Adding to CART =================================//
+function addToCart(productID, productDetails) {
+  const ramCapacity = $('#ramCapacitySelect').val();
+  let ssdPrice = JSON.parse(productDetails).find((details) => details.ramCapacity == ramCapacity);
+  const ssdCapacity = ssdPrice.ssdCapacity;
+  const price = ssdPrice.price;
+  let currentURL = window.location.href;
+  
+  $.ajax({
+    url: "/users/cart",
+    method: "post",
+    data: {
+      id: productID,
+      price : price,
+      ramCapacity : ramCapacity,
+      ssdCapacity : ssdCapacity,
+      url : currentURL,
     },
     success: (res) => {
       if (res.success === "countAdded") {
@@ -89,7 +120,7 @@ function updatePrice(ramDetails) {
 
 //========================= adding product to wish list ===============================
 function addToWishlist(productId) {
-  var currentURL = window.location.href;
+  let currentURL = window.location.href;
   $.ajax({
     url: "/users/wishlist",
     method: "patch",

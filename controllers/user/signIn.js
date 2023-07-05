@@ -24,6 +24,7 @@ exports.signInVerification = async(req, res)=> {
             const inputEmail = req.body.email.toLowerCase();
             const inputPassword = req.body.password;
             const userFind = await userCLTN.findOne({email : inputEmail});
+            console.log(req.session.currentUrl);
             if(userFind){
                   const hashedCheck = await bcrypt.compare(
                         inputPassword,
@@ -32,8 +33,9 @@ exports.signInVerification = async(req, res)=> {
                   if(userFind.access == true){
                         if(hashedCheck){
                               req.session.userId = userFind._id;
-                              if(req.session.currentWishlistUrl){
-                                    res.redirect(req.session.currentWishlistUrl);
+                              req.session.email = inputEmail;
+                              if(req.session.currentUrl){
+                                    res.redirect(req.session.currentUrl);
                               }
                               res.redirect('/');
                         }

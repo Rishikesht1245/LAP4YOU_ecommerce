@@ -1,7 +1,7 @@
 <%- include('../layouts/header') %> <%- include('../layouts/head-links') %>
 <div class="container line-break-top line-break text-center py-3">
   <span class="shadow-heading">All Orders</span>
-  <a href="/orders/return">Returned Orders</a>
+  <!-- <a href="/orders/return">Returned Orders</a> -->
 </div>
 
 <div class="container my-3">
@@ -45,7 +45,7 @@
                 </button>
              
             <% } else if (item.status == 'Out for delivery') { %>
-              <button class="btn btn-sm btn-dark w-100" onclick="ChangeOrderStatus('<%=item._id%>','<%=i%>', 'Delivered', true, '<%=item.summary[0].totalPrice%>')">
+              <button class="btn btn-sm btn-success w-100" onclick="ChangeOrderStatus('<%=item._id%>','<%=i%>', 'Delivered', true, '<%=item.summary[0].totalPrice%>')">
                 <i class="fa fa-truck text-warning"></i>
                 <span>Deliver</span>
               </button>
@@ -58,7 +58,7 @@
                   <% } %>
                 </span>
             <% } else if(item.status == 'Returned') { %>
-              <button class="btn btn-sm btn-dark w-100" onclick="ChangeOrderStatus('<%=item._id%>','<%=i%>', 'Refunded', false, '<%=item.summary[0].totalPrice%>')">
+              <button class="btn btn-sm btn-danger w-100" onclick="ChangeOrderStatus('<%=item._id%>','<%=i%>', 'Refunded', false, '<%=item.summary[0].totalPrice%>')">
                 <i class="fa fa-recycle text-warning"></i>
                 <span>Refund</span>
               </button>

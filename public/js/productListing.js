@@ -48,27 +48,42 @@ function removeFilter(filterBy){
 
 //========================= ajax call for sorting ====================================//
 
-function sortBy(order){
+function sortBy(order) {
   $.ajax({
-    url : '/products',
-    type : 'post',
-    data : {
-      sortBy:order,
+    url: '/products',
+    type: 'post',
+    data: {
+      sortBy: order,
     },
-    success : (res) => {
+    success: (res) => {
       swal.fire({
-        icon : 'success',
-        toast : true,
-        position : 'top-right',
-        showConfirmation : false,
-        timer : 1000,
-        animation : true,
-        title : 'Sorted',
+        icon: 'success',
+        toast: true,
+        position: 'top-right',
+        showConfirmation: false,
+        timer: 1000,
+        animation: true,
+        title: 'Sorted',
       });
-      $('#productContainer').load(location.href + ' #productContainer')
-    }
-  })
+
+      // Store the selected sort option in local storage
+      localStorage.setItem('selectedSort', order);
+
+      // Reload the page
+      window.location = '/products'
+    },
+  });
 }
+
+window.onload = function () {
+  const selectedSort = localStorage.getItem('selectedSort');
+  // Set the selected sort option in the UI
+  if (selectedSort) {
+    document.getElementById(selectedSort).checked = true;
+  }
+};
+
+
 
 
 //================ AJAX Call for Seraching ===============================//

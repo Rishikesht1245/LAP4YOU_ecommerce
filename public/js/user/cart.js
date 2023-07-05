@@ -24,6 +24,32 @@ function removeFromCart(productId){
       });
 };
 
+// checking out of stock while proceeding to checkout
+function proceedToCheckout(event, userCart, quantityInStock){
+      event.preventDefault();
+      const cart = JSON.parse(userCart);
+      const stock = JSON.parse(quantityInStock)
+
+      let outOfStock = false;
+      cart.products.forEach((product, i) =>  {
+            if(product.quantity > stock[i]){
+                  outOfStock = true;
+            }
+      });
+
+      if(outOfStock === true){
+            swal.fire({
+                  icon: 'error',
+                  title: 'Out of Stock',
+                  text: 'Quantity in Cart exceeds the available stock quantity',
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText: 'OK'
+                });
+      } else{
+            window.location = '/users/cart/checkout'
+      }
+}
+
 // add count of products in cart
 function addCount(cartId, i, ramCapacity, productId){
       $.ajax({
@@ -41,7 +67,7 @@ function addCount(cartId, i, ramCapacity, productId){
                   swal.fire({
                         icon: 'error',
                         title: 'Out of Stock',
-                        text: 'This product is currently out of stock.',
+                        text: 'Quantity in Cart exceeds the available stock quantity',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'OK'
                       });
@@ -64,3 +90,5 @@ function reduceCount(cartId, i){
             }
       });
 }
+
+

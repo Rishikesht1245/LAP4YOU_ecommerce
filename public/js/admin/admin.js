@@ -100,7 +100,53 @@ function showFormConfirmation(e, itemName, action) {
     confirmButtonClass: 'btn-lg btn-success',
     cancelButtonClass: 'btn-lg btn-danger',
   }).then((result) => {
-    if (result.isConfirmed && form) {
+    const paymentMethod = $('input[name="paymentMethod"]:checked').val();
+    if (result.isConfirmed && paymentMethod =='RazorPay') {
+      const formData = $('#checkout-form').serialize();
+
+      // ajax call to check out page
+      $.ajax({
+        url : '/users/cart/checkout',
+        method : 'POST',
+        data : formData,
+        success : (res) => {
+          const order = JSON.parse(res.order);
+          console.log('order');
+          console.log(order.receipt);
+           if(paymentMethod == 'RazorPay' && order){
+                var options = {
+                  "key": "rzp_test_52pMKUsVhUtk2U",
+                  "amount": order.amount, 
+                  "currency": "INR",
+                  "name": "LAP4YOU", //your business name
+                  "description": "Test Transaction",
+                  "image": "https://unsplash.com/s/photos/laptop",
+                  "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                  "callback_url":`/users/cart/checkout/${order.receipt}`,
+                  "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+                      "name": "LAP4YOU eCommerce", //your customer's name
+                      "email": "lap4you.ecommerce@gmail.com",
+                      "contact": "9000090000" //Provide the customer's phone number for better conversion rates 
+                  },
+                  "notes": {
+                      "address": "Razorpay Corporate Office"
+                  },
+                  "theme": {
+                      "color": "#3399cc"
+                  }
+              };
+
+              var rzp1 = new Razorpay(options);
+              rzp1.on('payment.failed', function (response) {
+                  console.log("paymentfialed");
+              });
+              rzp1.open();
+            }
+        }  
+        
+      });
+      
+    } if(result.isConfirmed && paymentMethod!= 'RazorPay'){
       form.submit();
     }
   });
@@ -255,3 +301,18 @@ function printInvoice(id){
   window.print();
   document.body.innerHTML = originalContents;
 }
+
+
+// ==================== ADD COUPON ==============================
+  function addCoupon(event) {
+    event.preventDefault();
+    console.log('Reached addCoupon');
+    const form = event.target.form;
+
+    const productCheckBoxes = $('input[type="checkbox"]:checked');
+    const selectedProducts = Array.from(productCheckBoxes).map(checkBox => checkBox.value);
+
+    const selectedProductsInput = $('#selectedProducts');
+    selectedProductsInput.val(JSON.stringify(selectedProducts));
+    form.submit();
+  };

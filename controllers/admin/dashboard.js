@@ -88,44 +88,101 @@ exports.chartData = async(req, res)=> {
                   },
             ]);
 
-            //collecting delivered orders
-            const deliveredOrders = await orderCLTN.find({status : "Delivered"}).countDocuments();
-            console.log(deliveredOrders)
-            //collecting cancelled and in-transist orders 
-            let returnedOrders = await orderCLTN.find({status : "Returned"}).countDocuments();
-            console.log(returnedOrders);
-            let notDelivered = await orderCLTN.aggregate([
-                  {
-                        $match :{
-                              delivered : false
-                        }  
-                  },{
+            // dougnut chart initialization
+             //collecting delivered orders
+             const deliveredOrders = await orderCLTN.find({status : "Delivered"}).countDocuments();
+             console.log(deliveredOrders)
+             //collecting cancelled and in-transist orders 
+             let returnedOrders = await orderCLTN.find({status : "Returned"}).countDocuments();
+             console.log(returnedOrders);
+             let notDelivered = await orderCLTN.aggregate([
+                   {
+                         $match :{
+                               delivered : false,
+                               orderedOn:{
+                                    $gte: new Date((new Date().getTime() - (1 * 24 * 60 * 60 * 1000)))
+                              }
+                         }  
+                   },{
                         $group:{
                               _id : "$status",
                               status : {$sum : 1},
                         },
                   },
-            ]);
-          
-            let inTransit;
-            let cancelled;
-            let refunded;
-            notDelivered.forEach((order) => {
-                  if(order._id === "In-transit"){
-                        inTransit = order.status;
-                  }else if(order._id === "Cancelled"){
-                        cancelled = order.status;
-                  }else if(order._id === "Refunded"){
-                        refunded = order.status
-                  }
-            });
-            console.log(notDelivered);
-            const delivered = deliveredOrders;
+             ]);
+           
+             let inTransit;
+             let cancelled;
+             let refunded;
+             notDelivered.forEach((order) => {
+                   if(order._id === "In-transit"){
+                         inTransit = order.status;
+                   }else if(order._id === "Cancelled"){
+                         cancelled = order.status;
+                   }else if(order._id === "Refunded"){
+                         refunded = order.status
+                   }
+             });
+             console.log(notDelivered);
+             const delivered = deliveredOrders;
+
+           
             res.json({
-                  data : {orderData, inTransit, cancelled, delivered, returnedOrders, refunded}
+                  data : {orderData, inTransit, delivered, cancelled, returnedOrders, refunded}
             });
 
       } catch (error) {
             console.log("Error in Chart Data : " + error);
+      }
+};
+
+// select period for doughnut chart
+exports.doughNutData = async(req, res) => {
+
+      try {
+            const period = req.params.id;
+      
+             //collecting delivered orders
+             const deliveredOrders = await orderCLTN.find({status : "Delivered"}).countDocuments();
+            
+             //collecting cancelled and in-transist orders 
+             let returnedOrders = await orderCLTN.find({status : "Returned"}).countDocuments();
+             let notDelivered = await orderCLTN.aggregate([
+                   {
+                         $match :{
+                               delivered : false,
+                               orderedOn:{
+                                    $gte: new Date((new Date().getTime() - (period * 24 * 60 * 60 * 1000)))
+                              }
+                         }  
+                   },{
+                        $group:{
+                              _id : "$status",
+                              status : {$sum : 1},
+                        },
+                  },
+             ]);
+           
+             let inTransit;
+             let cancelled;
+             let refunded;
+             notDelivered.forEach((order) => {
+                   if(order._id === "In-transit"){
+                         inTransit = order.status;
+                   }else if(order._id === "Cancelled"){
+                         cancelled = order.status;
+                   }else if(order._id === "Refunded"){
+                         refunded = order.status
+                   }
+             });
+             console.log(notDelivered);
+             const delivered = deliveredOrders;
+      
+             res.json({
+                  data:{inTransit, cancelled, delivered, returnedOrders, refunded}
+             });
+            
+      } catch (error) {
+            console.log("Error in doughNut Chart : " + error);
       }
 };
