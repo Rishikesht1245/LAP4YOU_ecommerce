@@ -4,6 +4,7 @@ exports.page = async (req, res)=> {
       try{
             res.render('admin/partials/signIn', {
                   documentTitle : 'Admin SignIn Page | LAP4YOU',
+                  admin : true
             })
       } catch(err){
             console.log('Error occured while rendering the Admin sign in page' + err);

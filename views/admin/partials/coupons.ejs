@@ -125,7 +125,7 @@
                   >
                     Close
                   </button>
-                  <button type="submit" class="btn btn-success" onclick="addCoupon(event)"">
+                  <button type="submit" class="btn btn-success" onclick="addCoupon(event)">
                     Save changes
                   </button>
                   </form>
@@ -170,8 +170,8 @@
               <td><%= moment(item.startingDate).format('ll')  %></td>
               <td><%= moment(item.expiryDate).format('ll') %></td>
               <td class="text-center d-flex flex-column">
-                <a href="/admin/product_management/edit?id=<%= item._id %>" onclick="showProductConfirmation(event, this, '<%= item.name %>', 'edit')" class="btn btn-dark text-white btn-sm my-1">Edit</a>
-                <% if((item.active==true) && (item.expiryDate < Date.now())){ %> 
+                <a href="/admin/coupon_management/edit?id=<%= item._id %>" onclick="showProductConfirmation(event, this, '<%= item.name %>', 'edit')" class="btn btn-dark text-white btn-sm my-1">Edit</a>
+                <% if((item.active==true) && (item.expiryDate > Date.now())){ %> 
                 <a href="/admin/coupon_management/changeActivity?id=<%= item._id %>" onclick="showProductConfirmation(event,this, 'status', 'change')" class="btn btn-success text-white btn-sm  my-1">Active</a>
               <% }else{ %>
                 <a href="/admin/coupon_management/changeActivity?id=<%= item._id %>" onclick="showProductConfirmation(event,this, 'status', 'change')" class="btn btn-danger text-white btn-sm my-1">In-active</a>

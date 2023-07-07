@@ -2,6 +2,13 @@
 <div class="container line-break-top line-break text-center py-3">
   <span class="shadow-heading">DashBoard</span>
 </div>
+
+<% if (flash.error) { %>
+  <div class="alert alert-danger text-center">
+    <%= flash.error %>
+  </div>
+<% } %>
+
 <div class="col-md-10 mx-auto my-3">
   <div class="row m-0">
       <div class="col-xl-3 col-lg-6 mb-2">
@@ -185,13 +192,13 @@
   <div
     class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around"
   >
-    <a class="col-lg-3 pb-2 text-center " href="#">Track Shipping</a>
-    <a class="col-lg-3 pb-2 text-center" href="#">Contact Us</a>
-    <a class="col-lg-3 pb-2 text-center" href="#">Customer Care</a>
-    <a class="col-lg-3 pb-2 text-center" href="#">About us</a>
+  <a class="col-lg-3 pb-2 text-center " href="#"><%if(locals.session){%>Change Password<%}else{%>Forgot Password<%}%></a>
+    <a class="col-lg-3 pb-2 text-center" href="/manager"> <%if(admin){%>Manager Sign In<%}else{%>Admin sign In<%}%> </a>
+    <a class="col-lg-3 pb-2 text-center" href="#">Privacy Policy</a>
+    <a class="col-lg-3 pb-2 text-center" href="#">Terms and Conditions</a>
   </div>
-  <div class="copyright bg-theme py-2 text-center text-white">
-    <span>Copyright © 2023 | LAP4YOU | Made by <a class="text-grey" href="https://rishikesht1245.github.io/Rishikesh_website/">Rishikesh T</a></span>
+  <div class="copyright bg-theme py-2 text-center">
+    <span style="color: white;">Copyright © 2023 | LAP4YOU | Made by <a href="https://rishikesht1245.github.io/Rishikesh_website/">Rishikesh T</a></span>
   </div>
 </footer>
 <!-- include xlsx cdn -->

@@ -48,8 +48,8 @@
         <div
           class="container px-3 d-flex header-top-links justify-content-around"
         >
-          <a class="px-3" href="/">ADMIN HOME PAGE</a>
-          <%if(locals.session){%>
+          <a class="px-3" href="/admin/dashboard"><%if(admin){%>ADMIN<%}else{%>Manager<%}%> HOME PAGE</a>
+          <%if(admin){%>
 
             <span style="color: white;"><a href="/admin/signOut">Sign Out</a></span>
 

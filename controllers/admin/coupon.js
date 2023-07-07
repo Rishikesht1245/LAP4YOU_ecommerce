@@ -9,11 +9,10 @@ exports.page = async(req, res) => {
       try {
             const coupons = await couponCLTN.find().populate('product category');
 
-            console.log(coupons)
 
             // for category and product based filtration
             const categories = await categoryCLTN.find({isDeleted : false});
-            const products = await productCLTN.find();
+            const products = await productCLTN.find({isDeleted : false});
 
             res.render('admin/partials/coupons', {
                   session: req.session.adminId,
@@ -22,6 +21,7 @@ exports.page = async(req, res) => {
                   moment,
                   categories,
                   products,
+                  admin : req.admin,
             });
 
       } catch (error) {
@@ -74,3 +74,53 @@ exports.changeActivity = async(req, res) => {
             console.log('Error in Change Activity Of Coupon ' + error);
       }
 };
+
+//edit coupon Page
+exports.editCouponPage = async(req, res) => {
+      try {
+            const couponId = req.query.id;
+            const currentCoupon = await couponCLTN.findById(couponId)
+                                          .populate('product category');
+
+            const categories = await categoryCLTN.find({isDeleted:false});
+
+            const products = await productCLTN.find({isDeleted : false});
+            
+            res.render('admin/partials/editCoupon', {
+                  coupon : currentCoupon,
+                  categories,
+                  products,
+                  moment,
+                  admin : req.admin,
+            });
+      } catch (error) {
+            console.log("Error in edit coupon : " + error);
+      }
+};
+
+
+// edit coupon post 
+exports.editCoupon = async(req, res) => {
+      try {
+           const couponId = req.query.id;
+           const selectedProducts = JSON.parse(req.body.selectedProducts);
+           const {name, code, discount, category, startingDate, expiryDate} = req.body;
+
+           //updating in collection
+           await couponCLTN.findByIdAndUpdate(couponId, {
+            $set:{
+                  product : selectedProducts,
+                  name,
+                  code, 
+                  discount,
+                  category,
+                  startingDate,
+                  expiryDate,
+            }
+           });
+
+           res.redirect('/admin/coupon_management');
+      } catch (error) {
+            console.log("Error in edit coupon : " +error);
+      }
+}

@@ -6,10 +6,12 @@ const sharp = require('sharp');
 exports.bannerPage = async (req, res)=> {
       try{
             const allBanners = await bannerCLTN.find({}).sort({_id : -1});
+
             res.render('admin/partials/banner', {
                   session : req.session.admin,
                   documentTitle : 'Banner Management | LAP4YOU',
                   allBanners : allBanners,
+                  admin : req.admin,
             });
       }
       catch(error){
@@ -39,11 +41,13 @@ exports.addBanner = async (req, res) => {
       }
       catch(error){
             console.log('Error in Add new Banner '+ error);
+            
             res.render('admin/partials/banner',{
                   session : req.body.session,
                   errorMessage: 'Unable to add new Banner',
                   documentTitle : 'Banner Management | LAP4YOU',
-                  allBanners : allBanners
+                  allBanners : allBanners,
+                  admin : req.admin,
             });
       }
 };

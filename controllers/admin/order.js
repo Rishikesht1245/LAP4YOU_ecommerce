@@ -26,6 +26,7 @@ exports.viewAll = async(req, res) => {
                   session : req.session.admin,
                   allOrders,
                   moment,
+                  admin : req.admin,
             });
       } catch (error) {
             console.log("Error in Order Admin Page : " + error);
@@ -143,6 +144,7 @@ exports.details = async(req, res) => {
                   moment,
                   documentTitle : 'LAP4YOU | eCommerce',
                   currentOrder,
+                  admin : true,
             });
       } catch (error) {
             console.log('Error in Order Details Page : ' + error);

@@ -10,6 +10,7 @@ exports.viewAll = async (req, res) =>{
                   documentTitle : "Customer Management | LAP4YOU",
                   allCustomers,
                   session: req.session.admin,
+                  admin : req.admin,
             });
       }catch(error){
             console.log('Error in Listing All User :' + error);

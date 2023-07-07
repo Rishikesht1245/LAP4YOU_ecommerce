@@ -316,3 +316,67 @@ function printInvoice(id){
     selectedProductsInput.val(JSON.stringify(selectedProducts));
     form.submit();
   };
+
+
+  function editCoupon(event) {
+    event.preventDefault();
+    console.log('Reached edit coupon');
+    const form = event.target;
+  
+    const productCheckBoxes = $('input[type="checkbox"]:checked');
+    const selectedProducts = Array.from(productCheckBoxes).map(checkBox => checkBox.value);
+  
+    const selectedProductsInput = $('#selectedProducts');
+    selectedProductsInput.val(JSON.stringify(selectedProducts));
+    
+    form.submit();
+  }
+  
+// =======================MANAGER SECTION ==============================================
+
+  // ===================== MANAGER CHANGE ACCESS ========================================
+  function changeMangerAccess(id, access){
+   
+    $.ajax({
+      url: '/admin/manager_management/'+id,
+      type: "patch",
+      data:{
+        id,
+        currentAccess : access,
+      },
+      success: (res) => {
+        $("#" +id).load(location.href + " #" +id);
+      }
+    });
+  }
+
+
+  // manager roles check boxes converting to a single array before submitting
+  function addManager(event) {
+
+    event.preventDefault();
+    const form = event.target.form;
+    console.log(form);
+
+    const roleCheckBoxes = $('input[type="checkbox"]:checked');
+    const selectedRoles = Array.from(roleCheckBoxes).map(checkBox => checkBox.value);
+
+    const selectedRolesInput = $('#selectedRoles');
+    selectedRolesInput.val(JSON.stringify(selectedRoles));
+    form.submit();
+  };
+
+
+  // edit manager
+  function editManager(event){
+    event.preventDefault();
+    const form = event.target;
+    console.log(form);
+
+    const roleCheckBoxes = $('input[type="checkbox"]:checked');
+    const selectedRoles = Array.from(roleCheckBoxes).map(checkBox => checkBox.value);
+
+    const selectedRolesInput = $('#selectedRoles');
+    selectedRolesInput.val(JSON.stringify(selectedRoles));
+    form.submit();
+  }

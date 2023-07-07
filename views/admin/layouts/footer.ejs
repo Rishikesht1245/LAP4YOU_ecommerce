@@ -4,10 +4,10 @@
   <div
     class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around"
   >
-    <a class="col-lg-3 pb-2 text-center " href="#">Track Shipping</a>
-    <a class="col-lg-3 pb-2 text-center" href="#">Contact Us</a>
-    <a class="col-lg-3 pb-2 text-center" href="#">Customer Care</a>
-    <a class="col-lg-3 pb-2 text-center" href="#">About us</a>
+  <a class="col-lg-3 pb-2 text-center " href="#"><%if(admin !== "undefined"){%>Change Password<%}else{%>Forgot Password<%}%></a>
+    <a class="col-lg-3 pb-2 text-center" href="<%if(admin){%>/manager<%}else{%>/admin<%}%>"> <%if(admin){%>Manager Sign In<%}else{%>Admin sign In<%}%> </a>
+    <a class="col-lg-3 pb-2 text-center" href="#">Privacy Policy</a>
+    <a class="col-lg-3 pb-2 text-center" href="#">Terms and Conditions</a>
   </div>
   <div class="copyright bg-theme py-2 text-center">
     <span style="color: white;">Copyright © 2023 | LAP4YOU | Made by <a href="https://rishikesht1245.github.io/Rishikesh_website/">Rishikesh T</a></span>
@@ -36,6 +36,16 @@
       new $.fn.dataTable.FixedHeader(table);
     });
     </script> 
+
+<!-- phone number validator -->
+<script>
+  function checkPhoneNumberLength(input) {
+    const maxLength = 10;
+    if (input.value.length > maxLength) {
+      input.value = input.value.slice(0, maxLength);
+    }
+  }
+  </script>
     
     <script src="/public/js/admin/admin.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

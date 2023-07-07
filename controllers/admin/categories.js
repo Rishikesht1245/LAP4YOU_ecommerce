@@ -8,14 +8,16 @@ exports.view = async(req, res) =>{
             res.render('admin/partials/categories.ejs',{
                   session: req.session.admin,
                   documentTitle : 'Category Management | LAP4YOU',
-                  details : categoryDetails
+                  details : categoryDetails,
+                  admin : req.admin,
             });
       }
       catch(error){
             res.render('admin/partials/dashboard',{
                   documentTitle : 'Dash Board | LAP4YOU',
                   session : req.session.admin,
-                  errorMessage : error
+                  errorMessage : error,
+                  admin : req.admin,
             });
       }
 };
@@ -28,6 +30,7 @@ exports.addCategory = async(req, res) => {
             inputCategoryName = inputCategoryName.toUpperCase();
             const categoryDetails = await categoryCLTN.find({});
             const duplicateCheck = await categoryCLTN.findOne({name:inputCategoryName});
+
             if(duplicateCheck){
                   // checking if category name deleted, if yes retrieve the soft deleted category
                   if(duplicateCheck.isDeleted == true){
@@ -38,13 +41,15 @@ exports.addCategory = async(req, res) => {
                                documentTitle: 'Category Management | LAP4YOU',
                                details : categoryDetails,
                                session : req.session.admin,
+                               admin : req.admin,
                          });
                   }else{
                         res.render('admin/partials/categories',{
                               documentTitle: 'Category Management | LAP4YOU',
                               details : categoryDetails,
                               session : req.session.admin,
-                              errorMessage : `Category ${inputCategoryName} already exists`
+                              errorMessage : `Category ${inputCategoryName} already exists`,
+                              admin : req.admin,
                         });
                   }
             } else{
@@ -68,10 +73,12 @@ exports.editCategoryPage = async(req, res) => {
       try{
             const currentCategory = await categoryCLTN.findById(categoryId);
             req.session.currentCategory = currentCategory;
+
                   res.render('admin/partials/editCategory', {
                         session : req.session.admin,
                         documentTitle : 'Category Management | LAP4YOU',
                         category : currentCategory,
+                        admin : req.admin,
                   });
       }
       catch(error){
@@ -99,7 +106,8 @@ exports.editCategory = async(req, res) => {
                         documentTitle:'Edit Category | LAP4YOU',
                         session : req.session.admin,
                         category : currentCategory,
-                        errorMessage : `Category ${updatedName} alredy exists..`
+                        errorMessage : `Category ${updatedName} alredy exists..`,
+                        admin : req.admin,
                   })
          }
       }

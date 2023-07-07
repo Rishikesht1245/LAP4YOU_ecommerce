@@ -4,6 +4,8 @@ const app = express();
 const path = require('path');
 const nocache = require('nocache');
 
+
+
 //configuring .env
 dotenv.config({path:'config.env'});
 
@@ -26,6 +28,7 @@ require('./config/db');
 app.use(nocache());
 
 
+
 // setting view engine to ejs
 app.set('view engine', 'ejs');
 
@@ -41,6 +44,9 @@ app.use(
       cookie: { secure: false },
     })
  );
+
+ const flash = require('connect-flash');
+ app.use(flash());
 
 
 // serving the static files
@@ -60,6 +66,10 @@ app.use('/', indexRouter);
 //routing to user router
 const userRouter = require('./routes/user');
 app.use('/users', userRouter);
+
+// routing to manger router
+const managerRouter = require('./routes/manager');
+app.use('/manager', managerRouter);
 
 
 // 404 rendering

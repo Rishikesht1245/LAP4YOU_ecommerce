@@ -32,7 +32,7 @@ exports.view = async (req, res)=> {
             }
 
             res.render('admin/partials/dashboard', {
-                  session : req.session.admin,
+                  session : req.session.admin || req.session.manager,
                   recentOrders,
                   moment,
                   orderCount,
@@ -40,6 +40,8 @@ exports.view = async (req, res)=> {
                   productCount,
                   totalRevenue,
                   documentTitle : 'Admin Dashboard | LAP4YOU',
+                  admin : req.admin,
+                  flash : req.flash(),
             });
       } catch (error) {
             console.log("Error in DashBoard Page : " + error);

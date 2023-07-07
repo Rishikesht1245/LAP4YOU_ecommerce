@@ -1,7 +1,7 @@
 <%- include('../layouts/header') %>
 <div class="container">
   <div class="line-break text-center py-4">
-    <span class="shadow-heading">Welcome Admin</span>
+    <span class="shadow-heading">Welcome <%if(admin){%>Admin<%}else{%>Manager<%}%> </span>
   </div>
   <div class="row my-4 pt-4">
     <span class="text-center pb-3" style="font-size: 0.8rem; text-transform: none;">
@@ -36,4 +36,4 @@
     </div>
   </div>
 </div>
-<%- include('../layouts/footer-sign-in') %>
+<%- include('../layouts/footer') %>

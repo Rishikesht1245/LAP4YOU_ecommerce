@@ -3,12 +3,14 @@ const brandCLTN = require('../../models/admin/brandDetails');
 
 // rendering the brands list page
 exports.view = async(req, res) => {
+   
       try{
             const brandDetails = await brandCLTN.find({isDeleted:false});
             res.render('admin/partials/brands', {
                   session : req.session.admin,
                   documentTitle : 'Brand Management | LAP4YOU',
                   details : brandDetails,
+                  admin : req.admin,
             });
       }
       catch(error){
@@ -16,6 +18,7 @@ exports.view = async(req, res) => {
                   session : req.session.admin,
                   documentTitle : 'Dash Board | LAP4YOU',
                   errorMessage : error,
+                  admin : req.admin,
             });
       }
 };
@@ -23,10 +26,12 @@ exports.view = async(req, res) => {
 
 // adding new brand
 exports.addBrand = async (req, res) => {
+      
       try {
             let inputBrandName = req.body.brand;
             inputBrandName = inputBrandName.toUpperCase();
             const brandDetails = await brandCLTN.find({});
+
             // duplication check
             const duplicateCheck = await brandCLTN.findOne({name:inputBrandName});
             if(duplicateCheck){
@@ -39,6 +44,7 @@ exports.addBrand = async (req, res) => {
                                documentTitle: 'Brand Management | LAP4YOU',
                                details : brandDetails,
                                session : req.session.admin,
+                               admin : req.admin,
                          });
                   }else{
                         res.render('admin/partials/brands', {
@@ -46,6 +52,7 @@ exports.addBrand = async (req, res) => {
                               documentTitle : 'Brand Management | LAP4YOU',
                               details : brandDetails,
                               errorMessage : `Brand ${inputBrandName} already exists`,
+                              admin : req.admin,
                         });
                   }
             } else{
@@ -66,10 +73,12 @@ exports.editBrandPage = async(req, res)=>{
             const brandId = req.query.id;
             const currentBrand = await brandCLTN.findById(brandId);
             req.session.currentBrand = currentBrand;
+            
             res.render('admin/partials/editBrands', {
                   session : req.session.admin,
                   documentTitle:'Brand Management | LAP4YOU',
                   brand : currentBrand,
+                  admin : req.admin,
             })
       } catch (error) {
             console.log('Error in GET category Page ' + error);
@@ -90,11 +99,13 @@ exports.editBrand = async (req, res) => {
                   );
                   res.redirect('/admin/brands');
             } else{
+                 
                   res.render('admin/partials/editBrands',{
                         documentTitle:'Edit Brand | LAP4YOU',
                         session : req.session.admin,
                         brand : currentBrand,
-                        errorMessage : `Brand ${updatedName} alredy exists..`
+                        errorMessage : `Brand ${updatedName} alredy exists..`,
+                        admin : req.admin,
                   })
             }
       } catch (error) {

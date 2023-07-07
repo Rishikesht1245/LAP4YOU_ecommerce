@@ -1,0 +1,98 @@
+<%- include('../layouts/header') %> <%- include('../layouts/head-links') %>
+
+<div class="container mx-auto" style="text-decoration: none">
+  
+      <form action="" method="post" class="container row flex-column my-5 mx-auto" onsubmit="editCoupon(event)">
+          <div class="mb-3 col-lg-6">
+            <label for="name" class="px-1" style="font-size: 0.75rem;">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              value="<%= coupon.name %>"
+              name="name"
+              placeholder="Name"
+            />
+          </div>
+
+          <div class="mb-3 col-lg-6">
+            <label for="name" class="px-1" style="font-size: 0.75rem;">Code</label>
+            <input
+              type="text"
+              class="form-control"
+              id="code"
+              value="<%= coupon.code %>"
+              name="code"
+              placeholder="Code"
+            />
+          </div>
+
+          <div class="mb-3 col-lg-6">
+            <label for="name" class="px-1" style="font-size: 0.75rem;">Discount</label>
+            <input
+              type="number"
+              class="form-control"
+              id="discount"
+              value="<%= coupon.discount %>"
+              name="discount"
+              placeholder="Discount"
+            />
+          </div>
+
+          <!-- Category -->
+          <div class="mb-3 col-lg-6 ">
+            <label for="name" class="px-1" style="font-size: 0.75rem;">SELECT CATEGORY</label>
+            <select id="inputState" class="form-control" name="category" required> 
+              <%categories.forEach((data)=>{%> 
+                <option value="<%=data._id%>" <%if(data._id == coupon.category._id){%> selected <%}%>><%=data.name%></option> 
+              <%})%> 
+            </select>
+          </div>
+
+          <!-- Product select -->
+      <div class="mb-3"> SELECT PRODUCT : <br>
+            <% products.forEach(function(product, i) { %>
+                  <label class="my-1 fs-7">
+                  <input type="checkbox" name="option<%= i %>" value="<%= product._id %>" <% if (coupon.product.some(p => p.name == product.name)) { %> checked <% } %>>
+                  <%= product.name %>
+                  </label>
+                  <br>
+            <% }) %>
+      </div>
+
+      <div class="mb-3 col-lg-6">
+            <label for="name" class="px-1" style="font-size: 0.75rem;">Starting Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="startingDate"
+              value="<%= moment(coupon.startingDate).format('YYYY-MM-DD') %>"
+              name="startingDate"
+              placeholder="startingDate"
+            />
+      </div>
+
+      <div class="mb-3 col-lg-6">
+            <label for="name" class="px-1" style="font-size: 0.75rem;">Expiry Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="expiryDate"
+              value="<%= moment(coupon.expiryDate).format('YYYY-MM-DD') %>"
+              name="expiryDate"
+              placeholder="expiryDate"
+            />
+      </div>
+
+      <!-- for attaching the selected products using js -->
+      <input type="hidden" id="selectedProducts" name="selectedProducts" value="">
+    
+          <div class="float-end mb-5">
+            <a href="/admin/coupon_management" onclick="showProductConfirmation(event, this, '', 'discard')" class="btn btn-secondary text-white my-1">Cancel</a>
+            <button type="submit" class="btn btn-success my-1" id="editCoupon-btn" >
+              <span>Update Coupon</span>
+            </button>
+          </div>
+      </form>
+</div>
+<%- include('../layouts/footer') %>

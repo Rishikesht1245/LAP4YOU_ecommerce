@@ -43,9 +43,15 @@
         <li class="nav-item">
           <a class="nav-link px-3" href="/admin/banner_management">Banners</a>
         </li>
+        <%if(admin){%>
         <li class="nav-item">
-          <a class="nav-link px-3" href="/admin/vendor_management">Vendors</a>
+          <a class="nav-link px-3" href="/admin/manager_management" >Managers</a>
         </li>
+        <%}else{%>
+          <li class="nav-item">
+            <a class="nav-link px-3" href="/profile" >Profile</a>
+          </li>
+        <%}%>
       </ul>
     </div>
   </div>

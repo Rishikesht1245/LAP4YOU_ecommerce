@@ -1,0 +1,64 @@
+<%- include('../layouts/header') %> <%- include('../layouts/head-links') %>
+
+<div class="container  col-lg-6" style="text-decoration: none border-1">
+      <form action="" method="post" class="container row flex-column my-5 mx-auto" onsubmit="editManager(event)">
+            <div class="mb-3 ms-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    placeholder="Name"
+                    name = "name"
+                    value="<%= manager.name %>"
+                    />
+            </div>
+
+            <div class="mb-3 ms-3">
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="Email"
+                    name = "email"
+                    value="<%= manager.email %>"
+                    />
+            </div>
+
+            <div class="mb-3 ms-3">
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="number"
+                    placeholder="Phone Number"
+                    name = "number"
+                    value="<%= manager.number %>"
+                    oninput="checkPhoneNumberLength(this)"
+                    />
+            </div>
+
+              <!-- Select roles -->
+              <div class="mb-3 ms-3"> SELECT ROLES : <br>
+                  <% rolesArray.forEach(function(type, i) { %>
+                        <label class="my-1 fs-7">
+                        <input type="checkbox" name="option<%=i %>" value=" <%=type %>" <% if (manager.roles.includes(type)) { %> checked <% } %>>
+                        <%=type  %>
+                        </label>
+                        <br>
+                  <% }) %>
+              </div>
+
+               <!-- for attaching the selected products using js -->
+                  <input type="hidden" id="selectedRoles" name="selectedRoles" value="">
+            
+                  <div class="float-end mb-5">
+                        <a href="/admin/coupon_management" onclick="showProductConfirmation(event, this, '', 'discard')" class="btn btn-secondary text-white my-1">Cancel</a>
+                        <button type="submit" class="btn btn-success my-1" id="editCoupon-btn" >
+                        <span>Update Manager</span>
+                        </button>
+                  </div>
+
+  
+      </form>
+</div>
+
+<%- include('../layouts/footer') %>

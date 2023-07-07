@@ -48,6 +48,7 @@
     var bs_modal = $('#modal');
     var image = document.getElementById('image');
     var cropper, reader, file;
+    var formData = new FormData();
 
     $("body").on("change", ".image", function(e) {
       var files = e.target.files;
@@ -90,21 +91,11 @@
 
       canvas.toBlob(function(blob) {
         var file = new File([blob], 'croppedImage.png', { type: 'image/png' });
-        var formData = new FormData();
 
         formData.append('croppedImage', file);
         formData.append('name', $("#form-holder").val());
 
-        $.ajax({
-          url: "/users/profile",
-          type: "POST",
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function(data) {
-            bs_modal.modal('hide');
-          }
-        });
+        bs_modal.modal('hide');
 
         var previewImage = $(".preview-img");
         $(".preview-img").removeClass('hide');
@@ -131,7 +122,16 @@
         cancelButtonClass: 'btn-lg btn-danger',
       }).then((result) => {
         if(result.isConfirmed){
-          window.location = '/users/profile'
+          $.ajax({
+          url: "/users/profile",
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(data) {
+            window.location.href = '/users/profile'
+          }
+        });
         }
       });
     });

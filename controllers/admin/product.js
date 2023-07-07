@@ -4,7 +4,7 @@ const categoryCLTN = require('../../models/admin/categoryDetails');
 const productCLTN = require('../../models/admin/productDetails');
 const sharp = require('sharp');
 const router = require('../../routes/admin');
-const sessionCheck = require('../../middlewares/admin/sessioncheck');
+
 
 
 // Products view page
@@ -19,6 +19,7 @@ exports.view = async(req, res) => {
                   categories : categoryDetails,
                   brands : brandDetails,
                   products : productDetails,
+                  admin : req.admin,
             });
       }
       catch(error){
@@ -99,7 +100,8 @@ exports.editPage = async (req, res) => {
                   documentTitle : 'Edit Product | LAP4YOU',
                   product : currentProduct,
                   categories : categories,
-                  brands : brands
+                  brands : brands,
+                  admin : req.admin,
             })
       }
       catch(error){
