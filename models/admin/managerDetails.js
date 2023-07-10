@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const bcrypt = require('bcrypt');
 
 const managerSchema = new mongoose.Schema({
       name : {
@@ -25,6 +25,17 @@ const managerSchema = new mongoose.Schema({
       access : {
             type : Boolean,
             default : true,
+      }
+});
+
+
+managerSchema.pre('save', async function(next){
+      try {
+            const hashedPassword = await bcrypt.hash(this.password, 10);
+            this.password = hashedPassword;
+            next();
+      } catch (error) {
+           next(error); 
       }
 });
 

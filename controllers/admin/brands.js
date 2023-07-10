@@ -58,6 +58,7 @@ exports.addBrand = async (req, res) => {
             } else{
                   const newBrand = new brandCLTN({
                         name : inputBrandName,
+                        updatedBy :  req.session.manager? req.session.manager.name : req.session.admin.name,
                   });
                   await newBrand.save();
                   res.redirect('/admin/brands');
@@ -95,7 +96,10 @@ exports.editBrand = async (req, res) => {
             if(duplicateCheck == null){
                   await brandCLTN.updateOne(
                         {_id : currentBrand._id },
-                        {name : updatedName}
+                        {
+                          name : updatedName, 
+                          updatedBy : req.session.manager? req.session.manager.name : req.session.admin.name,
+                        }
                   );
                   res.redirect('/admin/brands');
             } else{
@@ -118,7 +122,10 @@ exports.deleteBrand = async (req, res) => {
             const brandId = req.query.id;
             await brandCLTN.updateOne(
                   {_id : brandId},
-                  {isDeleted : true});
+                  {
+                        isDeleted : true ,
+                        updatedBy :  req.session.manager? req.session.manager.name : req.session.admin.name,
+                  });
             res.redirect('/admin/brands');
       }
       catch(error){

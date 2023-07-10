@@ -13,6 +13,7 @@ const couponSchema = new mongoose.Schema({
             type : Boolean,
             default : true,
       },
+      updatedBy : String,
 });
 
 const couponCLTN = new mongoose.model("Coupons", couponSchema);

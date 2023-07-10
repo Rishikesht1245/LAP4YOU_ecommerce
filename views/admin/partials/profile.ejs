@@ -1,0 +1,56 @@
+<%- include('../layouts/header') %> <%- include('../layouts/head-links') %>
+
+<style>
+      .profile-card {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+  
+      .profile-card h3 {
+        text-align: center;
+      }
+  
+      .profile-card .form-group {
+        margin-bottom: 20px;
+      }
+
+      .profile-card label {
+      font-weight: bold;
+    }
+
+    .profile-card .form-control {
+      width: 100%;
+    }
+  </style>
+
+<div class="container w-50 my-5">
+      <div class="profile-card">
+        <h3>Profile</h3>
+        <form>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" class="form-control" value="<%= currentManager.name %>" readonly>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" class="form-control" value="<%= currentManager.email %>" readonly>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" class="form-control" value="<%= currentManager.number %>" readonly>
+          </div>
+          <div class="form-group">
+            <label for="roles">Roles</label>
+            <input type="text" id="roles" class="form-control" value="<%= currentManager.roles %>" readonly>
+          </div>
+          <a href="/manager/changePassword" class="btn btn-sm btn-dark  mt-3 position-relative start-50  translate-middle">Change Password</a>
+        </form>
+
+      </div>
+</div>
+
+<%- include('../layouts/footer') %>

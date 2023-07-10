@@ -27,6 +27,13 @@ exports.profilePafge = async (req, res) => {
             });
       } catch (error) {
             console.log('Error in User Profile Page : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };
 
@@ -45,5 +52,12 @@ exports.updateProfile = async (req, res) => {
             res.redirect('/users/profile');
      } catch (error) {
             console.log('Error in Update user profile :' +error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
      }
 }

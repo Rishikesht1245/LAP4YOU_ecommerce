@@ -4,7 +4,12 @@
   <div
     class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around"
   >
-  <a class="col-lg-3 pb-2 text-center " href="#"><%if(admin !== "undefined"){%>Change Password<%}else{%>Forgot Password<%}%></a>
+  <% if (typeof admin !== "undefined") { %>
+    <a class="col-lg-3 pb-2 text-center" href="/manager/changePassword">Change Password</a>
+<% } else { %>
+    <a class="col-lg-3 pb-2 text-center" href="/manager/changePassword">Forgot Password</a>
+<% } %>
+
     <a class="col-lg-3 pb-2 text-center" href="<%if(admin){%>/manager<%}else{%>/admin<%}%>"> <%if(admin){%>Manager Sign In<%}else{%>Admin sign In<%}%> </a>
     <a class="col-lg-3 pb-2 text-center" href="#">Privacy Policy</a>
     <a class="col-lg-3 pb-2 text-center" href="#">Terms and Conditions</a>
@@ -13,6 +18,7 @@
     <span style="color: white;">Copyright © 2023 | LAP4YOU | Made by <a href="https://rishikesht1245.github.io/Rishikesh_website/">Rishikesh T</a></span>
   </div>
 </footer>
+<!-- CLearing current url from browsers history -->
 <script>
   if ( window.history.replaceState ) {
  window.history.replaceState( null, null, window.location.href );

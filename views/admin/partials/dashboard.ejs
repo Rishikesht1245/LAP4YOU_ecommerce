@@ -4,8 +4,16 @@
 </div>
 
 <% if (flash.error) { %>
-  <div class="alert alert-danger text-center">
+  <div class="alert alert-danger text-center alert-dismissible" role="alert">
     <%= flash.error %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+
+<% if (flash.success) { %>
+  <div class="alert alert-success alert-dismissible fade show start-50 w-50 end-50 translate-middle" role="alert">
+    <%= flash.success %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 <% } %>
 
@@ -192,7 +200,7 @@
   <div
     class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around"
   >
-  <a class="col-lg-3 pb-2 text-center " href="#"><%if(locals.session){%>Change Password<%}else{%>Forgot Password<%}%></a>
+  <a class="col-lg-3 pb-2 text-center " href="/manager/changePassword"><%if(locals.session){%>Change Password<%}else{%>Forgot Password<%}%></a>
     <a class="col-lg-3 pb-2 text-center" href="/manager"> <%if(admin){%>Manager Sign In<%}else{%>Admin sign In<%}%> </a>
     <a class="col-lg-3 pb-2 text-center" href="#">Privacy Policy</a>
     <a class="col-lg-3 pb-2 text-center" href="#">Terms and Conditions</a>

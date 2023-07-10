@@ -4,6 +4,7 @@ const returnCLTN = require('../../models/users/return');
 const { order } = require('paypal-rest-sdk');
 const productCLTN = require('../../models/admin/productDetails');
 const sendMail = require('../../utilities/nodeMailer');
+const userCLTN = require('../../models/users/userDetails');
 
 // view orders page 
 exports.viewAll = async( req, res) => {
@@ -22,6 +23,13 @@ exports.viewAll = async( req, res) => {
 
       } catch (error) {
             console.log('Error in View all Orders Page : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };
 
@@ -49,6 +57,13 @@ exports.viewOrderDetails = async (req,res) => {
             }
       } catch (error) {
             console.log("Error in Order Details Page : " + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };
 
@@ -92,6 +107,13 @@ exports.cancelOrder = async(req, res) => {
             
       } catch (error) {
             console.log("Error in Cancel Order Page : " + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 }
 
@@ -119,6 +141,13 @@ exports.returnOrder = async(req, res) => {
             res.redirect(`/users/orders/${req.body.orderId}`)
       } catch (error) {
             console.log("Error in Order Return : "+ error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 }
 

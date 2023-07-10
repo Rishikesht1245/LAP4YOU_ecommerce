@@ -1,4 +1,5 @@
-exports.signOut = (req, res) => {
+
+exports.signOut = async (req, res) => {
       try{
             req.session.destroy();
             res.redirect('/users/signIn');

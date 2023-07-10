@@ -5,6 +5,7 @@ const wishlistCLTN = require('../../models/users/wishlist');
 const moment = require('moment');
 const category = require('./productListing');
 const orderReviewCLTN = require('../../models/users/orderReview');
+const couponCLTN = require('../../models/admin/coupon');
 
 // single Product page
 exports.view = async(req, res) => {
@@ -13,7 +14,21 @@ exports.view = async(req, res) => {
             const productDetails = await productCLTN
                   .findById(req.params.id)
                   .populate(['category', 'brand']);
+           
+            const categoryId = productDetails.category._id;
+            console.log(categoryId);
+            // for displaying available coupon in product page
+            const coupons = await couponCLTN.find({
+                  $or: [
+                    { category: categoryId },
+                    { product: req.params.id }
+                  ],
+                  active : true,
+                });
+                
+            console.log(coupons);
             let productExistInWishlist = null;
+           
             if(currentUser){
                   productExistInWishlist = await wishlistCLTN.findOne({
                         customer: currentUser._id,
@@ -21,18 +36,20 @@ exports.view = async(req, res) => {
                       });                      
                   productExistInWishlist = productExistInWishlist ? productExistInWishlist.products : null;
             }
+            
             let reviews = await reviewCLTN.find({product: productDetails._id})
                   .sort({_createdAt : -1})
                   .populate({
                         path : 'customer',
                         select : 'name photo',
                   });
-            const numberOfReviews = reviews.length;
+           
+                  const numberOfReviews = reviews.length;
             reviews = reviews.slice(0,6);
             if(reviews == ""){
                   reviews = null;
             }
-            const categoryId = productDetails.category._id;
+           
             let similarProducts = await productCLTN.find({ 'category': categoryId }).populate(['category', 'brand']);
             similarProducts = similarProducts.filter((product) => product.name != productDetails.name)
             const accessToReview = await orderReviewCLTN.findOne({customer : req.session.userId, product : req.params.id, deliverd : true});
@@ -47,9 +64,17 @@ exports.view = async(req, res) => {
                   moment,
                   similarProducts,
                   accessToReview,
+                  coupons : coupons[0],
             });
       } catch(error){
             console.log('Error in Single Product Page : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                      documentTitle : '404 | Page Not Found',
+                      url: req.originalUrl,
+                      session: req.session.userId,
+                      currentUser,
+            });
       }
 };
 

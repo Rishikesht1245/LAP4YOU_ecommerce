@@ -14,6 +14,7 @@
           <tr>
             <th>No.</th>
             <th>Name</th>
+            <th>Updated By</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -22,6 +23,7 @@
           <tr>
             <td><%= i+1 %></td>
             <td><%= item.name %></td>
+            <td><%= item.updatedBy %></td>
             <td class="text-center">
               <a
                 href="/admin/brands/edit?id=<%= item._id%>"

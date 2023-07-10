@@ -245,6 +245,7 @@
               <th>Brand</th>
               <th>Total Stock</th>
               <th>Variants and Price</th>
+              <th>Updated By</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -265,6 +266,7 @@
                   </div>
                 <% }) %>
               </td>
+              <td><%= item.updatedBy %></td>
               <td >
                 <div class="text-center d-flex flex-column">
                   <a href="/admin/product_management/edit?id=<%= item._id %>" onclick="showProductConfirmation(event, this, '<%= item.name %>', 'edit')" class="btn btn-dark text-white btn-sm my-1">Edit</a>
@@ -299,7 +301,7 @@
                     <option>256 GB</option> 
                     <option>512 GB</option> 
                     <option>1 TB</option> 
-                    <option>2 GB</option> 
+                    <option>2 TB</option> 
             </select>`+
           '<input type="number" class="form-control" name="combPrice[]" placeholder="Price" required>' +
           '<input type="number" class="form-control" name="quantity[]" placeholder="Quantity" required>'+

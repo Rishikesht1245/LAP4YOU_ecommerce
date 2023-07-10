@@ -15,7 +15,7 @@ exports.page = async(req, res) => {
             const products = await productCLTN.find({isDeleted : false});
 
             res.render('admin/partials/coupons', {
-                  session: req.session.adminId,
+                  session: req.session.admin || req.session.manager,
                   documentTitle : 'Coupon Management | LAP4YOU',
                   coupons,
                   moment,
@@ -42,6 +42,7 @@ exports.addNew = async(req,res) => {
                   category : req.body.category,
                   startingDate : req.body.startingDate,
                   expiryDate : req.body.expiryDate,
+                  updatedBy :  req.session.manager? req.session.manager.name : req.session.admin.name,
             });
             await newCoupon.save();
 
@@ -67,6 +68,7 @@ exports.changeActivity = async(req, res) => {
             currentActivity = Boolean(currentActivity);
             await couponCLTN.findByIdAndUpdate(currentCoupon._id, {
                   active: currentActivity ,
+                  updatedBy :  req.session.manager? req.session.manager.name : req.session.admin.name,
                 });
 
             res.redirect('/admin/coupon_management');
@@ -116,6 +118,7 @@ exports.editCoupon = async(req, res) => {
                   category,
                   startingDate,
                   expiryDate,
+                  updatedBy :  req.session.manager? req.session.manager.name : req.session.admin.name,
             }
            });
 

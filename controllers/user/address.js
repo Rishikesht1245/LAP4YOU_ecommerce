@@ -15,6 +15,13 @@ exports.viewAll = async (req, res) => {
             });  
       } catch (error) {
             console.log('Error in Address Page : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 }
 
@@ -45,6 +52,13 @@ exports.addNewAddress = async(req, res) => {
             res.redirect('/users/addresses');
       } catch (error) {
             console.log('Error in Add New Address : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };
 
@@ -68,6 +82,13 @@ exports.editAddress = async(req, res) => {
             res.redirect('/users/addresses');
       } catch (error) {
             console.log('Error in Edit Address : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };
 
@@ -86,6 +107,13 @@ exports.deleteAddress = async(req, res) => {
             res.redirect('/users/addresses');
       } catch (error) {
             console.log('Error in Removing Address : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };
 
@@ -108,5 +136,12 @@ exports.defaultToggler = async(req, res) =>{
             res.redirect('/users/addresses');
       } catch (error) {
             console.log('Error in Default Address Toggler :' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };

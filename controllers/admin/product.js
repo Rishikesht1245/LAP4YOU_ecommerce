@@ -3,7 +3,7 @@ const brandCLTN = require('../../models/admin/brandDetails');
 const categoryCLTN = require('../../models/admin/categoryDetails');
 const productCLTN = require('../../models/admin/productDetails');
 const sharp = require('sharp');
-const router = require('../../routes/admin');
+
 
 
 
@@ -75,6 +75,7 @@ exports.addProduct = async(req, res) => {
                   });
             }
             req.body.RAMSSD = RAMSSD;
+            req.body.updatedBy = req.session.manager? req.session.manager.name : req.session.admin.name;
             //fields inside req.body and collection fields should match with each other
             const newProduct = new productCLTN(req.body);
             await newProduct.save();
@@ -161,6 +162,7 @@ exports.editProduct = async (req,res) => {
             req.body.RAMSSD = RAMSSD;
             req.body.category = new mongoose.Types.ObjectId(req.body.category);
             req.body.brand = new mongoose.Types.ObjectId(req.body.brand);
+            req.body.updatedBy = req.session.manager? req.session.manager.name : req.session.admin.name;
             await productCLTN.findByIdAndUpdate(req.query.id, req.body);
             console.log("Product Edited Successfully");
             res.redirect('/admin/product_management');
@@ -183,7 +185,10 @@ exports.changeListing = async(req, res) => {
                   currentListing = true;
             }
             currentListing = Boolean(currentListing);
-            await productCLTN.findByIdAndUpdate(productId, {listed : currentListing});
+            await productCLTN.findByIdAndUpdate(productId, {
+                  listed : currentListing,
+                  updatedBy : req.session.manager? req.session.manager.name : req.session.admin.name,
+            });
             res.redirect('/admin/product_management');
       } catch (error) {
             console.log('Error in Product unlisting '+ error);

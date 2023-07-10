@@ -1,6 +1,7 @@
 const userCLTN = require('../../models/users/userDetails');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
+const twilio = require('twilio');
 const mongoose = require('mongoose');
 const saltRounds = 10;
 const NewOTP = require('../../models/users/otp');
@@ -45,7 +46,7 @@ exports.registerUser = async(req, res) => {
                         errorMessage :'User Already exists',
                   });
             }else{
-                  const otp = `${Math.floor(1000+Math.random()*9000)}`
+                  const otp = `${Math.floor(100000+Math.random()*900000)}`
                   console.log(otp +'otp');
                   req.session.otp = otp;
 
@@ -54,6 +55,8 @@ exports.registerUser = async(req, res) => {
                         otp : otp,
                   });
                   await newOTP.save();
+
+                  // node mailer
                    // creating transporter
                   let transporter = nodemailer.createTransport({
                         service:'Gmail',
@@ -67,7 +70,8 @@ exports.registerUser = async(req, res) => {
                         from:process.env.TRANSPORTER_USERNAME,
                         to: inputEmail,
                         subject : "OTP Verification | LAP4YOU eCommerce",
-                        html: `<h1>OTP</h1></br><h2 style="text-color: red, font-weight: bold">${otp}</h2></br><p>Enter the OTP to create account.</p>`,
+                        html: `<h1>OTP</h1></br><h2 style="text-color: red, font-weight: bold">${otp}
+                                                      </h2></br><p>Enter the OTP to create account.</p>`,
                   };
 
                   transporter.sendMail(mailOptions, (error, info)=> {
@@ -78,7 +82,23 @@ exports.registerUser = async(req, res) => {
                               res.redirect('/users/otp_verification');
                         }
                   });
-            }
+
+                  // twilio
+                  const authToken = process.env.TWILIO_AUTH_TOKEN;
+                  const accountSId = process.env.TWILIO_ACCOUNT_SID;
+                  const client = twilio(accountSId, authToken);
+                  const message = `Your OTP for Creating Account in LAP4YOU is : ${otp}`;
+
+                  client.messages
+                        .create({
+                        body: message,
+                        from: process.env.TWILIO_PHONE_NUMBER, // Replace with your Twilio phone number
+                        to: `+91${inputNumber}`,
+                        })
+                        .then((message) => console.log('OTP sent:', message.sid))
+                        .catch((error) => console.error('Error sending OTP:', error));
+
+      }
 
       }catch(error){
             console.log('Error signing up user : ' + error);

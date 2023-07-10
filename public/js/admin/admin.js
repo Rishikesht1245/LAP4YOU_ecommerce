@@ -11,6 +11,7 @@ function changeActivity(id, active){
     data: {bannerID: id, currentActivity : active,},
     success : (res)=>{
       $("#" + id).load(location.href + " #" + id);
+      $("." +id).load(location.href + " ."+id )
     },
   });
 }

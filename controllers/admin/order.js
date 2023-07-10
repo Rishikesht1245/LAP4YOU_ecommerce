@@ -40,9 +40,10 @@ exports.changeOrderStatus = async(req, res) => {
             // update the data to orderCLTN for all status
             await orderCLTN.findByIdAndUpdate(req.body.id, {
                   $set:{
-                        delivered : req.body.delivered,
-                        status : req.body.status,
-                        deliveredOn : req.body.deliveredOn,
+                        delivered : req.body.delivered, // ture or false
+                        status : req.body.status,   // cancelled , returned, refunded , delivered, out for delivery
+                        deliveredOn : req.body.deliveredOn, // date
+                        updatedBy : req.session.manager? req.session.manager.name : req.session.admin.name,
                   }
             });
            
@@ -177,6 +178,7 @@ exports.cancelOrder = async(req, res) => {
                         $set : {
                               status : "Cancelled",
                               delivered : null,
+                              updatedBy : req.session.manager? req.session.manager.name : req.session.admin.name,
                         }
                   });
       

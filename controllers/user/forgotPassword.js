@@ -7,13 +7,20 @@ const saltRounds = 10;
 
 
 // forgot password page
-exports.forgotPasswordPage = (req, res) => {
+exports.forgotPasswordPage = async (req, res) => {
       try{
             res.render('user/partials/forgotPassword',{
                   documentTitle:'Forgot Password | User | LAP4YOU',
             });
       } catch(error){
             console.log('Error in GET forgot password Page :' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };
 
@@ -65,12 +72,19 @@ exports.emailVerification = async(req, res)=> {
       }
     } catch (error) {
             console.log('Error Email Verification : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
     }
 };
 
 
 // OTP page
-exports.otpPage = (req, res) => {
+exports.otpPage =  (req, res) => {
       if(req.session.resetPasswordAuth && req.session.resetOTP){
             res.render('user/partials/otp', {
                   documentTitle : "Update User Password | LAP4YOU"
@@ -105,6 +119,13 @@ exports.otpVerification = async(req, res) => {
             }
       }catch(error){
             console.log('Error in OTP Verification ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };
 
@@ -141,5 +162,12 @@ exports.updatePassword = async(req, res) => {
             }
       } catch(error){
             console.log('Error in Change Password :' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };

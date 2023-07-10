@@ -36,6 +36,7 @@ const orderSchema = new mongoose.Schema({
       orderedOn : {type : Date, default : new Date()},
       deliveredOn : {type : Date, default:null},
       returnedOn : {type : Date, default:null},
+      updatedBy : String,
 });
 
 const orderCLTN = new mongoose.model('Orders', orderSchema);

@@ -236,17 +236,17 @@
       <div class="line-break text-center py-4">
         <span class="shadow-heading" style="font-size: 1rem">New Releases</span>
       </div>
-      <div class="text-center d-flex justify-content-center flex-column my-3">
-        <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
+      <div class="text-center d-flex justify-content-center flex-column mt-3">
+        <div class="row row-cols-1 row-cols-md-4 g-5 justify-content-center">
           <% newReleases.forEach((product,i)=>{%>
           <div class="col">
-            <div class="card h-75 border-0 rounded">
+            <div class="card border-0 rounded" style="height: 90%;">
               <a href="/products/<%=product._id%>"
                 ><img
                   src="../../public/img/products/<%=product.thumbnail%>"
-                  class="card-img-top px-4 py-2 h-50"
+                  class="card-img-top px-4 py-2 "
                   alt="..."
-                  style="object-fit: scale-down; aspect-ratio: 0.9;"
+                  style="object-fit: scale-down; aspect-ratio: 0.9; height: 60%;"
                 />
                 <div class="card-body">
                   <h6 class="card-title text-black"><%=product.name%></h6>
@@ -259,6 +259,16 @@
                     class="my-2"
                     ><%=product.brand.name%></span
                   >
+                  <br>
+                  <span
+                  style="
+                    font-weight: bold;
+                    color: #7f7f7f;
+                    font-size: 0.75rem;
+                  "
+                  class="my-2 mb-2"
+                  >₹ <%=product.RAMSSD[0].price%></span
+                >
                 </div></a
               >
             </div>
@@ -268,7 +278,7 @@
         <span
           ><a 
             href="/categories/newReleases"
-            class="btn btn-outline-dark py-2 px-3 mt-5"
+            class="btn btn-outline-dark py-2 px-3 mt-1"
             style="font-size: 0.75rem"
             >SHOW MORE</a
           ></span
@@ -282,20 +292,20 @@
       />
 
       <!-- GAMING -->
-      <div class="line-break text-center py-2">
+      <div class="line-break text-center py-2 my-2">
         <span class="shadow-heading" style="font-size: 1rem">GAMING</span>
       </div>
-      <div class="text-center d-flex justify-content-center flex-column my-3">
-        <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
+      <div class="text-center d-flex justify-content-center flex-column mt-3">
+        <div class="row row-cols-1 row-cols-md-4 g-5 justify-content-center">
           <% gaming.forEach((product,i)=>{%>
           <div class="col">
-            <div class="card h-75 border-0 rounded">
+            <div class="card border-0 rounded" style="height: 90%">
               <a href="/products/<%=product._id%>"
                 ><img
                   src="../../public/img/products/<%=product.thumbnail%>"
-                  class="card-img-top px-4 py-2 h-50"
+                  class="card-img-top px-4 py-2"
                   alt="..."
-                  style="object-fit: scale-down; aspect-ratio: 0.9;"
+                  style="object-fit: scale-down; aspect-ratio: 0.9; height: 60%;"
                 />
                 <div class="card-body">
                   <h6 class="card-title text-black"><%=product.name%></h6>
@@ -309,6 +319,16 @@
                     class="my-2"
                     ><%=product.brand.name%></span
                   >
+                  <br>
+                  <span
+                  style="
+                    font-weight: bold;
+                    color: #7f7f7f;
+                    font-size: 0.75rem;
+                  "
+                  class="my-2 mb-2"
+                  >₹ <%=product.RAMSSD[0].price%></span
+                >
                 </div></a
               >
             </div>
@@ -318,28 +338,28 @@
         <span
           ><a 
             href="/categories/64888a004cb3b3a4b1bb8be3"
-            class="btn btn-outline-dark py-2 px-3 mt-5"
+            class="btn btn-outline-dark py-2 px-3 mt-1"
             style="font-size: 0.75rem"
             >SHOW MORE</a
           ></span
         >
       </div>
-      <div class="line-break text-center py-4">
+      <div class="line-break text-center py-4 my-2 mt-4">
         <span class="shadow-heading" style="font-size: 1rem">STUDENT</span>
       </div>
-      <div class="text-center d-flex justify-content-center flex-column my-3">
+      <div class="text-center d-flex justify-content-center flex-column mt-3">
         <div
-          class="row row-cols-1 row-cols-md-4 g-4 mb-3 justify-content-center"
+          class="row row-cols-1 row-cols-md-4 g-5 justify-content-center"
         >
           <% student.forEach((product,i)=>{%>
           <div class="col">
-            <div class="card h-75 border-0">
+            <div class="card border-0" style="height: 90%">
               <a href="/products/<%=product._id%>"
                 ><img
                   src="../../public/img/products/<%=product.thumbnail%>"
-                  class="card-img-top px-4 py-2 h-50"
+                  class="card-img-top px-4 py-2"
                   alt="..."
-                  style="object-fit: scale-down; aspect-ratio: 0.9;"
+                  style="object-fit: scale-down; aspect-ratio: 0.9; height: 60%;"
                 />
                 <div class="card-body">
                   <h6 class="card-title text-black"><%=product.name%></h6>
@@ -352,6 +372,16 @@
                     class="my-2"
                     ><%=product.brand.name%></span
                   >
+                  <br>
+                  <span
+                  style="
+                    font-weight: bold;
+                    color: #7f7f7f;
+                    font-size: 0.75rem;
+                  "
+                  class="my-2 mb-2"
+                  >₹ <%=product.RAMSSD[0].price%></span
+                >
                 </div></a
               >
             </div>
@@ -361,28 +391,28 @@
         <span
           ><a 
             href="/categories/648d930bca2707bb62f29e01"
-            class="btn btn-outline-dark py-2 px-3 my-3"
+            class="btn btn-outline-dark py-2 px-3 my-1"
             style="font-size: 0.75rem"
             >SHOW MORE</a
           ></span
         >
       </div>
-      <div class="line-break text-center py-4">
+      <div class="line-break text-center py-4 my-2 mt-4">
         <span class="shadow-heading" style="font-size: 1rem">BUSINESS</span>
       </div>
-      <div class="text-center d-flex justify-content-center flex-column my-3">
+      <div class="text-center d-flex justify-content-center flex-column mt-3">
         <div
-          class="row row-cols-1 row-cols-md-4 g-4 mb-3 justify-content-center"
+          class="row row-cols-1 row-cols-md-4 g-5  justify-content-center"
         >
           <% business.forEach((product,i)=>{%>
           <div class="col">
-            <div class="card h-75 border-0 ">
+            <div class="card border-0 " style="height: 90%">
               <a href="/products/<%=product._id%>"
                 ><img
                   src="../../public/img/products/<%=product.thumbnail%>"
-                  class="card-img-top px-4 py-2 h-50"
+                  class="card-img-top px-4 py-2"
                   alt="..."
-                  style="object-fit: scale-down; aspect-ratio: 0.9;"
+                  style="object-fit: scale-down; aspect-ratio: 0.9; height: 60%;"
                 />
                 <div class="card-body">
                   <h6 class="card-title text-black"><%=product.name%></h6>
@@ -395,6 +425,16 @@
                     class="my-5"
                     ><%=product.brand.name%></span
                   >
+                  <br>
+                  <span
+                  style="
+                    font-weight: bold;
+                    color: #7f7f7f;
+                    font-size: 0.75rem;
+                  "
+                  class="my-2 mb-2"
+                  >₹ <%=product.RAMSSD[0].price%></span
+                >
                 </div></a
               >
             </div>
@@ -404,7 +444,7 @@
         <span
           ><a 
             href="/categories/648d9311ca2707bb62f29e06"
-            class="btn btn-outline-dark py-2 px-3 my-3"
+            class="btn btn-outline-dark py-2 px-3 my-1"
             style="font-size: 0.75rem"
             >SHOW MORE</a
           ></span>

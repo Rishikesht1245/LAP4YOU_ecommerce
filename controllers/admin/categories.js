@@ -36,7 +36,10 @@ exports.addCategory = async(req, res) => {
                   if(duplicateCheck.isDeleted == true){
                         await categoryCLTN.updateOne(
                               {_id: duplicateCheck._id},
-                              {isDeleted : false});
+                              {
+                                    isDeleted : false,
+                                    updatedBy :  req.session.manager? req.session.manager.name : req.session.admin.name,
+                              });
                          res.render('admin/partials/categories',{
                                documentTitle: 'Category Management | LAP4YOU',
                                details : categoryDetails,
@@ -56,6 +59,7 @@ exports.addCategory = async(req, res) => {
                   // create instance of category callection and then save.
                   const newCategory = new categoryCLTN({
                         name : inputCategoryName,
+                        updatedBy : req.session.manager? req.session.manager.name : req.session.admin.name,
                   });
                   await newCategory.save();
                   res.redirect('/admin/categories');
@@ -98,8 +102,10 @@ exports.editCategory = async(req, res) => {
             if(duplicateCheck == null){
                   await categoryCLTN.updateOne(
                         {_id : currentCategory._id },
-                        {name : updatedName}
-                  );
+                        {
+                              name : updatedName, 
+                              updatedBy : req.session.manager? req.session.manager.name : req.session.admin.name,
+                        });
                   res.redirect('/admin/categories');
             } else{
                   res.render('admin/partials/editCategory',{
@@ -123,7 +129,10 @@ exports.deleteCategory =  async(req, res) => {
             const categoryId = req.query.id;
             await categoryCLTN.updateOne(
                   {_id : categoryId},
-                  {isDeleted : true});
+                  {
+                        isDeleted : true, 
+                        updatedBy :  req.session.manager? req.session.manager.name : req.session.admin.name,
+                  });
             res.redirect('/admin/categories');
       }
       catch(error){

@@ -11,6 +11,7 @@ const categorySchema = new mongoose.Schema({
             type : Boolean,
             default : false,
       },
+      updatedBy : String,
 })
 
 const categoryCLTN = new mongoose.model("categories", categorySchema);

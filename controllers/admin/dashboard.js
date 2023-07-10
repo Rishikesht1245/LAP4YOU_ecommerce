@@ -19,6 +19,11 @@ exports.view = async (req, res)=> {
             let totalRevenue;
             totalRevenue = await orderCLTN.aggregate([
                   {
+                        $match : {
+                              delivered : true,
+                        },
+                  },
+                  {
                         $group : {
                               _id : 0,
                               totalRevenue : {$sum : '$finalPrice'},
@@ -91,43 +96,37 @@ exports.chartData = async(req, res)=> {
             ]);
 
             // dougnut chart initialization
-             //collecting delivered orders
-             const deliveredOrders = await orderCLTN.find({status : "Delivered"}).countDocuments();
-             console.log(deliveredOrders)
-             //collecting cancelled and in-transist orders 
-             let returnedOrders = await orderCLTN.find({status : "Returned"}).countDocuments();
-             console.log(returnedOrders);
-             let notDelivered = await orderCLTN.aggregate([
-                   {
-                         $match :{
-                               delivered : false,
-                               orderedOn:{
-                                    $gte: new Date((new Date().getTime() - (1 * 24 * 60 * 60 * 1000)))
-                              }
-                         }  
-                   },{
-                        $group:{
-                              _id : "$status",
-                              status : {$sum : 1},
-                        },
-                  },
-             ]);
-           
-             let inTransit;
-             let cancelled;
-             let refunded;
-             notDelivered.forEach((order) => {
-                   if(order._id === "In-transit"){
-                         inTransit = order.status;
-                   }else if(order._id === "Cancelled"){
-                         cancelled = order.status;
-                   }else if(order._id === "Refunded"){
-                         refunded = order.status
-                   }
-             });
-             console.log(notDelivered);
-             const delivered = deliveredOrders;
+            const today = moment().startOf('day'); // Get the start of the current day
+            const todayFormatted = today.format('YYYY-MM-DD'); // Format the date as string
 
+            let orders = await orderCLTN.aggregate([
+                  {
+                        $match :{
+                              orderedOn:{
+                                   $gte: new Date((new Date().getTime() - (1 * 24 * 60 * 60 * 1000)))
+                             }
+                        }  
+                  },{
+                       $group:{
+                             _id : "$status",
+                             status : {$sum : 1}, // {$sum : 1}  -- sum count of documents.
+                       },
+                 },
+            ]);
+            let inTransit, cancelled, delivered, returnedOrders, refunded;
+            orders.forEach((order, i) => {
+                  if(order._id === "In-Transit"){
+                        inTransit = order.status;
+                  }else if(order._id === "Cancelled"){
+                        cancelled = order.status;
+                  }else if(order._id === "Delivered"){
+                        delivered = order.status;
+                  }else if(order._id === "Refunded"){
+                        refunded = order.status;
+                  }else{
+                        returnedOrders = order.status;
+                  }
+            });
            
             res.json({
                   data : {orderData, inTransit, delivered, cancelled, returnedOrders, refunded}
@@ -144,15 +143,9 @@ exports.doughNutData = async(req, res) => {
       try {
             const period = req.params.id;
       
-             //collecting delivered orders
-             const deliveredOrders = await orderCLTN.find({status : "Delivered"}).countDocuments();
-            
-             //collecting cancelled and in-transist orders 
-             let returnedOrders = await orderCLTN.find({status : "Returned"}).countDocuments();
-             let notDelivered = await orderCLTN.aggregate([
+             let orders = await orderCLTN.aggregate([
                    {
                          $match :{
-                               delivered : false,
                                orderedOn:{
                                     $gte: new Date((new Date().getTime() - (period * 24 * 60 * 60 * 1000)))
                               }
@@ -164,21 +157,21 @@ exports.doughNutData = async(req, res) => {
                         },
                   },
              ]);
-           
-             let inTransit;
-             let cancelled;
-             let refunded;
-             notDelivered.forEach((order) => {
-                   if(order._id === "In-transit"){
-                         inTransit = order.status;
-                   }else if(order._id === "Cancelled"){
-                         cancelled = order.status;
-                   }else if(order._id === "Refunded"){
-                         refunded = order.status
-                   }
-             });
-             console.log(notDelivered);
-             const delivered = deliveredOrders;
+
+            let inTransit, cancelled, delivered, returnedOrders, refunded;
+            orders.forEach((order, i) => {
+                  if(order._id === "In-Transit"){
+                        inTransit = order.status;
+                  }else if(order._id === "Cancelled"){
+                        cancelled = order.status;
+                  }else if(order._id === "Delivered"){
+                        delivered = order.status;
+                  }else if(order._id === "Refunded"){
+                        refunded = order.status;
+                  }else{
+                        returnedOrders = order.status;
+                  }
+            });
       
              res.json({
                   data:{inTransit, cancelled, delivered, returnedOrders, refunded}

@@ -136,6 +136,7 @@
               <th>Image</th>
               <th>URL</th>
               <th>Video</th>
+              <th>Updated By</th>
             </tr>
           </thead>
           <tbody id="tableBody">
@@ -160,7 +161,7 @@
               <td><%if(item.image){%><%= item.image %><%}else{%>None<%}%></td>
               <td><%if(item.url){%><%= item.url %><%}else{%>None<%}%></td>
               <td><%if(item.videoURL){%><a href="<%= item.videoURL %>" target="_blank"><b class="text-primary">Video Link</b></a><%}else{%>None<%}%></td>
-              
+              <td class="<%=item._id%>"><%= item.updatedBy %></td>
             </tr>
             <% }) %>
           </tbody>

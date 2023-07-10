@@ -16,7 +16,7 @@ exports.collection = async (req, res) => {
          }
         const listingName = 'Collections'
         if(!listing){
-              listing = await productCLTN.find({listed : true}).populate('brand').limit(3);
+              listing = await productCLTN.find({listed : true}).populate('brand').limit(9);
         }
         if(req.query.query == 'viewMore'){
           listing = await productCLTN.find({listed : true}).populate('brand');
@@ -38,6 +38,13 @@ exports.collection = async (req, res) => {
         
   } catch(error){
         console.log('Error in Collection Page :' +error );
+        const currentUser = await userCLTN.findById(req.session.userId);
+        res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
   }
 };
 
@@ -120,6 +127,13 @@ exports.currentFilter = async(req, res) => {
         }
   } catch (error) {
         console.log('Error in Products Filter Page');
+        const currentUser = await userCLTN.findById(req.session.userId);
+        res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+        });
   }
 };
 
@@ -164,6 +178,13 @@ exports.sortBy = async (req, res) => {
         }   
   } catch (error) {
         console.log('Error occured in Sorting : ' + error);
+        const currentUser = await userCLTN.findById(req.session.userId);
+        res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+         });
   }
 }
 
@@ -256,5 +277,12 @@ exports.category = async(req, res) => {
         }
   } catch (error) {
         console.log('Error in Product Category Page : '+error);
+        const currentUser = await userCLTN.findById(req.session.userId);
+        res.render('index/404', {
+              documentTitle : '404 | Page Not Found',
+              url: req.originalUrl,
+              session: req.session.userId,
+              currentUser,
+        });
   }
 }

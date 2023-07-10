@@ -68,7 +68,7 @@
                         type="number"
                         class="form-control"
                         id="form-holder"
-                        placeholder="Discount in %"
+                        placeholder="Discount in ₹"
                         name="discount"
                         required
                       />
@@ -140,8 +140,8 @@
 
       <!-- Responsive data table -->
       
-      <div class="card-body container">
-        <table id="dataTable" class="table table-hover cell-border fw-light nowrap">
+      <div class="card-body container" >
+        <table id="dataTable" class="table table-hover cell-border fw-light nowrap m-0 p-0">
           <thead>
             <tr>
               <th>No.</th>
@@ -150,8 +150,9 @@
               <th>Discount</th>
               <th>Category</th>
               <th>Products</th>
-              <th>Starting Date</th>
+              <th>Starts On</th>
               <th>Expiry Date</th>
+              <th>Updated By</th>
               <th>Activity</th>
             </tr>
           </thead>
@@ -162,13 +163,14 @@
               <td><%= i+1 %></td>
               <td><%= item.name %></td>
               <td><%= item.code %></td>
-              <td><%= item.discount %>%</td>
+              <td>₹<%= item.discount %></td>
               <td><%= item.category.name %></td>
               <td>
                 <%= item.product.map(function(product) { return product.name; }).join(', ') %>
               </td>
               <td><%= moment(item.startingDate).format('ll')  %></td>
               <td><%= moment(item.expiryDate).format('ll') %></td>
+              <td><%= item.updatedBy %></td>
               <td class="text-center d-flex flex-column">
                 <a href="/admin/coupon_management/edit?id=<%= item._id %>" onclick="showProductConfirmation(event, this, '<%= item.name %>', 'edit')" class="btn btn-dark text-white btn-sm my-1">Edit</a>
                 <% if((item.active==true) && (item.expiryDate > Date.now())){ %> 

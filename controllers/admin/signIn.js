@@ -4,7 +4,8 @@ exports.page = async (req, res)=> {
       try{
             res.render('admin/partials/signIn', {
                   documentTitle : 'Admin SignIn Page | LAP4YOU',
-                  admin : true
+                  admin : true,
+                  signIn : false,
             })
       } catch(err){
             console.log('Error occured while rendering the Admin sign in page' + err);
@@ -21,7 +22,7 @@ exports.adminVerification = async(req, res)=> {
             //  console.log(adminFind);
              if(adminFind){
                   if(adminFind.password === inputPassword){
-                        req.session.admin = req.body.email;
+                        req.session.admin = adminFind;
                         console.log('Admin session created successfully');
                         res.redirect('/admin/dashboard');
                   }
@@ -29,12 +30,15 @@ exports.adminVerification = async(req, res)=> {
                         res.render('admin/partials/signIn',{
                               documentTitle : 'Admin SignIn Page | LAP4YOU',
                               errorMessage:'Incorrect Password',
+                              admin : true,
                               }
                         );
                   }
             }
             else{
-                  res.render('admin/partials/signIn', {errorMessage:'Admin not Found !'});
+                  res.render('admin/partials/signIn', {
+                  errorMessage:'Admin not Found !', 
+                   admin : true});
             }
       }
       catch(error){

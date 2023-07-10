@@ -76,6 +76,13 @@ exports.view = async(req, res) => {
             
       } catch (error) {
             console.log('Error in Check Out Page : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };
 
@@ -103,7 +110,6 @@ exports.coupon = async (req, res) => {
             }
       
             let couponCheck = '';
-            let discountPercentage = 0;
             let discountPrice = 0;
             let finalPrice = cartPrice;
       
@@ -140,9 +146,7 @@ exports.coupon = async (req, res) => {
                                     const currentTime = new Date().toJSON();
                                     if(currentTime > coupon.startingDate.toJSON()){
                                           if(currentTime < coupon.expiryDate.toJSON()){
-                                                discountPercentage = coupon.discount;
-                                                discountPrice = (discountPercentage/100)* cartPrice;
-                                                discountPrice = Math.floor(discountPrice);
+                                                discountPrice = coupon.discount;
                                                 finalPrice = cartPrice - discountPrice;
                                                 //coupon applied Case
                                                 couponCheck = 
@@ -175,13 +179,19 @@ exports.coupon = async (req, res) => {
             res.json({
                   data:{
                         couponCheck,
-                        discountPercentage,
                         discountPrice,
                         finalPrice,
                   }
             });
       } catch (error) {
             console.log('Error in Coupon Checking : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 
 };
@@ -209,6 +219,13 @@ exports.defaultAddress = async(req, res) => {
             res.redirect('/users/cart/checkout');
       } catch (error) {
             console.log('Error in Change Address : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 }
 
@@ -383,6 +400,13 @@ exports.checkOut = async (req, res) => {
             }
       } catch (error) {
             console.log("Error checking out : " + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 }
 
@@ -460,5 +484,12 @@ exports.result = async (req, res) => {
             }
       } catch (error) {
             console.log("Error rendering success page : " + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };

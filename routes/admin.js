@@ -11,7 +11,6 @@ const upload = require('../utilities/imageUpload');
 const banners = require('../controllers/admin/banner');
 const customer = require('../controllers/admin/customer');
 const signOut = require('../controllers/admin/signOut');
-const session = require('express-session');
 const coupon = require('../controllers/admin/coupon');
 const order = require('../controllers/admin/order');
 const manager = require('../controllers/admin/manager');

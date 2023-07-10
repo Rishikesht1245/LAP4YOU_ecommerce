@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const productCLTN = require('../../models/admin/productDetails');
 const cartCLTN = require('../../models/users/cart');
 const wishlistCLTN = require('../../models/users/wishlist');
+const userCLTN = require('../../models/users/userDetails');
 
 
 // cart Page
@@ -28,6 +29,13 @@ exports.viewAll = async (req, res) => {
         });
       } catch (error) {
         console.log("Error rendering all addresses: " + error);
+        const currentUser = await userCLTN.findById(req.session.userId);
+        res.render('index/404', {
+              documentTitle : '404 | Page Not Found',
+              url: req.originalUrl,
+              session: req.session.userId,
+              currentUser,
+        });
       }
 };
     
@@ -138,6 +146,13 @@ exports.addToCart = async (req, res) => {
             }
       } catch (error) {
             console.log('Error in Add Cart Page : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };
 
@@ -181,6 +196,13 @@ exports.remove = async(req, res) => {
             });
       } catch (error) {
             console.log('Error in removing Product from Cart : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };
 
@@ -248,6 +270,13 @@ exports.addCount = async(req, res) => {
             }
       } catch(error){
             console.log('Error in Add product count in Cart : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };
 
@@ -300,5 +329,12 @@ exports.reduceCount = async(req, res) => {
             });
       } catch (error) {
             console.log('Error in Reduce Product count in Cart : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 }

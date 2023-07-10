@@ -1,5 +1,6 @@
 const wishlistCLTN = require('../../models/users/wishlist');
 const mongoose = require('mongoose');
+const userCLTN = require('../../models/users/userDetails');
 
 
 // wishlist page 
@@ -21,6 +22,13 @@ exports.viewAll = async(req, res) => {
             });
       } catch (error) {
             console.log('Error in User Wishlist Page : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 }
 
@@ -66,6 +74,13 @@ exports.addOrRemove = async (req, res) => {
             }
       } catch (error) {
             console.log('Error in Add wishlist : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };
 
@@ -92,5 +107,12 @@ exports.remove = async(req, res) => {
             });
       } catch (error) {
             console.log('Error in Remove From wishlist : ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };

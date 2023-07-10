@@ -38,5 +38,12 @@ exports.viewAll = async(req, res)=> {
             });
       } catch(error){
             console.log('Error in GET Landing Page ' + error);
+            const currentUser = await userCLTN.findById(req.session.userId);
+            res.render('index/404', {
+                  documentTitle : '404 | Page Not Found',
+                  url: req.originalUrl,
+                  session: req.session.userId,
+                  currentUser,
+            });
       }
 };

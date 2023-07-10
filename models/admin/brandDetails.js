@@ -10,6 +10,7 @@ const brandSchema = new mongoose.Schema({
             type : Boolean,
             default : false,
       },
+      updatedBy : String,
 })
 
 const brandCLTN = new mongoose.model("brands", brandSchema);

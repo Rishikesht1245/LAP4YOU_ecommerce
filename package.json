@@ -16,7 +16,8 @@
     "nodemon": "^2.0.22",
     "paypal-rest-sdk": "^1.8.1",
     "razorpay": "^2.9.0",
-    "sharp": "^0.32.1"
+    "sharp": "^0.32.1",
+    "twilio": "^4.13.0"
   },
   "name": "lap4you",
   "version": "1.0.0",
