@@ -16,7 +16,7 @@ exports.view = async(req, res) => {
                   .populate(['category', 'brand']);
            
             const categoryId = productDetails.category._id;
-            console.log(categoryId);
+
             // for displaying available coupon in product page
             const coupons = await couponCLTN.find({
                   $or: [
@@ -26,7 +26,6 @@ exports.view = async(req, res) => {
                   active : true,
                 });
                 
-            console.log(coupons);
             let productExistInWishlist = null;
            
             if(currentUser){
@@ -44,7 +43,7 @@ exports.view = async(req, res) => {
                         select : 'name photo',
                   });
            
-                  const numberOfReviews = reviews.length;
+            const numberOfReviews = reviews.length;
             reviews = reviews.slice(0,6);
             if(reviews == ""){
                   reviews = null;

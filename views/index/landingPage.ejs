@@ -176,16 +176,16 @@
                 <source src="<%=banner.videoURL%>" type="video/mp4" />
               </video>
             <%}%>
-            <img src="/public/img/banners/<%=banner.image%>" alt="" style="object-fit: cover; height: auto; width: 100%;">
+            <img src="/public/img/banners/<%=banner.image%>" alt="" style="object-fit: cover; height: 50%; width: 100%; aspect-ratio: 2.5">
             <a href="/products/">
               <div
-                class="carousel-caption d-lg-block d-none"
-                style="position: absolute; top: 10%; left: 20%;"
+                class="carousel-caption d-lg-block d-none mt-5"
+                style="position: absolute; top: 60%; left: 20%;"
               >
-                <h3 style="text-shadow: 1px 1px #7c7c7c; font-size: 1.7rem" class="text-danger">
+                <h3 style="text-shadow: 1px 1px #7c7c7c; font-size: 1.7rem; color: rgb(173, 174, 172);">
                   <%=banner.title%>
                 </h3>
-                <p style="text-shadow: 1px 1px #7c7c7c; font-size: 1rem" class="text-danger">
+                <p style="text-shadow: 1px 1px #7c7c7c; font-size: 1rem; color: aqua;"" >
                   <%=banner.description%>
                 </p>
               </div>
@@ -450,47 +450,71 @@
           ></span>
          <!-- SERVICES
         ================================================== -->
+        <style>
+          .line-break {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 1.5rem;
+          }
+        
+          .icon-container {
+            display: flex;
+            align-items: center;
+          }
+        
+          .icon-container img {
+            width: 40px;
+            height: 40px;
+            margin-right: 1rem;
+          }
+        
+          .feature-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+          }
+        
+          .feature-description {
+            font-size: 0.6rem;
+            color: #777;
+          }
+        </style>
+        
         <section class="pt-0 pb-0 my-5">
           <div class="line-break text-center">
-          <div class="container">
+            <div class="container">
               <div class="row mt-n4">
-                  <div class="col-md-6 col-lg-4 mt-4 text-start">
-                      <div class="d-flex">
-                          <div class="flex-shrink-0">
-                              <img src="../../public/img/icons/icon-1.png" alt="...">
-                          </div>
-                          <div class="flex-grow-1 ms-3">
-                              <h4 class="h5 fs-6">Free Shipping</h4>
-                              <p class="mb-0 w-lg-90 text-secondary fw-bold" style="font-size: 0.6rem;">Please feel free to contact us and we provide best service.</p>
-                          </div>
-                      </div>
+                <div class="col-md-6 col-lg-4 mt-4 text-start">
+                  <div class="icon-container">
+                    <img src="../../public/img/icons/icon-1.png" alt="Free Shipping">
+                    <div>
+                      <h4 class="feature-title">Free Shipping</h4>
+                      <p class="feature-description">Please feel free to contact us, and we provide the best service.</p>
+                    </div>
                   </div>
-                  <div class="col-md-6 col-lg-4 mt-4 text-start">
-                      <div class="d-flex">
-                          <div class="flex-shrink-0">
-                              <img src="../../public/img/icons/icon-2.png" alt="...">
-                          </div>
-                          <div class="flex-grow-1 ms-3">
-                              <h4 class="h5 fs-6">Secure Payment</h4>
-                              <p class="mb-0 w-lg-90 text-secondary fw-bold" style="font-size: 0.6rem;">If you are not satisfied with product then we provide refunds.</p>
-                          </div>
-                      </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mt-4 text-start">
+                  <div class="icon-container">
+                    <img src="../../public/img/icons/icon-2.png" alt="Secure Payment">
+                    <div>
+                      <h4 class="feature-title">Secure Payment</h4>
+                      <p class="feature-description">If you are not satisfied with the product, we provide refunds.</p>
+                    </div>
                   </div>
-                  <div class="col-md-6 col-lg-4 mt-4 text-start">
-                      <div class="d-flex">
-                          <div class="flex-shrink-0">
-                              <img src="../../public/img/icons/icon-3.png"" alt="...">
-                          </div>
-                          <div class="flex-grow-1 ms-3">
-                              <h4 class="h5 fs-6">Gift Voucher</h4>
-                              <p class="mb-0 w-lg-90 text-secondary fw-bold" style="font-size: 0.6rem;">Shopping over ₹500 to ₹1000 get free gift voucher.</p>
-                          </div>
-                      </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mt-4 text-start">
+                  <div class="icon-container">
+                    <img src="../../public/img/icons/icon-3.png" alt="Gift Voucher">
+                    <div>
+                      <h4 class="feature-title">Gift Voucher</h4>
+                      <p class="feature-description">Shopping over ₹500 to ₹1000 gets a free gift voucher.</p>
+                    </div>
                   </div>
+                </div>
               </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+        
 
       </div>
     </section>
@@ -515,7 +539,7 @@
       >
         <span style="color: white;"
           >Copyright © 2023 | LAP4YOU | Made by
-          <a class=".footer-links" href="https://rishikesht1245.github.io/Rishikesh_website/"
+          <a class=".footer-links text-white" href="https://rishikesht1245.github.io/Rishikesh_website/"
             >Rishikesh T </a
           ></span
         >

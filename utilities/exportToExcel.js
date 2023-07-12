@@ -20,9 +20,18 @@ exports.download = async (req, res) => {
         let counter = 1; //couter for SI.No
         let total = 0; // total value of all Orders
         let reportPrice = 0;
+        // dates for from filer
+        const fromDate = new Date(req.query.fromDate);
+        const toDate = new Date(req.query.toDate);
         const saledata = await orderCLTN
-          .find()
+          .find({
+            orderedOn : {
+              $gte: fromDate,
+              $lte: toDate,
+            },
+          })
           .populate({ path: "customer", select: "name" });
+          
         saledata.forEach((sale, i) => {
           const date = moment(sale.orderedOn).format("lll");
           const orderID = sale._id.toString();

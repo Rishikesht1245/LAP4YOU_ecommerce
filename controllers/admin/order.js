@@ -41,7 +41,7 @@ exports.changeOrderStatus = async(req, res) => {
             await orderCLTN.findByIdAndUpdate(req.body.id, {
                   $set:{
                         delivered : req.body.delivered, // ture or false
-                        status : req.body.status,   // cancelled , returned, refunded , delivered, out for delivery
+                        status : req.body.status,   // cancelled , returned, refunded , delivered, out for delivery, replaced
                         deliveredOn : req.body.deliveredOn, // date
                         updatedBy : req.session.manager? req.session.manager.name : req.session.admin.name,
                   }
@@ -49,7 +49,6 @@ exports.changeOrderStatus = async(req, res) => {
            
             // if status is refunded or cancelled increase the stock, change access to review 
             if(req.body.status == "Refunded"){
-                 console.log("Refund");
                   const currentOrder = await orderCLTN.findById(req.body.id);
                  
                   // retruned product details 
@@ -75,7 +74,6 @@ exports.changeOrderStatus = async(req, res) => {
                                      }
                               });
                   }
-                  console.log("Increased the count");
 
                  
                   // changeing returned status to true
@@ -84,11 +82,6 @@ exports.changeOrderStatus = async(req, res) => {
                               isReturned : true,
                         }
                   });
-
-                  // change review access to false 
-                  await orderReviewCLTN.updateOne({customer : userId, product : productId}, 
-                        {delivered : false}
-                  );
 
                   res.json({
                         data : {
@@ -155,13 +148,11 @@ exports.details = async(req, res) => {
 // cancel Orders
 exports.cancelOrder = async(req, res) => {
       try {
-            console.log("Cancel Order");
             const orderDetails = await orderCLTN.findById(req.params.id);
             const productIds = orderDetails.summary.map((order) => order.product);
             const quantity = orderDetails.summary.map((order) => order.quantity);
             const price = orderDetails.summary.map((order) => order.totalPrice);
-            console.log(quantity);
-            console.log(productIds);
+           
             for(let i = 0; i< productIds.length; i++){
                   await productCLTN.updateOne(
                         {_id : productIds[i], 'RAMSSD.price': price[i]},
@@ -171,9 +162,7 @@ exports.cancelOrder = async(req, res) => {
                                }
                         });
             }
-            console.log("Increased the count");
             
-          
                   await orderCLTN.findByIdAndUpdate(req.params.id, {
                         $set : {
                               status : "Cancelled",

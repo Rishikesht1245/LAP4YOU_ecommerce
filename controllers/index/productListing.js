@@ -7,22 +7,24 @@ const userCLTN = require('../../models/users/userDetails');
 exports.collection = async (req, res) => {
   try{
         let listing;
-        if(req.session.category || req.session.viewMore){
+        let viewMore;
+        if(req.session.category || !viewMore){
           listing = req.session.listing;
         }
         let currentUser = null;
         if(req.session.userId){
               currentUser = await userCLTN.findOne({_id : req.session.userId});
          }
-        const listingName = 'Collections'
+         
         if(!listing){
               listing = await productCLTN.find({listed : true}).populate('brand').limit(9);
+              viewMore = false;
         }
         if(req.query.query == 'viewMore'){
           listing = await productCLTN.find({listed : true}).populate('brand');
           req.session.listing = listing;
-          req.session.viewMore = true;
-          req.session.category = false;
+          viewMore = true;
+          listingName = 'Collections';
           res.redirect('/products')
         }else{
             const brands = await brandCLTN.find({isDeleted : false});
@@ -31,7 +33,7 @@ exports.collection = async (req, res) => {
               documentTitle : 'LAP4YOU',
               currentUser,
               listing,
-              listingName,
+              listingName : req.session.listingName || "Collections",
               brands,
         });
         }
@@ -265,7 +267,6 @@ exports.category = async(req, res) => {
               req.session.listing = listing;
               req.session.category = true
               req.session.categories = listing;
-              console.log(brands);
               res.render('index/productListing', {
                     listing,
                     documentTitle : `${currentCategory.name} | LAP4YOU`,

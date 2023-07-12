@@ -24,7 +24,7 @@ exports.signInVerification = async(req, res)=> {
             const inputEmail = req.body.email.toLowerCase();
             const inputPassword = req.body.password;
             const userFind = await userCLTN.findOne({email : inputEmail});
-            console.log(req.session.currentUrl);
+            
             if(userFind){
                   const hashedCheck = await bcrypt.compare(
                         inputPassword,

@@ -17,17 +17,22 @@ const returnSchema = new mongoose.Schema({
             type : String,
             required : true,
       },
-      accountNo : {
+      action : {
             type : String,
             required : true,
+      },
+      address : {
+            type : mongoose.Types.ObjectId,
+            required : true,
+      },
+      accountNo : {
+            type : String,
       },
       bankName : {
             type : String,
-            required : true,
       },
       ifscCode : {
             type : String,
-            required : true,
       },
       isReturned: {
             type : Boolean,

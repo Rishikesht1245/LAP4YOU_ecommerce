@@ -132,7 +132,6 @@ exports.coupon = async (req, res) => {
                         }
                   });
                   
-                  console.log(isApplicable);
                   const alreadyUsedCoupon = await userCLTN.findOne({
                         _id : req.session.userId,
                         couponsUsed : coupon._id,
@@ -202,7 +201,7 @@ exports.defaultAddress = async(req, res) => {
       try {
             const userId = req.session.userId;
             const defaultAddressId = req.body.DefaultAddress;
-            console.log(req.body.DefaultAddress);
+           
             // chnage existing default address to false
             await userCLTN.updateMany(
                   {_id : userId, 'addresses.primary' : true},
@@ -465,7 +464,6 @@ exports.result = async (req, res) => {
                     }
                   }
                   
-                  console.log('Reduced the count of the product');
                   const userSubject = `The expected delivery will be on ${new Date(new Date().getTime() + 7*3600*24*1000)} Thanks for Choosing LAP4YOU`
                   const adminSubject = `A new order has been placed by ${req.session.email}`
                   //sending mail to uer

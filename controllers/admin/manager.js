@@ -25,7 +25,6 @@ exports.view = async(req, res) => {
 exports.addManager = async(req,res) => {
       try {
             const selectedRoles = JSON.parse(req.body.selectedRoles);
-            console.log(selectedRoles);
             const newManager = new managerCLTN({
                   name : req.body.name,
                   email : req.body.email,
@@ -73,7 +72,6 @@ exports.editPage = async(req, res) => {
       try {
             const managerId = req.params.id;
             const currentManager = await managerCLTN.findById(managerId);
-            console.log(currentManager);
             res.render("admin/partials/editManager", {
                   session : req.session.admin,
                   manager : currentManager,

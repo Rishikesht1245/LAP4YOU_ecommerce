@@ -103,8 +103,9 @@
       <div class="form-footer py-0 row justify-content-between">
         <span class="col-lg-8 my-1" style="font-weight: 500">Order Status: <%if(currentOrder.delivered==true && currentOrder.status ==="Delivered"){%>
           Delivered on <%=moment(currentOrder.deliveredOn).format('MMMM Do YYYY, h:mm:ss a')%>
-          <%}else if(currentOrder.status === "Returned"){%><b>Returned On <%=moment(currentOrder.returnedOn)%></b><%} 
-          else {%><b><%=currentOrder.status%></b><%}%></span>
+          <%}else if(currentOrder.status === "Returned"){%><b>Returned On <%=moment(currentOrder.returnedOn)%></b>
+          <%}else if(currentOrder.status === "Replace Requested"){%><b>Replace requested On <%=moment(currentOrder.returnedOn)%> </b>
+          <%}else {%><b><%=currentOrder.status%></b><%}%></span>
         
     </div>
   </div>
@@ -113,12 +114,12 @@
     <a href="/users/orders" style="font-size: 0.7rem;" class="col-lg-3 col-sm-12 btn btn-dark d-flex align-items-center justify-content-center px-2 mb-3 text-white"
     ><i class="fa fa-arrow-left mx-1"></i>all orders</a
   > 
-  <%if(currentOrder.status !== 'Cancelled' && currentOrder.delivered != true && currentOrder.status !== 'Refunded'){%> <button style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2.5px;" class="col-sm-12  btn btn-danger d-flex align-items-center justify-content-center px-2 mb-3 text-white col-lg-3 "
+  <%if(currentOrder.status !== 'Cancelled' && currentOrder.delivered != true && currentOrder.status !== 'Refunded' && currentOrder.status !== "Replaced"){%> <button style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2.5px;" class="col-sm-12  btn btn-danger d-flex align-items-center justify-content-center px-2 mb-3 text-white col-lg-3 "
   onclick="cancelOrder('<%=currentOrder._id%>')">Cancel Order</button
 > <% }%>
 
 
-<%if(currentOrder.delivered === true && currentOrder.status !== "Returned"){%>
+<%if(currentOrder.delivered === true && currentOrder.status !== "Returned" && currentOrder.status !== "Replace Requested"){%>
   <button
           type="button"
           style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2.5px;"
@@ -156,63 +157,157 @@
           <form action="/users/orders/return" method="POST">
             <input type="text" value="<%=currentOrder._id%>" hidden name="orderId">
             <input type="text" value="<%=currentOrder.summary[0].product._id%>" hidden name="product">
-              
-              <div class="mb-3">
-                <label for="reason" class="px-1" style="font-size: 0.75rem;">Reason :</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="reason"
-                    placeholder="Reason for Return"
-                    name="reason"
-                    required 
-                  />
-                 
-                </div>
-              <div class="mb-3">
-                  <label for="accountNo" class="px-1" style="font-size: 0.75rem;">Bank Acc No :</label>
-                <input
-                  class="form-control"
-                  id="accountNo"
-                  placeholder="Bank Account Number"
-                  name="accountNo"
-                  type="number"
-                />
+          
+            <div class="mb-3">
+              <label for="reason" class="px-1" style="font-size: 0.75rem;">Reason:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="reason"
+                placeholder="Reason for Return/Replacement"
+                name="reason"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="px-1" style="font-size: 0.75rem;">Select Action : </label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="action" id="replaceProduct" value="Replace" >
+                <label class="form-check-label" for="replaceProduct"  style="font-size: 0.75rem;">
+                  Replace Product
+                </label>
               </div>
-              <div class="mb-3">
-                <label for="bankName" class="px-1" style="font-size: 0.75rem;">Bank Name :</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="bankName"
-                    placeholder="Bank Name"
-                    name="bankName"
-                  />
-                </div>
-              <div class="mb-3">
-                <label for="ifscCode" class="px-1" style="font-size: 0.75rem;">IFSC Code :</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="ifscCode"
-                    placeholder="IFSC Code"
-                    name="ifscCode"
-                  />
-                </div>
-            
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="action" id="returnProduct" value="Return" checked>
+                <label class="form-check-label" for="returnProduct" style="font-size: 0.75rem;">
+                 Return Product
+                </label>
+              </div>
+            </div>
+          
+            <div class="mb-3">
+              <label class="px-1" style="font-size: 0.75rem;">Select Address:</label>
+              <select class="form-select" name="address">
+                <option value="" selected disabled>Select an address</option>
+              <% allAddresses.forEach((address, i) => {%>
+                <option value="<%=address._id%>" name="address"><%=address.address%></option>
+
+              <%})%>
+              </select>
+            </div>
+          <div id="return-section">
+            <div class="mb-3">
+              <label class="px-1" style="font-size: 0.75rem;">Select Bank Account:</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="accountType" id="existingAccount" value="existing">
+                <label class="form-check-label" for="existingAccount"  style="font-size: 0.75rem;">
+                  Use existing Account
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="accountType" id="newAccount" value="new" checked>
+                <label class="form-check-label" for="newAccount" style="font-size: 0.75rem;">
+                  Use a new Bank Account
+                </label>
+              </div>
+            </div>
+          
+            <div class="mb-3" id="existingAccountSection" style="display: none;">
+              <label for="existingAccountNo" class="px-1" style="font-size: 0.75rem;">Select Existing Account:</label>
+              <select class="form-select" name="accountNo">
+                <option value="" selected disabled>Select an existing account</option>
+                <!-- Add your existing account options dynamically here -->
+                <option value="XXXX-XXXX-XXXX-1278">XXXX-XXXX-XXXX-1278</option>
+                <option value="XXXX-XXXX-XXXX-3456" >XXXX-XXXX-XXXX-3456</option>
+              </select>
+            </div>
+          
+            <div class="mb-3" id="newAccountSection">
+              <label for="accountNo" class="px-1" style="font-size: 0.75rem;">Bank Account Number:</label>
+              <input
+                class="form-control"
+                id="accountNo"
+                placeholder="Bank Account Number"
+                name="accountNo"
+                type="number"
+              />
+            </div>
+          
+            <div class="mb-3" id="newAccountFields">
+              <label for="bankName" class="px-1" style="font-size: 0.75rem;">Bank Name:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="bankName"
+                placeholder="Bank Name"
+                name="bankName"
+              />
+            </div>
+          
+            <div class="mb-3" id="newAccountFields">
+              <label for="ifscCode" class="px-1" style="font-size: 0.75rem;">IFSC Code:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ifscCode"
+                placeholder="IFSC Code"
+                name="ifscCode"
+              />
+            </div>
+        
           </div>
           <div class="modal-footer">
-            <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal">
-            Cancel
-          </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
             <button type="submit" class="btn btn-success">
               Submit Request
             </button>
-            </form>
+          </div>
+          </form>
+          
+          <script>
+            const existingAccountRadio = document.getElementById('existingAccount');
+            const existingAccountSection = document.getElementById('existingAccountSection');
+            const newAccountSection = document.getElementById('newAccountSection');
+            const newAccountFields = document.getElementById('newAccountFields');
+            const return_section = document.getElementById('return-section');
+            const replaceProduct = document.getElementById('replaceProduct');
+            const returnProudct = document.getElementById('returnProduct');
+          
+            existingAccountRadio.addEventListener('change', function () {
+              if (this.checked) {
+                existingAccountSection.style.display = 'block';
+                newAccountSection.style.display = 'none';
+                newAccountFields.querySelectorAll('input').forEach((input) => (input.required = false));
+              }
+            });
+          
+            const newAccountRadio = document.getElementById('newAccount');
+          
+            newAccountRadio.addEventListener('change', function () {
+              if (this.checked) {
+                existingAccountSection.style.display = 'none';
+                newAccountSection.style.display = 'block';
+                newAccountFields.querySelectorAll('input').forEach((input) => (input.required = true));
+              }
+            });
 
+
+            replaceProduct.addEventListener('change', function () {
+              if (this.checked) {
+                return_section.style.display = 'none';
+              }
+            });
+
+            returnProudct.addEventListener('change', function () {
+              if (this.checked) {
+                return_section.style.display = 'block';
+              }
+            });
+          </script>
+          
 
 <!-- ------------------- -->
       

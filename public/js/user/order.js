@@ -1,22 +1,41 @@
 function cancelOrder(orderId){
-  $.ajax({
-    url : '/users/orders/' + orderId,
-    method : "patch",
-    success : (res) => {
-      if(res.success.message === 'cancelled'){
-        $("#orderDetails").load(location.href + " #orderDetails");
-        Swal.fire({
-          toast: true,
-          icon: "success",
-          position: "top-right",
-          showConfirmButton: false,
-          timer: 1000,
-          timerProgressBar: true,
-          animation: true,
-          title: "Order cancelled",
-        });
-      }
+  swal.fire({
+    title: `<h5 style="color: white">Are you sure to Cancel ?</h5>`,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    confirmButtonColor: '#4CAF50',
+    cancelButtonText: 'No',
+    cancelButtonColor: '#d33',
+    customClass: {
+      popup: 'swal-popup',
+      title: 'swal-title',
     },
+    background: '#333',
+    confirmButtonClass: 'btn-lg btn-success',
+    cancelButtonClass: 'btn-lg btn-danger',
+  }).then((result) => {
+    if(result.isConfirmed){
+      $.ajax({
+        url : '/users/orders/' + orderId,
+        method : "patch",
+        success : (res) => {
+          if(res.success.message === 'cancelled'){
+            $("#orderDetails").load(location.href + " #orderDetails");
+            Swal.fire({
+              toast: true,
+              icon: "success",
+              position: "top-right",
+              showConfirmButton: false,
+              timer: 1000,
+              timerProgressBar: true,
+              animation: true,
+              title: "Order cancelled",
+            });
+          }
+        },
+      });
+    }
   });
 }
 

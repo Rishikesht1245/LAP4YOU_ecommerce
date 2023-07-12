@@ -21,14 +21,13 @@ exports.viewAll = async (req, res) =>{
 // change access of customers
 exports.changeAccess = async(req, res) => {
     try {   
-            console.log('Reached changeAccess');
             let currentAccess = req.body.currentAccess;
             currentAccess = JSON.parse(currentAccess);
             currentAccess = !currentAccess;
             await userCLTN.findByIdAndUpdate(req.body.userId, {
                   access : currentAccess,
             });
-            console.log('Updated')
+
             res.json({
                   data : {newAccess : currentAccess},
             })

@@ -41,7 +41,6 @@ exports.profilePafge = async (req, res) => {
 // update profile
 exports.updateProfile = async (req, res) => {
      try {
-            console.log('Reached update Profile')
             const userId = req.session.userId;
             const newName = req.body.name;
             const updatedBody = {name : newName};

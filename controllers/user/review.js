@@ -4,7 +4,6 @@ const reviewCLTN = require('../../models/users/review');
 
 // add review for delivered products
 exports.addNew = async (req, res) => {
-      console.log(req.body.product)
      try {
             req.body.customer = req.session.userId;
             await reviewCLTN.create(req.body);

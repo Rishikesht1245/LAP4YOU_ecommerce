@@ -188,7 +188,7 @@
     </table>
     <%}%>
     <div class=" text-center my-3">
-      <a class="btn btn-sm btn-dark text-white" href="/admin/salesReport">Download Sales Report</a>
+      <a class="btn btn-sm btn-dark text-white" onclick="salesReport()">Download Sales Report</a>
     
     </div> 
 </div>
@@ -213,14 +213,16 @@
 <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
 <!-- include chart js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <!-- include sweet alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/public/js/admin/dashboard.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
       crossorigin="anonymous"
     ></script>
-    <!-- include sweet alert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   
+  
 <script>
   if ( window.history.replaceState ) {
  window.history.replaceState( null, null, window.location.href );

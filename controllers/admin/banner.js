@@ -6,7 +6,6 @@ const sharp = require('sharp');
 exports.bannerPage = async (req, res)=> {
       try{
             const allBanners = await bannerCLTN.find({}).sort({_id : -1});
-            console.log(allBanners);
 
             res.render('admin/partials/banner', {
                   session : req.session.admin,

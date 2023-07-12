@@ -21,7 +21,7 @@ exports.viewAll = async (req, res) => {
           .exec();
          
         const quantityInStock = userCart.products.map((item, i)=> item.name.RAMSSD[0].quantity);
-        console.log(quantityInStock);
+
         res.render("user/profile/partials/cart", {
           userCart,
           documentTitle: "Your Cart | LAP4YOU",
@@ -44,13 +44,11 @@ exports.viewAll = async (req, res) => {
 // adding products to the cart
 exports.addToCart = async (req, res) => {
       try {
-            console.log('re')
             const userId = req.session.userId;
             const productId = req.body.id;
             const price = parseInt(req.body.price);
             const ramCapacity = req.body.ramCapacity;
             const ssdCapacity = req.body.ssdCapacity;
-            console.log(req.body.url)
 
             if(!req.session.userId){
                   req.session.currentUrl = req.body.url;
@@ -94,7 +92,6 @@ exports.addToCart = async (req, res) => {
                               $elemMatch : {name : new mongoose.Types.ObjectId(productId), ramCapacity: ramCapacity}
                         }
                   });
-                  console.log(productExist)
             
                   if(productExist){
                         await cartCLTN.updateOne({

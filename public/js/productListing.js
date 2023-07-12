@@ -18,8 +18,6 @@ function filter(filterBy, brandId){
         title : 'Filterd',
       });
       $('#productContainer').load(location.href + ' #productContainer'); 
-      // $('#productContainer').html(res);
-      // location.reload();
       if(res.success == 0){
         $('#searchInput').val('');
       }

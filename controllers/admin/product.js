@@ -80,7 +80,6 @@ exports.addProduct = async(req, res) => {
             const newProduct = new productCLTN(req.body);
             await newProduct.save();
 
-            console.log('Product added successfully');
             res.redirect('/admin/product_management');
 
       } catch (error) {
@@ -164,7 +163,7 @@ exports.editProduct = async (req,res) => {
             req.body.brand = new mongoose.Types.ObjectId(req.body.brand);
             req.body.updatedBy = req.session.manager? req.session.manager.name : req.session.admin.name;
             await productCLTN.findByIdAndUpdate(req.query.id, req.body);
-            console.log("Product Edited Successfully");
+           
             res.redirect('/admin/product_management');
       } catch (error) {
             console.log("Product Editing POST error : " + error);

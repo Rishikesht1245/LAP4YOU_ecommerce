@@ -192,12 +192,31 @@ $(function () {
 
 
 
-// //downloading sales report in excel format using xlsx library
-// function exportToExcel(type, fileName, dl) {
-//       var element = document.getElementById('dataTable');
-//       var wb = XLSX.utils.table_to_book(element, { sheet: "salesReport" });
-//       return dl ?
-//         XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
-//         XLSX.writeFile(wb, fileName || ('MySheetName.' + (type || 'xlsx')));
-//    }
+  // Downloading sales report
+function salesReport() {
+  Swal.fire({
+    showCloseButton: true,
+    showConfirmButton: true,
+    html: `<form id="dateForm">
+        <div class="form-group">
+            <label for="fromDate">From Date:</label>
+            <input type="date" id="fromDate" class="form-control" required name="fromDate">
+        </div>
+        <div class="form-group">
+            <label for="toDate">To Date:</label>
+            <input type="date" id="toDate" class="form-control" required name="toDate">
+        </div>
+        </form>`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const fromDate = $("#fromDate").val();
+          const toDate = $("#toDate").val();
+
+          const url = `/admin/salesReport?fromDate=${fromDate}&toDate=${toDate}`;
+
+          window.location.href = url;
+        }
+      });
+}
+   
     

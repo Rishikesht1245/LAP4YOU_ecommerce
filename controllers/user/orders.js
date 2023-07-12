@@ -6,6 +6,7 @@ const productCLTN = require('../../models/admin/productDetails');
 const sendMail = require('../../utilities/nodeMailer');
 const userCLTN = require('../../models/users/userDetails');
 
+
 // view orders page 
 exports.viewAll = async( req, res) => {
       try {
@@ -44,13 +45,16 @@ exports.viewOrderDetails = async (req,res) => {
                   .sort("");
             const totalPrice = currentOrder.summary.reduce((total, order) => total + order.totalPrice, 0);
             currentOrder.totalPrice = totalPrice;
-            console.log(currentOrder);
+
+            let allAddresses = await userCLTN.findById(req.session.userId);
+            allAddresses = allAddresses.addresses;
             if(currentOrder){
                   res.render('user/profile/partials/orderDetails', {
                         documentTitle : "LAP4YOU | eCommerce",
                         currentOrder,
                         session:req.session.userId,
-                        moment
+                        moment,
+                        allAddresses,
                   });
             }else{
                   res.redirect('/pageNotFound');
@@ -69,14 +73,11 @@ exports.viewOrderDetails = async (req,res) => {
 
 exports.cancelOrder = async(req, res) => {
       try {
-
-            console.log("Cancel Order");
             const orderDetails = await orderCLTN.findById(req.params.id);
             const productIds = orderDetails.summary.map((order) => order.product);
             const quantity = orderDetails.summary.map((order) => order.quantity);
             const price = orderDetails.summary.map((order) => order.totalPrice);
-            console.log(quantity);
-            console.log(productIds);
+
             //Increasing the count of product when cancelled
             for(let i = 0; i< productIds.length; i++){
                   await productCLTN.updateOne(
@@ -87,7 +88,6 @@ exports.cancelOrder = async(req, res) => {
                                }
                         });
             }
-            console.log("Increased the count");
 
             await orderCLTN.findByIdAndUpdate(req.params.id, 
                  { $set : {
@@ -102,8 +102,10 @@ exports.cancelOrder = async(req, res) => {
                   }
             });
 
-            const adminSubject = `Order has been cancelled by ${req.session.email}`
+            const adminSubject = `Order has been cancelled by ${req.session.email}`;
+            const userSubject = `Orders has been cancelled successfully Order ID : ${req.params.id}`;
             sendMail ('lap4you.ecommerce@gmail.com', adminSubject, 'cancelled', 'admin', req.params.id);
+            sendMail(`${req.session.email}`, userSubject, 'cancelled', req.params.id );
             
       } catch (error) {
             console.log("Error in Cancel Order Page : " + error);
@@ -124,18 +126,24 @@ exports.returnOrder = async(req, res) => {
       try {
             // insert return data to the return collection
             req.body.customer = req.session.userId;
+            req.body.accountNo = req.body.accountNo[0];
             const newReturn = new returnCLTN(req.body);
             await newReturn.save();
-            console.log('Returned Data saved')
+
+            let status;
+            if(req.body.action == "Replace"){
+                  status = "Replace Requested"
+            }else{
+                  status = "Returned"
+            }
       
             //change status of product to returned from order collection
             await orderCLTN.findByIdAndUpdate(req.body.orderId, {
                   $set : {
-                        status : "Returned",
+                        status : status,
                         returnedOn : Date.now(),
                   },
             });
-            console.log('Status Changed');
 
             //redirece to the order details page after return
             res.redirect(`/users/orders/${req.body.orderId}`)

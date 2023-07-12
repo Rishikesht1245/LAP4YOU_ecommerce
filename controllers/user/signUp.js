@@ -124,7 +124,6 @@ exports.otpVerification = async (req, res)=> {
             const otpDetails = await NewOTP.findOne({otp:otp, email : inputEmail});
             if(otpDetails){
                   // if(otpDetails.expiration > Date.now()){
-                        console.log('reached otp verification page');
                         const newUserDetails = await new userCLTN(req.session.newUserDetails);
                         await newUserDetails.save();
                         res.redirect('/users/signIn')
@@ -147,7 +146,6 @@ exports.otpVerification = async (req, res)=> {
                          await newWishlist.save();
                         
                   }else{
-                  console.log('Invalid OTP');
                   res.render('user/partials/otp', {
                         documentTitle:'OTP Verification | LAP4YOU',
                         errorMessage:'Invalid OTP',
@@ -159,7 +157,6 @@ exports.otpVerification = async (req, res)=> {
             const mail = req.session.newUserDetails.email;
             await NewOTP.findOneAndDelete({email : mail , otp: otpNew});
             req.body.otp = false;
-            console.log('OTP Deleted');
       } catch (error) {
             console.log('Error in Sign Up : ' + error);
       }

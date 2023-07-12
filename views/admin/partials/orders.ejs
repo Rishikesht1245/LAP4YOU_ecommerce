@@ -58,12 +58,18 @@
                     <span><%= moment(item.deliveredOn).format('lll') %></span>
                   <% } %>
                 </span>
-            <% } else if(item.status == 'Returned') { %>
+            <% } 
+            else if(item.status == 'Returned') { %>
               <button class="btn btn-sm btn-danger w-100" onclick="ChangeOrderStatus('<%=item._id%>','<%=i%>', 'Refunded', false, '<%=item.summary[0].totalPrice%>')">
                 <i class="fa fa-recycle text-warning"></i>
                 <span>Refund</span>
               </button>
-            <%} else { %>
+            <%}  else if(item.status == 'Replace Requested') { %>
+              <button class="btn btn-sm btn-primary w-100" onclick="ChangeOrderStatus('<%=item._id%>','<%=i%>', 'Replaced', false, '<%=item.summary[0].totalPrice%>')">
+                <i class="fa fa-recycle text-warning"></i>
+                <span>Replace</span>
+              </button>
+          <% } else { %>
               <%= item.status %>
             <% } %>
           </div>

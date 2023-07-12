@@ -115,7 +115,7 @@ exports.chartData = async(req, res)=> {
             ]);
             let inTransit, cancelled, delivered, returnedOrders, refunded;
             orders.forEach((order, i) => {
-                  if(order._id === "In-Transit"){
+                  if(order._id === "In-transit"){
                         inTransit = order.status;
                   }else if(order._id === "Cancelled"){
                         cancelled = order.status;
@@ -160,7 +160,7 @@ exports.doughNutData = async(req, res) => {
 
             let inTransit, cancelled, delivered, returnedOrders, refunded;
             orders.forEach((order, i) => {
-                  if(order._id === "In-Transit"){
+                  if(order._id === "In-transit"){
                         inTransit = order.status;
                   }else if(order._id === "Cancelled"){
                         cancelled = order.status;
