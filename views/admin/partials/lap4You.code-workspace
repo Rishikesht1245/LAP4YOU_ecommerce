@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../cropper"
+		},
+		{
+			"path": "../../../../../../../OneDrive/Desktop/magiccasket/magiccasket"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "cropper"
+	}
+}

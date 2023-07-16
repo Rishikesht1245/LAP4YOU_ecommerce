@@ -6,37 +6,40 @@ const userCLTN = require('../../models/users/userDetails');
 // collection page 
 exports.collection = async (req, res) => {
   try{
-        let listing;
-        let viewMore;
-        if(req.session.category || !viewMore){
-          listing = req.session.listing;
-        }
-        let currentUser = null;
-        if(req.session.userId){
-              currentUser = await userCLTN.findOne({_id : req.session.userId});
-         }
-         
-        if(!listing){
-              listing = await productCLTN.find({listed : true}).populate('brand').limit(9);
-              viewMore = false;
-        }
-        if(req.query.query == 'viewMore'){
-          listing = await productCLTN.find({listed : true}).populate('brand');
-          req.session.listing = listing;
-          viewMore = true;
-          listingName = 'Collections';
-          res.redirect('/products')
-        }else{
-            const brands = await brandCLTN.find({isDeleted : false});
-              res.render('index/productListing', {
-              session : req.session.userId,
-              documentTitle : 'LAP4YOU',
-              currentUser,
-              listing,
-              listingName : req.session.listingName || "Collections",
-              brands,
-        });
-        }
+      let collectionId=req.query.category;       
+      let listing=req.session.listing;
+      let listingName
+      let currentUser=null;
+      if(req.session.userId){
+        currentUser= await userCLTN.findOne({_id:req.session.userId})
+      }
+      if(!req.session.listingName){
+        listingName="Our Collection"
+      }if(req.session.listingName){
+        listingName=req.session.listingName
+      }
+      // view more
+      if(collectionId=='viewMore' && !req.session.sorted && !req.session.filter && !req.session.searched){
+            listing= await productCLTN.find({listed:true}).populate("brand");
+            req.session.listing=listing;
+            listingName="Our Collection"
+      }else{
+            listing= await productCLTN.find({listed:true}).populate("brand").limit(12);
+            req.session.listing=listing;
+            listingName="Our Collection"
+      }
+      
+      req.session.sorted=null;
+      req.session.filter=null;
+      req.session.searched=null;
+
+      res.render("index/productListing",{ 
+          session:req.session.userID,
+          listingName,
+          listing,
+          currentUser,
+          documentTitle: "LAP4 YOU | COLLECTIONS"
+      });
         
   } catch(error){
         console.log('Error in Collection Page :' +error );

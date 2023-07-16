@@ -54,6 +54,7 @@ function sortBy(order) {
       sortBy: order,
     },
     success: (res) => {
+      $('#productContainer').load(location.href + ' #productContainer');
       swal.fire({
         icon: 'success',
         toast: true,
@@ -63,12 +64,6 @@ function sortBy(order) {
         animation: true,
         title: 'Sorted',
       });
-
-      // Store the selected sort option in local storage
-      localStorage.setItem('selectedSort', order);
-
-      // Reload the page
-      window.location = '/products'
     },
   });
 }
