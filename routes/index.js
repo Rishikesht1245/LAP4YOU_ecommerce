@@ -25,7 +25,10 @@ router
       .put(productListing.search);
 
 //================= Categories section ==============================//
-router.get('/categories/:id', productListing.category);
+router
+      .route('/categories/:id')
+      .get(productListing.category)
+      .put(productListing.search);
 
 
 

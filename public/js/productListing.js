@@ -1,23 +1,30 @@
 // ============= ajax call for filtering products ========================//
-function filter(filterBy, brandId){
+function filter(filterBy, brandId, listingName){
   $.ajax({
     url:'/products',
     type:'patch',
     data : {
       filterBy : filterBy,
       brandId : brandId,
+      listingName : listingName,
     },
     success : (res) => {
-      swal.fire({
-        toast:true,
-        icon : 'success',
-        position : 'top-right',
-        showConfirmation : false,
-        timer : 1000,
-        animation : true,
-        title : 'Filterd',
-      });
-      $('#productContainer').load(location.href + ' #productContainer'); 
+      console.log(res.success)
+      if(res.success == "clear"){
+        $('#productContainer').load(location.href + ' #productContainer');
+        $("#searchInput").val("");
+      }else{
+        swal.fire({
+          toast:true,
+          icon : 'success',
+          position : 'top-right',
+          showConfirmation : false,
+          timer : 1000,
+          animation : true,
+          title : 'Filterd',
+        });
+        $('#productContainer').load(location.href + ' #productContainer'); 
+     }
       if(res.success == 0){
         $('#searchInput').val('');
       }
@@ -46,7 +53,15 @@ function removeFilter(filterBy){
 
 //========================= ajax call for sorting ====================================//
 
-function sortBy(order) {
+function sortBy(event, order) {
+
+  const liElements = document.querySelectorAll('.dropdown-item');
+  liElements.forEach((li) => {
+    li.classList.remove('active');
+  });
+
+  event.target.classList.add('active');
+
   $.ajax({
     url: '/products',
     type: 'post',
@@ -54,7 +69,6 @@ function sortBy(order) {
       sortBy: order,
     },
     success: (res) => {
-      $('#productContainer').load(location.href + ' #productContainer');
       swal.fire({
         icon: 'success',
         toast: true,
@@ -64,24 +78,30 @@ function sortBy(order) {
         animation: true,
         title: 'Sorted',
       });
+      $('#productContainer').load(location.href + ' #productContainer');
     },
   });
 }
 
-window.onload = function () {
-  const selectedSort = localStorage.getItem('selectedSort');
-  // Set the selected sort option in the UI
-  if (selectedSort) {
-    document.getElementById(selectedSort).checked = true;
-  }
-};
+
 
 
 
 
 //================ AJAX Call for Seraching ===============================//
 
-function search(){
+function search(listingName){
+  let url;
+  if(listingName == 'Our Collection'){
+     url = '/products'
+  }else if(listingName == 'GAMING'){
+    url = '/categories/64888a004cb3b3a4b1bb8be3'
+  }else if(listingName == 'STUDENT'){
+    url = '/categories/648d930bca2707bb62f29e01'
+  }else if(listingName == 'BUSINESS'){
+    url = '/categories/648d9311ca2707bb62f29e06'
+  }
+
   const searchInput = $('#searchInput').val();
   if(searchInput){
     $('#searchButton').html(
@@ -89,7 +109,7 @@ function search(){
           );
   }
   $.ajax({
-    url:'/products',
+    url: url,
     type : 'put',
     data : {
       searchInput : searchInput,

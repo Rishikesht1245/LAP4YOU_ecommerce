@@ -181,7 +181,7 @@
             <%brands.forEach((brand, i) => {%>
               <li>
                 <label class="dropdown-item">
-                  <input type="radio" name="filterOption" onclick="filter('<%=brand.name%>', '<%=brand._id%>')"> <%=brand.name%>
+                  <input type="radio" name="filterOption" onclick="filter('<%=brand.name%>', '<%=brand._id%>' , '<%=listingName%>')"> <%=brand.name%>
                 </label>
               </li>
             <%})%>
@@ -214,16 +214,19 @@
           </a>
           <ul class="dropdown-menu">
             <li>
-              <label class="dropdown-item" onclick="sortBy('newReleases')">
-                  <input type="radio" id="newReleases" name="sortOptions"> New releases</label>
+              <span class="dropdown-item" onclick="sortBy(event , 'newReleases')"
+                >New releases</span
+              >
             </li>
             <li>
-                <label class="dropdown-item" onclick="sortBy('ascending')">
-                  <input type="radio" id="ascending" name="sortOptions"> Price: Low to High</label>
+              <span class="dropdown-item" onclick="sortBy(event , 'ascending')"
+                >Price: Low to High</span
+              >
             </li>
             <li>
-              <label class="dropdown-item" onclick="sortBy('descending')">
-                <input type="radio" id="descending" name="sortOptions"> Price: High to low</label>
+              <span class="dropdown-item" onclick="sortBy(event , 'descending')"
+                >Price: High to low</span
+              >
             </li>
             <!-- <li><a class="dropdown-item" href="#"></a></li> -->
           </ul>
@@ -235,7 +238,7 @@
           <input
             type="text"
             id="searchInput"
-            onkeyup="search()"
+            onkeyup="search('<%=listingName%>')"
             class="form-control"
             placeholder="Search"
             aria-label="Search"
@@ -306,14 +309,12 @@
       
     </section>
     <div class="text-center my-3">
-      <%if(listingName == 'Collections'){%>
         <a 
         href="/products?query=viewMore"
         class="btn btn-outline-dark py-2 px-3 mt-5"
         style="font-size: 0.75rem"
         >SHOW MORE</a
       >
-      <%}%>
      
     </div>
     <footer class="bg-theme">
