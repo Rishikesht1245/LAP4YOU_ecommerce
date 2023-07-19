@@ -5,7 +5,7 @@ const orderReviewCLTN = require('../../models/users/orderReview');
 const returnCLTN = require('../../models/users/return');
 const productCLTN = require('../../models/admin/productDetails');
 const mongoose = require('mongoose');
-
+const sendMail = require('../../utilities/nodeMailer');
 
 //view orders
 exports.viewAll = async(req, res) => {
@@ -46,6 +46,15 @@ exports.changeOrderStatus = async(req, res) => {
                         updatedBy : req.session.manager? req.session.manager.name : req.session.admin.name,
                   }
             });
+
+            const currentOrder = await orderCLTN.findById(req.body.id).populate('customer');
+            const customerEmail = currentOrder.customer.email;
+            //send email
+            const adminSubject = `Order has been ${req.body.status} for user ${customerEmail}`;
+            const userSubject = `Orders has been ${req.body.status} successfully Order ID : ${req.body.id}`;
+            sendMail ('lap4you.ecommerce@gmail.com', adminSubject, `${req.body.status}` , 'admin', req.body.id);
+            sendMail(`${customerEmail}`, userSubject,`${req.body.status}` ,'users', req.body.id );
+
            
             // if status is refunded or cancelled increase the stock, change access to review 
             if(req.body.status == "Refunded"){
@@ -76,7 +85,7 @@ exports.changeOrderStatus = async(req, res) => {
                   }
 
                  
-                  // changeing returned status to true
+                  // changing returned status to true
                   await returnCLTN.findByIdAndUpdate(returnedProductId, {
                         $set :{
                               isReturned : true,

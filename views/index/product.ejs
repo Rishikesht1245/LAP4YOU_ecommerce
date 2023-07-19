@@ -232,23 +232,26 @@
           </div>
         </div>
         <div class="product-description mt-5 mb-5 container text-center">
-          <div id="description ">
+          <div id="description">
+            <div class="line-break text-center py-4">
+              <span class="shadow-heading" style="font-size: 1rem">PRODUCT Details</span>
+            </div>
             <!-- first row -->
             <div class="row my-4 justify-content-around">
-              <div class="col-3 d-flex flex-column">
+              <div class="col-12 mb-sm-1 col-md-3  d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Operating System</h6>
                   <p class="fs-7"><%=productDetails.operatingSystem%></p>
                 </div>
               </div>
               
-              <div class="col-3 d-flex flex-column">
+              <div class="col-12 col-md-3 mb-sm-1 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Series</h6>
                   <p class="fs-7"><%=productDetails.series%></p>
                 </div>
               </div>
-              <div class="col-3 d-flex flex-column">
+              <div class="col-12 col-md-3 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Type</h6>
                   <p class="fs-7"><%=productDetails.category.name%></p>
@@ -257,14 +260,14 @@
             </div>
             <!-- second row -->
             <div class="row my-4 justify-content-around">
-              <div class="col-3 d-flex flex-column">
+              <div class="col-12 col-md-3 mb-sm-1 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Processor</h6>
                   <p class="fs-7"><%=productDetails.processor%></p>
                 </div>
               </div>
-              <div class="col-3 d-flex flex-column">
-                <div class="description-heading">
+              <div class="col-12 col-md-3 mb-sm-1 d-flex flex-column">
+                <div class="description-heading mb-sm-1">
                   <h6 class="fw-bold">RAM SSD VARIANTS</h6>
                   <select class="form-select fs-7 custom-select" id="ramCapacitySelect" onchange="updatePrice('<%= JSON.stringify(productDetails.RAMSSD) %>')">
                     <% productDetails.RAMSSD.forEach(function(ramSSD) { %>
@@ -275,7 +278,7 @@
                   </select>                  
                 </div>
               </div>
-              <div class="col-3 d-flex flex-column">
+              <div class="col-12 col-md-3 mb-sm-1 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Price</h6>
                   <p class="fs-7" id="price"><%= productDetails.RAMSSD[0].price %></p>
@@ -284,19 +287,19 @@
             </div>
             <!-- third row -->
             <div class="row my-4 justify-content-around">
-              <div class="col-3 d-flex flex-column">
+              <div class=" col-12 col-md-3 mb-sm-1 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Warranty</h6>
                   <p class="fs-7"><%=productDetails.warranty%></p>
                 </div>
               </div>
-              <div class="col-3 d-flex flex-column">
+              <div class="col-12 col-md-3 mb-sm-1 d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Screen Size</h6>
                   <p class="fs-7"><%=productDetails.screenSize%></p>
                 </div>
               </div>
-              <div class="col-3 d-flex flex-column">
+              <div class="col-12 col-md-3  d-flex flex-column">
                 <div class="description-heading">
                   <h6 class="fw-bold">Sales Package</h6>
                   <p class="fs-7"><%=productDetails.salesPackage%></p>

@@ -337,8 +337,8 @@ exports.checkOut = async (req, res) => {
                               payment_method : "paypal",
                         },
                         redirect_urls : {
-                              return_url : `http://localhost:3000/users/cart/checkout/${transactionID}`,
-                              cancel_url : 'http://localhost:3000/users/cart/checkout',
+                              return_url : `https://www.lap4you.shop/users/cart/checkout/${transactionID}`,
+                              cancel_url : 'https://www.lap4you.shop/users/cart/checkout',
                         },
                         transactions : [
                               {
