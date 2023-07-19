@@ -81,12 +81,13 @@
             <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-3">
               <a class="nav-link" href="/products">Collection</a>
             </span>
-            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-3">
-              <a class="nav-link" href="/users/wishlist">Wishlist</a>
-            </span>
-            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-3">
-              <a class="nav-link" href="/users/cart">Cart</a>
-            </span>
+            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+              <a class="nav-link" href="/users/wishlist">Wishlist <%if(locals.wishlistCount){%><span class="count-icon" id="cart-count"><%=wishlistCount%></span><%}%></a>
+          </span>
+          <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+              <a class="nav-link" href="/users/cart">Cart <%if(locals.cartCount){%><span class="count-icon" id="cart-count"><%=cartCount%></span><%}%></a>
+          </span>
+
             <span class="nav-item nav-link text-center mb-2 mb-lg-0 ms-lg-3">
               <% if(locals.session){%>
               <div class="d-block d-lg-none">
@@ -169,14 +170,13 @@
       >
         <div class="dropdown">
           <a
-            class="btn btn-light btn-sm dropdown-toggle"
-            href="#"
+            class="btn btn-dark btn-sm dropdown-toggle"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             Filter
-          </a>
+        </a>
           <ul class="dropdown-menu">
             <%brands.forEach((brand, i) => {%>
               <li>
@@ -204,7 +204,7 @@
 
         <div class="dropdown">
           <a
-            class="btn btn-light btn-sm dropdown-toggle"
+            class="btn btn-dark btn-sm dropdown-toggle"
             href="#"
             role="button"
             data-bs-toggle="dropdown"

@@ -39,6 +39,8 @@ exports.collection = async (req, res) => {
       req.session.searched=null;
 
       res.render("index/productListing",{ 
+          cartCount : req.session.cartCount,
+          wishlistCount : req.session.wishlistCount,
           session:req.session.userID,
           listingName,
           listing,
@@ -238,6 +240,8 @@ exports.category = async(req, res) => {
               listing = await productCLTN.find({isDeleted:false}).sort({_id : -1});
               req.session.categorySort = listing;
               res.render('index/productListing', {
+                    cartCount : req.session.cartCount,
+                    wishlistCount : req.session.wishlistCount,
                     listing,
                     documentTitle : 'New Releases | LAP4YOU',
                     listingName : 'New Releases',
@@ -251,6 +255,8 @@ exports.category = async(req, res) => {
               req.session.sorted = 0;
 
               res.render('index/productListing', {
+                  cartCount : req.session.cartCount,
+                  wishlistCount : req.session.wishlistCount,
                   listing,
                   documentTitle : `${currentCategory.name} | LAP4YOU`,
                   listingName : `${currentCategory.name}`,
@@ -277,6 +283,8 @@ exports.category = async(req, res) => {
               req.session.filtered = false;
              
               res.render('index/productListing', {
+                    cartCount : req.session.cartCount,
+                    wishlistCount : req.session.wishlistCount,
                     listing : req.session.listing,
                     documentTitle : `${currentCategory.name} | LAP4YOU`,
                     listingName : `${currentCategory.name}`,

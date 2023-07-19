@@ -109,11 +109,12 @@
               <a class="nav-link" href="/products">Collection</a>
             </span>
             <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
-              <a class="nav-link" href="/users/wishlist">Wishlist</a>
-            </span>
-            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
-              <a class="nav-link" href="/users/cart">Cart</a>
-            </span>
+              <a class="nav-link" href="/users/wishlist">Wishlist <%if(locals.wishlistCount){%><span class="count-icon" id="cart-count"><%=wishlistCount%></span><%}%></a>
+          </span>
+          <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+              <a class="nav-link" href="/users/cart">Cart <%if(locals.cartCount){%><span class="count-icon" id="cart-count"><%=cartCount%></span><%}%></a>
+          </span>
+
             <span class="nav-item nav-link text-center mb-2 mb-lg-0 ms-lg-3">
               <% if(session){%>
               <div class="d-block d-lg-none">

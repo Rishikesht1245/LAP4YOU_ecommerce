@@ -78,11 +78,11 @@
               <a class="nav-link" href="/products">Collections</a>
             </span>
             <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
-              <a class="nav-link" href="/users/wishlist">Wishlist</a>
-            </span>
-            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
-              <a class="nav-link" href="/users/cart">Cart</a>
-            </span>
+              <a class="nav-link" href="/users/wishlist">Wishlist <%if(locals.wishlistCount){%><span class="count-icon" id="cart-count"><%=wishlistCount%></span><%}%></a>
+          </span>
+          <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+              <a class="nav-link" href="/users/cart">Cart <%if(locals.cartCount){%><span class="count-icon" id="cart-count"><%=cartCount%></span><%}%></a>
+          </span>
 
             <span class="nav-item nav-link text-center mb-2 mb-lg-0 ms-lg-3">
               <% if(session){%>
@@ -185,7 +185,7 @@
                 <h3 style="text-shadow: 1px 1px #7c7c7c; font-size: 1.7rem; color: rgb(173, 174, 172);">
                   <%=banner.title%>
                 </h3>
-                <p style="text-shadow: 1px 1px #7c7c7c; font-size: 1rem; color: aqua;"" >
+                <p style="text-shadow: 1px 1px #7c7c7c; font-size: 1rem;" >
                   <%=banner.description%>
                 </p>
               </div>

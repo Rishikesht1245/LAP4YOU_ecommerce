@@ -49,6 +49,7 @@ exports.addToCart = async (req, res) => {
             const price = parseInt(req.body.price);
             const ramCapacity = req.body.ramCapacity;
             const ssdCapacity = req.body.ssdCapacity;
+            req.session.cartCount = req.session.cartCount + 1;
 
             if(!req.session.userId){
                   req.session.currentUrl = req.body.url;
@@ -159,6 +160,7 @@ exports.remove = async(req, res) => {
       try {
             const removeProductId = req.body.id;
             const userId = req.session.userId;
+            req.session.cartCount = req.session.cartCount - 1
             const productToRemove = await cartCLTN.aggregate([
                   {
                         $match: {customer : new mongoose.Types.ObjectId(userId)}

@@ -14,15 +14,6 @@ function filter(filterBy, brandId, listingName){
         $('#productContainer').load(location.href + ' #productContainer');
         $("#searchInput").val("");
       }else{
-        swal.fire({
-          toast:true,
-          icon : 'success',
-          position : 'top-right',
-          showConfirmation : false,
-          timer : 1000,
-          animation : true,
-          title : 'Filterd',
-        });
         $('#productContainer').load(location.href + ' #productContainer'); 
      }
       if(res.success == 0){
@@ -69,15 +60,6 @@ function sortBy(event, order) {
       sortBy: order,
     },
     success: (res) => {
-      swal.fire({
-        icon: 'success',
-        toast: true,
-        position: 'top-right',
-        showConfirmation: false,
-        timer: 1000,
-        animation: true,
-        title: 'Sorted',
-      });
       $('#productContainer').load(location.href + ' #productContainer');
     },
   });

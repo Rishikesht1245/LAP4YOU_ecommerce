@@ -27,7 +27,10 @@ exports.viewAll = async(req, res)=> {
             business = business.slice(0,3);
             const newReleases =allProducts.slice(0,3);
             const allBanners = await bannerCLTN.find({active:true}).limit(3);
+            console.log(req.session.cartCount)
             res.render('index/landingPage', {
+                  cartCount : req.session.cartCount,
+                  wishlistCount : req.session.wishlistCount,
                   session : req.session.userId,
                   currentUser,
                   newReleases,

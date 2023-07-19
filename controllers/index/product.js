@@ -53,6 +53,8 @@ exports.view = async(req, res) => {
             similarProducts = similarProducts.filter((product) => product.name != productDetails.name)
             const accessToReview = await orderReviewCLTN.findOne({customer : req.session.userId, product : req.params.id, deliverd : true});
             res.render('index/product', {
+                  cartCount : req.session.cartCount,
+                  wishlistCount : req.session.wishlistCount,
                   session : req.session.userId,
                   documentTitle : productDetails.name,
                   productDetails,

@@ -42,6 +42,7 @@ exports.addOrRemove = async (req, res) => {
                         {_id :userWishlist._id, products:req.body.id});
                   
                   if(!productExist){
+                        req.session.wishlistCount = req.session.wishlistCount +1;
                         await wishlistCLTN.findByIdAndUpdate(userWishlist._id, {
                               $push:{
                                     products : [req.body.id]
@@ -53,6 +54,7 @@ exports.addOrRemove = async (req, res) => {
                               }
                         });
                   } else{
+                        req.session.wishlistCount = req.session.wishlistCount -1;
                         await wishlistCLTN.findByIdAndUpdate(userWishlist._id, {
                               $pull : {
                                     products : req.body.id

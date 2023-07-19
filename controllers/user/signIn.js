@@ -23,7 +23,7 @@ exports.signInVerification = async(req, res)=> {
       try {
             const inputEmail = req.body.email.toLowerCase();
             const inputPassword = req.body.password;
-            const userFind = await userCLTN.findOne({email : inputEmail});
+            const userFind = await userCLTN.findOne({email : inputEmail}).populate('cart wishlist');
             
             if(userFind){
                   const hashedCheck = await bcrypt.compare(
@@ -34,6 +34,8 @@ exports.signInVerification = async(req, res)=> {
                         if(hashedCheck){
                               req.session.userId = userFind._id;
                               req.session.email = inputEmail;
+                              req.session.cartCount = userFind.cart.totalQuantity;
+                              req.session.wishlistCount = userFind.wishlist.products.length;
                               if(req.session.currentUrl){
                                     res.redirect(req.session.currentUrl);
                               }

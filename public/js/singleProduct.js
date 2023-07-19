@@ -247,10 +247,9 @@ function helpful(reviewId, ){
 // checking add review access 
  function checkAccess(accessToReview, productId){
   accessToReview = JSON.parse(accessToReview); // Convert the string back to an object
-  if(accessToReview){
-    if(accessToReview.delivered == true){
+  console.log(accessToReview);
+  if(accessToReview && accessToReview.delivered == true){
       reviewAdd(productId);
-    }
   } else {
     Swal.fire({
       showCloseButton: true,
