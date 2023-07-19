@@ -343,8 +343,7 @@ exports.checkOut = async (req, res) => {
                         transactions : [
                               {
                                     item_list : {
-                                          items:[
-                                                {
+                                          items:[                                                {
                                                       name : `Order Number - ${transactionID}`,
                                                       sku : `Order Number - ${transactionID}`,
                                                       price : billAmount,

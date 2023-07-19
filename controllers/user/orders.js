@@ -106,6 +106,7 @@ exports.cancelOrder = async(req, res) => {
             const userSubject = `Orders has been cancelled successfully Order ID : ${req.params.id}`;
             sendMail ('lap4you.ecommerce@gmail.com', adminSubject, 'cancelled', 'admin', req.params.id);
             sendMail(`${req.session.email}`, userSubject, 'cancelled' ,'users', req.params.id );
+            sendMail(`${req.session.email}`, userSubject, 'cancelled', 'users', req.params.id );
             
       } catch (error) {
             console.log("Error in Cancel Order Page : " + error);

@@ -16,7 +16,7 @@ exports.page = async (req, res)=> {
 // admin verification 
 exports.adminVerification = async(req, res)=> {
       try{
-             const inputPassword = req.body.password;
+              const inputPassword = req.body.password;
              const inputEmail = req.body.email.toLowerCase();
              const adminFind = await adminCLTN.findOne({email : inputEmail});
             //  console.log(adminFind);
@@ -45,4 +45,4 @@ exports.adminVerification = async(req, res)=> {
             console.log('Failed to login'+ error);
       }
 
-}
+};

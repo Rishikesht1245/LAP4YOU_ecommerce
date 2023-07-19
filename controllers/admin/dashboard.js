@@ -18,8 +18,8 @@ exports.view = async (req, res)=> {
             const customerCount = await userCLTN.countDocuments();
             let totalRevenue;
             totalRevenue = await orderCLTN.aggregate([
-                  {
-                        $match : {
+                 {
+      	                 $match : {
                               delivered : true,
                         },
                   },
