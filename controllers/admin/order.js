@@ -47,6 +47,8 @@ exports.changeOrderStatus = async(req, res) => {
                   }
             });
 
+
+
             const currentOrder = await orderCLTN.findById(req.body.id).populate('customer');
             const customerEmail = currentOrder.customer.email;
             //send email
@@ -55,8 +57,11 @@ exports.changeOrderStatus = async(req, res) => {
             sendMail ('lap4you.ecommerce@gmail.com', adminSubject, `${req.body.status}` , 'admin', req.body.id);
             sendMail(`${customerEmail}`, userSubject,`${req.body.status}` ,'users', req.body.id );
 
+
            
-            // if status is refunded or cancelled increase the stock, change access to review 
+            
+	    // if status is refunded or cancelled increase the stock, change access to review 
+
             if(req.body.status == "Refunded"){
                   const currentOrder = await orderCLTN.findById(req.body.id);
                  
