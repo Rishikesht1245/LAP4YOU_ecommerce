@@ -233,15 +233,6 @@
           </div>
         </div>
         <div class="product-description mt-5 mb-5 container text-center">
-<<<<<<< HEAD
-          <div id="description">
-            <div class="line-break text-center py-4">
-              <span class="shadow-heading" style="font-size: 1rem">PRODUCT Details</span>
-            </div>
-            <!-- first row -->
-            <div class="row my-4 justify-content-around">
-              <div class="col-12 mb-sm-1 col-md-3  d-flex flex-column">
-=======
           <div id="description ">
 		   <div class="line-break text-center py-4">
               <span class="shadow-heading" style="font-size: 1rem">PRODUCT Details</span>
@@ -250,28 +241,18 @@
             <!-- first row -->
             <div class="row my-4 justify-content-around">
               <div class="col-md-3 col-12 mb-sm-1 d-flex flex-column">
->>>>>>> 46630cb (Updated the bugs)
                 <div class="description-heading">
                   <h6 class="fw-bold">Operating System</h6>
                   <p class="fs-7"><%=productDetails.operatingSystem%></p>
                 </div>
               </div>
-              
-<<<<<<< HEAD
-              <div class="col-12 col-md-3 mb-sm-1 d-flex flex-column">
-=======
               <div class="col-md-3 col-12 mb-sm-1 d-flex flex-column">
->>>>>>> 46630cb (Updated the bugs)
                 <div class="description-heading">
                   <h6 class="fw-bold">Series</h6>
                   <p class="fs-7"><%=productDetails.series%></p>
                 </div>
               </div>
-<<<<<<< HEAD
-              <div class="col-12 col-md-3 d-flex flex-column">
-=======
               <div class="col-md-3 col-12 mb-sm-1 d-flex flex-column">
->>>>>>> 46630cb (Updated the bugs)
                 <div class="description-heading">
                   <h6 class="fw-bold">Type</h6>
                   <p class="fs-7"><%=productDetails.category.name%></p>
@@ -280,23 +261,14 @@
             </div>
             <!-- second row -->
             <div class="row my-4 justify-content-around">
-<<<<<<< HEAD
-              <div class="col-12 col-md-3 mb-sm-1 d-flex flex-column">
-=======
               <div class="col-md-3 col-12 mb-sm-1 d-flex flex-column">
->>>>>>> 46630cb (Updated the bugs)
                 <div class="description-heading">
                   <h6 class="fw-bold">Processor</h6>
                   <p class="fs-7"><%=productDetails.processor%></p>
                 </div>
               </div>
-<<<<<<< HEAD
-              <div class="col-12 col-md-3 mb-sm-1 d-flex flex-column">
-                <div class="description-heading mb-sm-1">
-=======
               <div class="col-md-3 col-12 mb-sm-1 d-flex flex-column">
                 <div class="description-heading">
->>>>>>> 46630cb (Updated the bugs)
                   <h6 class="fw-bold">RAM SSD VARIANTS</h6>
                   <select class="form-select fs-7 custom-select" id="ramCapacitySelect" onchange="updatePrice('<%= JSON.stringify(productDetails.RAMSSD) %>')">
                     <% productDetails.RAMSSD.forEach(function(ramSSD) { %>
