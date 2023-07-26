@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="/public/stylesheets/userStyle.css" />
     <link rel="preconnect" href="https://rsms.me/" />
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <style>
+      /* Add custom styles to reduce the gap between the cards */
+      .row-cols-md-4 .col {
+        /* Adjust the margin value as needed */
+        margin: 5px;
+      }
+      </style>
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"
@@ -237,7 +244,7 @@
         <span class="shadow-heading" style="font-size: 1rem">New Releases</span>
       </div>
       <div class="text-center d-flex justify-content-center flex-column mt-3">
-        <div class="row row-cols-1 row-cols-md-4 g-5 justify-content-center">
+        <div class="row row-cols-1 row-cols-md-4 justify-content-center">
           <% newReleases.forEach((product,i)=>{%>
           <div class="col">
             <div class="card border-0 rounded" style="height: 90%;">
