@@ -48,46 +48,41 @@ function passwordValidator() {
 }
 
 // confirm password match
-function passwordMatch(){
+function passwordMatch() {
   const inputPassword = $("#inputPassword").val();
   const confirmPassword = $("#confirmPassword").val();
-  if(inputPassword !== confirmPassword){
+  if (inputPassword !== confirmPassword) {
     $("#submitButton").prop("disabled", true);
     $("#passwordmatch").html(
       '<i class="fa fa-exclamation"></i>Password doesnot match'
     );
-  }else{
+  } else {
     $("#submitButton").prop("disabled", false);
     $("#passwordmatch").empty();
   }
 }
 
-// otp expiration couter
+// otp expiration counter
 window.onload = () => {
-  let counter = localStorage.getItem('counter') || 60;
+  let counter = localStorage.getItem("counter") || 60;
   let countdownInterval;
 
   function startCounter() {
     countdownInterval = setInterval(updateCounter, 1000);
-    $('#resend-button').prop('disabled', true);
+    $("#resend-button").prop("disabled", true);
   }
 
   function updateCounter() {
     counter--;
-    localStorage.setItem('counter', counter); // Corrected line
-    $('#resend-button').text(`OTP Expires in ${counter}s`);
+    localStorage.setItem("counter", counter); // Corrected line
+    $("#resend-button").text(`OTP Expires in ${counter}s`);
     if (counter <= 0) {
       clearInterval(countdownInterval);
-      $('#resend-button').prop('disabled', false);
-      $('#resend-button').text('Resend OTP');
-      localStorage.removeItem('counter');
+      $("#resend-button").prop("disabled", false);
+      $("#resend-button").text("Resend OTP");
+      localStorage.removeItem("counter");
     }
   }
 
   startCounter();
 };
-
-
-
-  
-

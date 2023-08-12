@@ -20,12 +20,16 @@
         /* Adjust the margin value as needed */
         margin: 5px;
       }
-      </style>
+    </style>
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"
     />
-    <link rel="shortcut icon" type="image/jpg" href="/public/img/lap4you-favicon.png" />
+    <link
+      rel="shortcut icon"
+      type="image/jpg"
+      href="/public/img/lap4you-favicon.png"
+    />
     <title>LAP4YOU | Home Page</title>
   </head>
   <body>
@@ -49,7 +53,7 @@
               class="d-inline-block align-text-top"
             />
             <div class="brand-name ms-3">
-              <span>LAP<span style="color : red;">4</span>YOU</span>
+              <span>LAP<span style="color: red">4</span>YOU</span>
             </div>
           </a>
           <button
@@ -66,17 +70,23 @@
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-2 mb-2 mb-lg-0 align-items-center">
               <li class="nav-item mx-2 ms-lg-5">
-                <a class="nav-link text-dark" href="/categories/64888a004cb3b3a4b1bb8be3"
+                <a
+                  class="nav-link text-dark"
+                  href="/categories/64888a004cb3b3a4b1bb8be3"
                   >Gaming</a
                 >
               </li>
               <li class="nav-item mx-2">
-                <a class="nav-link text-dark" href="/categories/648d9311ca2707bb62f29e06"
+                <a
+                  class="nav-link text-dark"
+                  href="/categories/648d9311ca2707bb62f29e06"
                   >Business</a
                 >
               </li>
               <li class="nav-item mx-2">
-                <a class="nav-link  text-dark" href="/categories/648d930bca2707bb62f29e01"
+                <a
+                  class="nav-link text-dark"
+                  href="/categories/648d930bca2707bb62f29e01"
                   >Student</a
                 >
               </li>
@@ -85,11 +95,23 @@
               <a class="nav-link" href="/products">Collections</a>
             </span>
             <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
-              <a class="nav-link" href="/users/wishlist">Wishlist <%if(locals.wishlistCount){%><span class="count-icon" id="cart-count"><%=wishlistCount%></span><%}%></a>
-          </span>
-          <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
-              <a class="nav-link" href="/users/cart">Cart <%if(locals.cartCount){%><span class="count-icon" id="cart-count"><%=cartCount%></span><%}%></a>
-          </span>
+              <a class="nav-link" href="/users/wishlist"
+                >Wishlist <%if(locals.wishlistCount){%><span
+                  class="count-icon"
+                  id="cart-count"
+                  ><%=wishlistCount%></span
+                ><%}%></a
+              >
+            </span>
+            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+              <a class="nav-link" href="/users/cart"
+                >Cart <%if(locals.cartCount){%><span
+                  class="count-icon"
+                  id="cart-count"
+                  ><%=cartCount%></span
+                ><%}%></a
+              >
+            </span>
 
             <span class="nav-item nav-link text-center mb-2 mb-lg-0 ms-lg-3">
               <% if(session){%>
@@ -171,28 +193,46 @@
         id="carouselVideoExample"
         class="carousel slide carousel-fade mx-auto"
         data-bs-ride="carousel"
-        style="position: relative; top: -6px;"
+        style="position: relative; top: -6px"
       >
         <!-- Inner -->
         <div class="carousel-inner h-75">
           <!-- Single item -->
           <%banners.forEach(banner => {%>
-          <div class="carousel-item active h-75" style="background-position: center; background-size: cover;">
+          <div
+            class="carousel-item active h-75"
+            style="background-position: center; background-size: cover"
+          >
             <%if(banner.videoURL){%>
-              <video class="img-fluid" autoplay loop muted>
-                <source src="<%=banner.videoURL%>" type="video/mp4" />
-              </video>
+            <video class="img-fluid" autoplay loop muted>
+              <source src="<%=banner.videoURL%>" type="video/mp4" />
+            </video>
             <%}%>
-            <img src="/public/img/banners/<%=banner.image%>" alt="" style="object-fit: cover; height: 50%; width: 100%; aspect-ratio: 2.5">
+            <img
+              src="/public/img/banners/<%=banner.image%>"
+              alt=""
+              style="
+                object-fit: cover;
+                height: 50%;
+                width: 100%;
+                aspect-ratio: 2.5;
+              "
+            />
             <a href="/products/">
               <div
                 class="carousel-caption d-lg-block d-none mt-5"
-                style="position: absolute; top: 60%; left: 20%;"
+                style="position: absolute; top: 60%; left: 20%"
               >
-                <h3 style="text-shadow: 1px 1px #7c7c7c; font-size: 1.7rem; color: rgb(173, 174, 172);">
+                <h3
+                  style="
+                    text-shadow: 1px 1px #7c7c7c;
+                    font-size: 1.7rem;
+                    color: rgb(173, 174, 172);
+                  "
+                >
                   <%=banner.title%>
                 </h3>
-                <p style="text-shadow: 1px 1px #7c7c7c; font-size: 1rem;" >
+                <p style="text-shadow: 1px 1px #7c7c7c; font-size: 1rem">
                   <%=banner.description%>
                 </p>
               </div>
@@ -247,13 +287,13 @@
         <div class="row row-cols-1 row-cols-md-4 justify-content-center">
           <% newReleases.forEach((product,i)=>{%>
           <div class="col">
-            <div class="card border-0 rounded" style="height: 90%;">
+            <div class="card border-0 rounded" style="height: 90%">
               <a href="/products/<%=product._id%>"
                 ><img
                   src="../../public/img/products/<%=product.thumbnail%>"
-                  class="card-img-top px-4 py-2 "
+                  class="card-img-top px-4 py-2"
                   alt="..."
-                  style="object-fit: scale-down; aspect-ratio: 0.9; height: 60%;"
+                  style="object-fit: scale-down; aspect-ratio: 0.9; height: 60%"
                 />
                 <div class="card-body">
                   <h6 class="card-title text-black"><%=product.name%></h6>
@@ -266,16 +306,16 @@
                     class="my-2"
                     ><%=product.brand.name%></span
                   >
-                  <br>
+                  <br />
                   <span
-                  style="
-                    font-weight: bold;
-                    color: #7f7f7f;
-                    font-size: 0.75rem;
-                  "
-                  class="my-2 mb-2"
-                  >₹ <%=product.RAMSSD[0].price%></span
-                >
+                    style="
+                      font-weight: bold;
+                      color: #7f7f7f;
+                      font-size: 0.75rem;
+                    "
+                    class="my-2 mb-2"
+                    >₹ <%=product.RAMSSD[0].price%></span
+                  >
                 </div></a
               >
             </div>
@@ -283,7 +323,7 @@
           <%})%>
         </div>
         <span
-          ><a 
+          ><a
             href="/categories/newReleases"
             class="btn btn-outline-dark py-2 px-3 mt-1"
             style="font-size: 0.75rem"
@@ -299,11 +339,11 @@
       />
 
       <!-- GAMING -->
-      <div class="line-break text-center py-2 my-2">
-        <span class="shadow-heading" style="font-size: 1rem">GAMING</span>
+      <div class="line-break text-center py-4">
+        <span class="shadow-heading" style="font-size: 1rem">Gaming</span>
       </div>
       <div class="text-center d-flex justify-content-center flex-column mt-3">
-        <div class="row row-cols-1 row-cols-md-4 g-5 justify-content-center">
+        <div class="row row-cols-1 row-cols-md-4 justify-content-center">
           <% gaming.forEach((product,i)=>{%>
           <div class="col">
             <div class="card border-0 rounded" style="height: 90%">
@@ -312,7 +352,7 @@
                   src="../../public/img/products/<%=product.thumbnail%>"
                   class="card-img-top px-4 py-2"
                   alt="..."
-                  style="object-fit: scale-down; aspect-ratio: 0.9; height: 60%;"
+                  style="object-fit: scale-down; aspect-ratio: 0.9; height: 60%"
                 />
                 <div class="card-body">
                   <h6 class="card-title text-black"><%=product.name%></h6>
@@ -321,21 +361,20 @@
                       font-weight: bold;
                       color: #7f7f7f;
                       font-size: 0.75rem;
-                     
                     "
                     class="my-2"
                     ><%=product.brand.name%></span
                   >
-                  <br>
+                  <br />
                   <span
-                  style="
-                    font-weight: bold;
-                    color: #7f7f7f;
-                    font-size: 0.75rem;
-                  "
-                  class="my-2 mb-2"
-                  >₹ <%=product.RAMSSD[0].price%></span
-                >
+                    style="
+                      font-weight: bold;
+                      color: #7f7f7f;
+                      font-size: 0.75rem;
+                    "
+                    class="my-2 mb-2"
+                    >₹ <%=product.RAMSSD[0].price%></span
+                  >
                 </div></a
               >
             </div>
@@ -343,30 +382,28 @@
           <%})%>
         </div>
         <span
-          ><a 
-            href="/categories/64888a004cb3b3a4b1bb8be3"
+          ><a
+            href="/categories/newReleases"
             class="btn btn-outline-dark py-2 px-3 mt-1"
             style="font-size: 0.75rem"
             >SHOW MORE</a
           ></span
         >
       </div>
-      <div class="line-break text-center py-4 my-2 mt-4">
-        <span class="shadow-heading" style="font-size: 1rem">STUDENT</span>
+      <div class="line-break text-center py-4">
+        <span class="shadow-heading" style="font-size: 1rem">Business</span>
       </div>
       <div class="text-center d-flex justify-content-center flex-column mt-3">
-        <div
-          class="row row-cols-1 row-cols-md-4 g-5 justify-content-center"
-        >
-          <% student.forEach((product,i)=>{%>
+        <div class="row row-cols-1 row-cols-md-4 justify-content-center">
+          <% business.forEach((product,i)=>{%>
           <div class="col">
-            <div class="card border-0" style="height: 90%">
+            <div class="card border-0 rounded" style="height: 90%">
               <a href="/products/<%=product._id%>"
                 ><img
-                  src="../../public/img/products/<%=product.thumbnail%>"
+                  src="/public/img/products/<%=product.thumbnail%>"
                   class="card-img-top px-4 py-2"
                   alt="..."
-                  style="object-fit: scale-down; aspect-ratio: 0.9; height: 60%;"
+                  style="object-fit: scale-down; aspect-ratio: 0.9; height: 60%"
                 />
                 <div class="card-body">
                   <h6 class="card-title text-black"><%=product.name%></h6>
@@ -379,16 +416,16 @@
                     class="my-2"
                     ><%=product.brand.name%></span
                   >
-                  <br>
+                  <br />
                   <span
-                  style="
-                    font-weight: bold;
-                    color: #7f7f7f;
-                    font-size: 0.75rem;
-                  "
-                  class="my-2 mb-2"
-                  >₹ <%=product.RAMSSD[0].price%></span
-                >
+                    style="
+                      font-weight: bold;
+                      color: #7f7f7f;
+                      font-size: 0.75rem;
+                    "
+                    class="my-2 mb-2"
+                    >₹ <%=product.RAMSSD[0].price%></span
+                  >
                 </div></a
               >
             </div>
@@ -396,30 +433,28 @@
           <%})%>
         </div>
         <span
-          ><a 
-            href="/categories/648d930bca2707bb62f29e01"
-            class="btn btn-outline-dark py-2 px-3 my-1"
+          ><a
+            href="/categories/newReleases"
+            class="btn btn-outline-dark py-2 px-3 mt-1"
             style="font-size: 0.75rem"
             >SHOW MORE</a
           ></span
         >
       </div>
-      <div class="line-break text-center py-4 my-2 mt-4">
-        <span class="shadow-heading" style="font-size: 1rem">BUSINESS</span>
+      <div class="line-break text-center py-4">
+        <span class="shadow-heading" style="font-size: 1rem">Students</span>
       </div>
       <div class="text-center d-flex justify-content-center flex-column mt-3">
-        <div
-          class="row row-cols-1 row-cols-md-4 g-5  justify-content-center"
-        >
-          <% business.forEach((product,i)=>{%>
+        <div class="row row-cols-1 row-cols-md-4 justify-content-center">
+          <% student.forEach((product,i)=>{%>
           <div class="col">
-            <div class="card border-0 " style="height: 90%">
+            <div class="card border-0 rounded" style="height: 90%">
               <a href="/products/<%=product._id%>"
                 ><img
                   src="../../public/img/products/<%=product.thumbnail%>"
                   class="card-img-top px-4 py-2"
                   alt="..."
-                  style="object-fit: scale-down; aspect-ratio: 0.9; height: 60%;"
+                  style="object-fit: scale-down; aspect-ratio: 0.9; height: 60%"
                 />
                 <div class="card-body">
                   <h6 class="card-title text-black"><%=product.name%></h6>
@@ -429,19 +464,19 @@
                       color: #7f7f7f;
                       font-size: 0.75rem;
                     "
-                    class="my-5"
+                    class="my-2"
                     ><%=product.brand.name%></span
                   >
-                  <br>
+                  <br />
                   <span
-                  style="
-                    font-weight: bold;
-                    color: #7f7f7f;
-                    font-size: 0.75rem;
-                  "
-                  class="my-2 mb-2"
-                  >₹ <%=product.RAMSSD[0].price%></span
-                >
+                    style="
+                      font-weight: bold;
+                      color: #7f7f7f;
+                      font-size: 0.75rem;
+                    "
+                    class="my-2 mb-2"
+                    >₹ <%=product.RAMSSD[0].price%></span
+                  >
                 </div></a
               >
             </div>
@@ -449,71 +484,90 @@
           <%})%>
         </div>
         <span
-          ><a 
-            href="/categories/648d9311ca2707bb62f29e06"
-            class="btn btn-outline-dark py-2 px-3 my-1"
+          ><a
+            href="/categories/newReleases"
+            class="btn btn-outline-dark py-2 px-3 mt-1"
             style="font-size: 0.75rem"
             >SHOW MORE</a
-          ></span>
-         <!-- SERVICES
+          ></span
+        >
+      </div>
+        <!-- SERVICES
         ================================================== -->
         <style>
           .line-break {
             border-bottom: 1px solid #ccc;
             margin-bottom: 1.5rem;
           }
-        
+
           .icon-container {
             display: flex;
             align-items: center;
           }
-        
+
           .icon-container img {
             width: 40px;
             height: 40px;
             margin-right: 1rem;
           }
-        
+
           .feature-title {
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
           }
-        
+
           .feature-description {
             font-size: 0.6rem;
             color: #777;
           }
         </style>
-        
+
         <section class="pt-0 pb-0 my-5">
           <div class="line-break text-center">
             <div class="container">
               <div class="row mt-n4">
                 <div class="col-md-6 col-lg-4 mt-4 text-start">
                   <div class="icon-container">
-                    <img src="../../public/img/icons/icon-1.png" alt="Free Shipping">
+                    <img
+                      src="../../public/img/icons/icon-1.png"
+                      alt="Free Shipping"
+                    />
                     <div>
                       <h4 class="feature-title">Free Shipping</h4>
-                      <p class="feature-description">Please feel free to contact us, and we provide the best service.</p>
+                      <p class="feature-description">
+                        Please feel free to contact us, and we provide the best
+                        service.
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-4 mt-4 text-start">
                   <div class="icon-container">
-                    <img src="../../public/img/icons/icon-2.png" alt="Secure Payment">
+                    <img
+                      src="../../public/img/icons/icon-2.png"
+                      alt="Secure Payment"
+                    />
                     <div>
                       <h4 class="feature-title">Secure Payment</h4>
-                      <p class="feature-description">If you are not satisfied with the product, we provide refunds.</p>
+                      <p class="feature-description">
+                        If you are not satisfied with the product, we provide
+                        refunds.
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-4 mt-4 text-start">
                   <div class="icon-container">
-                    <img src="../../public/img/icons/icon-3.png" alt="Gift Voucher">
+                    <img
+                      src="../../public/img/icons/icon-3.png"
+                      alt="Gift Voucher"
+                    />
                     <div>
                       <h4 class="feature-title">Gift Voucher</h4>
-                      <p class="feature-description">Shopping over ₹500 to ₹1000 gets a free gift voucher.</p>
+                      <p class="feature-description">
+                        Shopping over ₹500 to ₹1000 gets a free gift voucher.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -521,17 +575,19 @@
             </div>
           </div>
         </section>
-        
-
       </div>
     </section>
-    <footer class="bg-theme ">
+    <footer class="bg-theme">
       <div
         class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around footer-links"
       >
-        <a class="col-lg-2 pb-2 text-center text-white" href="#">Track Shipping</a>
+        <a class="col-lg-2 pb-2 text-center text-white" href="#"
+          >Track Shipping</a
+        >
         <a class="col-lg-2 pb-2 text-center text-white" href="#">Contact Us</a>
-        <a class="col-lg-2 pb-2 text-center text-white" href="#">Customer Care</a>
+        <a class="col-lg-2 pb-2 text-center text-white" href="#"
+          >Customer Care</a
+        >
         <a class="col-lg-2 pb-2 text-center text-white" href="#">About us</a>
         <span class="col-lg-2 justify-content-center d-flex align-items-center">
           <i class="fab fa-instagram text-white"></i>
@@ -544,11 +600,13 @@
         class="copyright bg-theme py-2 text-center"
         style="font-size: 0.85rem"
       >
-        <span style="color: white;"
+        <span style="color: white"
           >Copyright © 2023 | LAP4YOU | Made by
-          <a  href="https://rishikesht1245.github.io/Rishikesh_website/"
-            style="color: white;">Rishikesh T </a
-          ></span
+          <a
+            href="https://rishikesht1245.github.io/Rishikesh_website/"
+            style="color: white"
+            >Rishikesh T
+          </a></span
         >
       </div>
     </footer>
