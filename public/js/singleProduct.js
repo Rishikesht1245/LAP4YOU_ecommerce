@@ -1,30 +1,30 @@
-
 //================  Listed check ===============================================
-window.onload=() =>{
-  let productId = window.location.pathname.split('/',3).splice(2).toString();
+window.onload = () => {
+  let productId = window.location.pathname.split("/", 3).splice(2).toString();
   $.ajax({
-    url : '/products/' +productId,
-    type : 'patch',
-    data : {
-            id :productId,
-       },
-    success : (res) => {
-      if(res.message == 'unlisted'){
-        $('#buyNow').css('pointer-events', 'none');
-        $('#buyNow').css('pointer-events', 'none');
+    url: "/products/" + productId,
+    type: "patch",
+    data: {
+      id: productId,
+    },
+    success: (res) => {
+      if (res.message == "unlisted") {
+        $("#buyNow").css("pointer-events", "none");
+        $("#buyNow").css("pointer-events", "none");
         Swal.fire("Oops!", "Product currently unavailable.", "error");
       }
-    }
-  })
-}
+    },
+  });
+};
 //an api call to check if product is listed or not and removes click event if unlisted
 //===================================================================================
 
-
 // ======================= BUY NOW ========================================//
 function buyNow(productID, productDetails) {
-  const ramCapacity = $('#ramCapacitySelect').val();
-  let ssdPrice = JSON.parse(productDetails).find((details) => details.ramCapacity == ramCapacity);
+  const ramCapacity = $("#ramCapacitySelect").val();
+  let ssdPrice = JSON.parse(productDetails).find(
+    (details) => details.ramCapacity == ramCapacity
+  );
   const ssdCapacity = ssdPrice.ssdCapacity;
   const price = ssdPrice.price;
   let currentURL = window.location.href;
@@ -33,10 +33,10 @@ function buyNow(productID, productDetails) {
     method: "post",
     data: {
       id: productID,
-      price : price,
-      ramCapacity : ramCapacity,
-      ssdCapacity : ssdCapacity,
-      url : currentURL,
+      price: price,
+      ramCapacity: ramCapacity,
+      ssdCapacity: ssdCapacity,
+      url: currentURL,
     },
     success: (res) => {
       console.log(res.success);
@@ -51,21 +51,23 @@ function buyNow(productID, productDetails) {
 
 // ======================= Adding to CART =================================//
 function addToCart(productID, productDetails) {
-  const ramCapacity = $('#ramCapacitySelect').val();
-  let ssdPrice = JSON.parse(productDetails).find((details) => details.ramCapacity == ramCapacity);
+  const ramCapacity = $("#ramCapacitySelect").val();
+  let ssdPrice = JSON.parse(productDetails).find(
+    (details) => details.ramCapacity == ramCapacity
+  );
   const ssdCapacity = ssdPrice.ssdCapacity;
   const price = ssdPrice.price;
   let currentURL = window.location.href;
-  
+
   $.ajax({
     url: "/users/cart",
     method: "post",
     data: {
       id: productID,
-      price : price,
-      ramCapacity : ramCapacity,
-      ssdCapacity : ssdCapacity,
-      url : currentURL,
+      price: price,
+      ramCapacity: ramCapacity,
+      ssdCapacity: ssdCapacity,
+      url: currentURL,
     },
     success: (res) => {
       if (res.success === "countAdded") {
@@ -79,6 +81,7 @@ function addToCart(productID, productDetails) {
           animation: true,
           title: "Count added in cart",
         });
+        $("#cart-count").load(location.href + " #cart-count");
       } else if (res.success === "addedToCart") {
         Swal.fire({
           toast: true,
@@ -90,33 +93,33 @@ function addToCart(productID, productDetails) {
           animation: true,
           title: "Added to cart",
         });
-      } else if(res.success === "outOfStock"){
+        $("#cart-count").load(location.href + " #cart-count");
+      } else if (res.success === "outOfStock") {
         swal.fire({
-          icon: 'error',
-          title: 'Out of Stock',
-          text: 'This product is currently out of stock.',
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'OK'
+          icon: "error",
+          title: "Out of Stock",
+          text: "This product is currently out of stock.",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
         });
-      }else {
+      } else {
         window.location.href = "/users/signIn";
       }
     },
   });
 }
 
-
 // ============= Update price according to the selected ram and ssd =================
 function updatePrice(ramDetails) {
-  const ramSelect = $('#ramCapacitySelect').val();
-  console.log(ramSelect) // ram size only
+  const ramSelect = $("#ramCapacitySelect").val();
+  console.log(ramSelect); // ram size only
   let priceElement;
-  priceElement = JSON.parse(ramDetails).find((ram) => ram.ramCapacity == ramSelect).price;
-  const price = $('#price');
+  priceElement = JSON.parse(ramDetails).find(
+    (ram) => ram.ramCapacity == ramSelect
+  ).price;
+  const price = $("#price");
   price.text(priceElement);
 }
-
-
 
 //========================= adding product to wish list ===============================
 function addToWishlist(productId) {
@@ -126,7 +129,7 @@ function addToWishlist(productId) {
     method: "patch",
     data: {
       id: productId,
-      url : currentURL,
+      url: currentURL,
     },
     success: (res) => {
       if (res.data.message === 0) {
@@ -141,6 +144,8 @@ function addToWishlist(productId) {
           animation: true,
           title: "Removed from wishlist",
         });
+
+        $("#wish-count").load(location.href + " #wish-count");
       } else if (res.data.message === 1) {
         $("#wishlistHeart").html('<i class="fa fa-heart text-danger">');
         Swal.fire({
@@ -153,6 +158,7 @@ function addToWishlist(productId) {
           animation: true,
           title: "Added to wishlist",
         });
+        $("#wishlistHeart").html('<i class="fa fa-heart text-danger">');
       } else {
         window.location.href = "/users/signIn";
       }
@@ -162,18 +168,17 @@ function addToWishlist(productId) {
 
 // ===================== IMAGE ZOOMING ===============================
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const zoomableImage = document.getElementById('zoomable-image');
-    mediumZoom(zoomableImage);
-  });
+document.addEventListener("DOMContentLoaded", function () {
+  const zoomableImage = document.getElementById("zoomable-image");
+  mediumZoom(zoomableImage);
+});
 
-  
 //====================== DYNAMIC IMAGE CHANGING =======================
-  // Add event listeners to the small images
-const smallImages = document.querySelectorAll('.small-image');
+// Add event listeners to the small images
+const smallImages = document.querySelectorAll(".small-image");
 smallImages.forEach((image) => {
-  image.addEventListener('click', () => {
-    const mainImage = document.getElementById('zoomable-image');
+  image.addEventListener("click", () => {
+    const mainImage = document.getElementById("zoomable-image");
     const newImageSrc = image.dataset.image; // forEach
     mainImage.src = newImageSrc;
   });
@@ -182,8 +187,6 @@ smallImages.forEach((image) => {
 // ===================== REVIEWS ======================================
 // add review
 function reviewAdd(productId) {
-
-
   Swal.fire({
     showCloseButton: true,
     showConfirmButton: true,
@@ -223,39 +226,37 @@ function reviewAdd(productId) {
   });
 }
 
-
 // helpgul review
-function helpful(reviewId, ){
+function helpful(reviewId) {
   $.ajax({
-    url : '/users/reviews',
-    method : 'patch',
-    data : {
-      id : reviewId
+    url: "/users/reviews",
+    method: "patch",
+    data: {
+      id: reviewId,
     },
-    success : (res) => {
+    success: (res) => {
       console.log(res.message);
-      if(res.message === 1){
-        $("#helpful" + reviewId).load(location.href + (" #helpful" +reviewId));
-      } else{
-        window.location.replace('/users/signIn');
+      if (res.message === 1) {
+        $("#helpful" + reviewId).load(location.href + (" #helpful" + reviewId));
+      } else {
+        window.location.replace("/users/signIn");
       }
-    }
-  })
+    },
+  });
 }
 
-
-// checking add review access 
- function checkAccess(accessToReview, productId){
+// checking add review access
+function checkAccess(accessToReview, productId) {
   accessToReview = JSON.parse(accessToReview); // Convert the string back to an object
   console.log(accessToReview);
-  if(accessToReview && accessToReview.delivered == true){
-      reviewAdd(productId);
+  if (accessToReview && accessToReview.delivered == true) {
+    reviewAdd(productId);
   } else {
     Swal.fire({
       showCloseButton: true,
       showConfirmButton: true,
-      html:`<h6>Haven't Purchased this Product?</h6> <br>
-            <small>Sorry! You are not allowed to review this product since you haven't bought it on LAP4YOU.</small>`
+      html: `<h6>Haven't Purchased this Product?</h6> <br>
+            <small>Sorry! You are not allowed to review this product since you haven't bought it on LAP4YOU.</small>`,
     });
   }
 }

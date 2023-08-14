@@ -33,8 +33,8 @@
     <title>LAP4YOU | Home Page</title>
   </head>
   <body>
-    <header style="z-index: 10">
-      <div class="container-fluid header-top">
+    <header style="z-index: 10;">
+      <div class="container-fluid header-top" style="background: #f3f2f2;">
         <div class="container d-flex header-top-links justify-content-end">
           <a class="px-2 d-none d-lg-block" href="">Contact Us</a>
           <a class="px-2 d-none d-lg-block" href="">About Us</a>
@@ -120,7 +120,7 @@
                 <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
                   <a class="nav-link fw-bold" href="/users/profile"
                     ><img
-                      src="/Public/img/users/<%=locals.currentUser.photo%>"
+                      src="/public/img/users/default_userPhoto.jpg"
                       height="25px"
                       alt=""
                       class="mx-2"
@@ -150,7 +150,7 @@
                   "
                 >
                   <img
-                    src="/Public/img/users/<%=locals.currentUser.photo%>"
+                    src="/public/img/users/<%=locals.currentUser.photo%>"
                     height="25px"
                     alt=""
                   />
@@ -201,13 +201,18 @@
           <%banners.forEach(banner => {%>
           <div
             class="carousel-item active h-75"
-            style="background-position: center; background-size: cover"
+            style="background-position: center; background-size: cover; background: #000;"
           >
             <%if(banner.videoURL){%>
-            <video class="img-fluid" autoplay loop muted>
+            <video class="" autoplay loop muted  style="
+                object-fit: cover;
+                height: 60%;
+                width: 100%;
+                aspect-ratio: 2.5;
+              ">
               <source src="<%=banner.videoURL%>" type="video/mp4" />
             </video>
-            <%}%>
+            <%}else{%>
             <img
               src="/public/img/banners/<%=banner.image%>"
               alt=""
@@ -218,6 +223,7 @@
                 aspect-ratio: 2.5;
               "
             />
+            <%}%>
             <a href="/products/">
               <div
                 class="carousel-caption d-lg-block d-none mt-5"
@@ -577,34 +583,34 @@
         </section>
       </div>
     </section>
-    <footer class="bg-theme">
+    <footer class="bg-theme" style="background: #f3f2f2; height: 20%;">
       <div
         class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around footer-links"
       >
-        <a class="col-lg-2 pb-2 text-center text-white" href="#"
+        <a class="col-lg-2 pb-2 text-center text-black" href="#"
           >Track Shipping</a
         >
-        <a class="col-lg-2 pb-2 text-center text-white" href="#">Contact Us</a>
-        <a class="col-lg-2 pb-2 text-center text-white" href="#"
+        <a class="col-lg-2 pb-2 text-center text-black" href="#">Contact Us</a>
+        <a class="col-lg-2 pb-2 text-center text-black" href="#"
           >Customer Care</a
         >
-        <a class="col-lg-2 pb-2 text-center text-white" href="#">About us</a>
+        <a class="col-lg-2 pb-2 text-center text-black" href="#">About us</a>
         <span class="col-lg-2 justify-content-center d-flex align-items-center">
-          <i class="fab fa-instagram text-white"></i>
-          <i class="fab fa-facebook-f text-white"></i>
-          <i class="fab fa-twitter text-white"></i>
-          <i class="fab fa-whatsapp text-white"></i>
+          <i class="fab fa-instagram text-black"></i>
+          <i class="fab fa-facebook-f text-black"></i>
+          <i class="fab fa-twitter text-black"></i>
+          <i class="fab fa-whatsapp text-black"></i>
         </span>
       </div>
       <div
-        class="copyright bg-theme py-2 text-center"
-        style="font-size: 0.85rem"
+        class="copyright bg-theme py-1 text-center"
+        style="font-size: 0.85rem ; background: #f1efef;" 
       >
-        <span style="color: white"
+        <span style="color: black"
           >Copyright © 2023 | LAP4YOU | Made by
           <a
             href="https://rishikesht1245.github.io/Rishikesh_website/"
-            style="color: white"
+            style="color: gray"
             >Rishikesh T
           </a></span
         >

@@ -60,7 +60,7 @@
   </head>
   <body>
     <header>
-      <div class="container-fluid header-top">
+      <div class="container-fluid header-top" style="background: #f3f2f2;">
         <div class="container d-flex header-top-links justify-content-end">
           <a class="px-2 d-none d-lg-block" href="">Contact Us</a>
           <a class="px-2 d-none d-lg-block" href="">About Us</a>
@@ -108,12 +108,16 @@
             <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
               <a class="nav-link" href="/products">Collection</a>
             </span>
-            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
-              <a class="nav-link" href="/users/wishlist">Wishlist <%if(locals.wishlistCount){%><span class="count-icon" id="cart-count"><%=wishlistCount%></span><%}%></a>
-          </span>
-          <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
-              <a class="nav-link" href="/users/cart">Cart <%if(locals.cartCount){%><span class="count-icon" id="cart-count"><%=cartCount%></span><%}%></a>
-          </span>
+            <div id="wish-count">
+              <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+                <a class="nav-link" href="/users/wishlist">Wishlist <%if(locals.wishlistCount){%><span class="count-icon" ><%=wishlistCount%></span><%}%></a>
+            </span>
+            </div>
+          <div id="cart-count">
+            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2" >
+              <a  class="nav-link" href="/users/cart">Cart <%if(locals.cartCount){%><span class="count-icon" "><%=cartCount%></span><%}%></a>
+            </span>
+          </div>
 
             <span class="nav-item nav-link text-center mb-2 mb-lg-0 ms-lg-3">
               <% if(session){%>
@@ -321,12 +325,12 @@
 <div class="container" id="reviewContainer">
   <% if (numberOfReviews!=null){%> <h5 class="text-center mx-auto col-lg-10 my-4">Reviews - (<%=numberOfReviews%>)</h5><%}%>
   </div>
-    <div class="container d-flex justify-content-center">
+    <div class="container d-flex justify-content-center" >
       <div class="row carousal-row">
           <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <div class="cards-wrapper card_wrap">
+                  <div class="cards-wrapper card_wrap" style="background: white;">
                       <div class="card cardMargin">
                         <div class="card-body">
                           
@@ -493,24 +497,37 @@
            </div>
     </section>
     <%}%>
-    <footer class="bg-theme">
+   <footer class="bg-theme" style="background: #f3f2f2; height: 20%;">
       <div
-        class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around"
+        class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around footer-links"
       >
-        <a class="col-lg-2 pb-2 text-center text-white" href="#">Track Shipping</a>
-        <a class="col-lg-2 pb-2 text-center text-white" href="#">Contact Us</a>
-        <a class="col-lg-2 pb-2 text-center text-white" href="#">Customer Care</a>
-        <a class="col-lg-2 pb-2 text-center text-white" href="#">About us</a>
+        <a class="col-lg-2 pb-2 text-center text-black" href="#"
+          >Track Shipping</a
+        >
+        <a class="col-lg-2 pb-2 text-center text-black" href="#">Contact Us</a>
+        <a class="col-lg-2 pb-2 text-center text-black" href="#"
+          >Customer Care</a
+        >
+        <a class="col-lg-2 pb-2 text-center text-black" href="#">About us</a>
         <span class="col-lg-2 justify-content-center d-flex align-items-center">
-          <i class="fab fa-instagram text-white"></i>
-          <i class="fab fa-facebook-f text-white"></i>
-          <i class="fab fa-twitter text-white"></i>
-          <i class="fab fa-whatsapp text-white"></i>
+          <i class="fab fa-instagram text-black"></i>
+          <i class="fab fa-facebook-f text-black"></i>
+          <i class="fab fa-twitter text-black"></i>
+          <i class="fab fa-whatsapp text-black"></i>
         </span>
       </div>
-      <div class="copyright bg-theme py-2 text-center text-white">
-        <span>Copyright © 2023 | LAP4YOU | Made by <a href="https://rishikesht1245.github.io/Rishikesh_website/" style="color: white;">Rishikesh T</a></span>
-
+      <div
+        class="copyright bg-theme py-1 text-center"
+        style="font-size: 0.85rem ; background: #f1efef;" 
+      >
+        <span style="color: black"
+          >Copyright © 2023 | LAP4YOU | Made by
+          <a
+            href="https://rishikesht1245.github.io/Rishikesh_website/"
+            style="color: gray"
+            >Rishikesh T
+          </a></span
+        >
       </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/medium-zoom"></script>
