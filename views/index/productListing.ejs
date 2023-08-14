@@ -27,7 +27,7 @@
   </head>
   <body>
     <header>
-      <div class="container-fluid header-top">
+      <div class="container-fluid header-top" style="background: #f3f2f2">
         <div class="container d-flex header-top-links justify-content-end">
           <a class="px-2 d-none d-lg-block" href="">Contact Us</a>
           <a class="px-2 d-none d-lg-block" href="">About Us</a>
@@ -46,7 +46,7 @@
               class="d-inline-block align-text-top"
             />
             <div class="brand-name ms-3">
-              <span>LAP<span style="color:red">4</span>YOU</span>
+              <span>LAP<span style="color: red">4</span>YOU</span>
             </div>
           </a>
           <button
@@ -63,17 +63,23 @@
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
               <li class="nav-item mx-2 ms-lg-5">
-                <a class="nav-link text-dark" href="/categories/64888a004cb3b3a4b1bb8be3"
+                <a
+                  class="nav-link text-dark"
+                  href="/categories/64888a004cb3b3a4b1bb8be3"
                   >Gaming</a
                 >
               </li>
               <li class="nav-item mx-2">
-                <a class="nav-link text-dark" href="/categories/648d930bca2707bb62f29e01"
+                <a
+                  class="nav-link text-dark"
+                  href="/categories/648d930bca2707bb62f29e01"
                   >Student</a
                 >
               </li>
               <li class="nav-item mx-2">
-                <a class="nav-link text-dark" href="/categories/648d9311ca2707bb62f29e06"
+                <a
+                  class="nav-link text-dark"
+                  href="/categories/648d9311ca2707bb62f29e06"
                   >Business</a
                 >
               </li>
@@ -82,11 +88,23 @@
               <a class="nav-link" href="/products">Collection</a>
             </span>
             <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
-              <a class="nav-link" href="/users/wishlist">Wishlist <%if(locals.wishlistCount){%><span class="count-icon" id="cart-count"><%=wishlistCount%></span><%}%></a>
-          </span>
-          <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
-              <a class="nav-link" href="/users/cart">Cart <%if(locals.cartCount){%><span class="count-icon" id="cart-count"><%=cartCount%></span><%}%></a>
-          </span>
+              <a class="nav-link" href="/users/wishlist"
+                >Wishlist <%if(locals.wishlistCount){%><span
+                  class="count-icon"
+                  id="cart-count"
+                  ><%=wishlistCount%></span
+                ><%}%></a
+              >
+            </span>
+            <span class="nav-item nav-link text-center mb-2 mb-lg-0 mx-2">
+              <a class="nav-link" href="/users/cart"
+                >Cart <%if(locals.cartCount){%><span
+                  class="count-icon"
+                  id="cart-count"
+                  ><%=cartCount%></span
+                ><%}%></a
+              >
+            </span>
 
             <span class="nav-item nav-link text-center mb-2 mb-lg-0 ms-lg-3">
               <% if(locals.session){%>
@@ -176,24 +194,32 @@
             aria-expanded="false"
           >
             Filter
-        </a>
+          </a>
           <ul class="dropdown-menu">
             <%brands.forEach((brand, i) => {%>
-              <li>
-                <label class="dropdown-item">
-                  <input type="radio" name="filterOption" onclick="filter('<%=brand.name%>', '<%=brand._id%>' , '<%=listingName%>')"> <%=brand.name%>
-                </label>
-              </li>
-            <%})%>
-       
             <li>
               <label class="dropdown-item">
-                <input type="radio" name="filterOption" onclick="removeFilter('none')"> NO Filter
+                <input
+                  type="radio"
+                  name="filterOption"
+                  onclick="filter('<%=brand.name%>', '<%=brand._id%>' , '<%=listingName%>')"
+                />
+                <%=brand.name%>
+              </label>
+            </li>
+            <%})%>
+
+            <li>
+              <label class="dropdown-item">
+                <input
+                  type="radio"
+                  name="filterOption"
+                  onclick="removeFilter('none')"
+                />
+                NO Filter
               </label>
             </li>
           </ul>
-          
-          
         </div>
 
         <span
@@ -214,7 +240,9 @@
           </a>
           <ul class="dropdown-menu">
             <li>
-              <span class="dropdown-item" onclick="sortBy(event , 'newReleases')"
+              <span
+                class="dropdown-item"
+                onclick="sortBy(event , 'newReleases')"
                 >New releases</span
               >
             </li>
@@ -261,7 +289,7 @@
           filter.</span
         >
       </div>
-      <br>
+      <br />
       <div
         class="text-center d-flex justify-content-center flex-column my-3"
         id="productContainer"
@@ -270,13 +298,13 @@
         <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
           <%listing.forEach(product => {%>
           <div class="col-lg-3 mx-2">
-            <div class="card  border-0" style="height: 90%;">
+            <div class="card border-0" style="height: 90%">
               <a href="/products/<%=product._id%>"
                 ><img
                   src="/public/img/products/<%=product.thumbnail%>"
-                  class="card-img-top px-4 pt-2 "
+                  class="card-img-top px-4 pt-2"
                   alt="..."
-                  style="object-fit: scale-down; aspect-ratio: 1; height: 60%;"
+                  style="object-fit: scale-down; aspect-ratio: 1; height: 60%"
                 />
                 <div class="card-body">
                   <h6 class="card-title text-dark"><%=product.name%></h6>
@@ -288,16 +316,16 @@
                     "
                     ><%=product.brand.name%></span
                   >
-                  <br>
+                  <br />
                   <span
-                  style="
-                    font-weight: bold;
-                    color: #7f7f7f;
-                    font-size: 0.75rem;
-                  "
-                  class="mb-4"
-                  >₹ <%=product.RAMSSD[0].price%></span
-                >
+                    style="
+                      font-weight: bold;
+                      color: #7f7f7f;
+                      font-size: 0.75rem;
+                    "
+                    class="mb-4"
+                    >₹ <%=product.RAMSSD[0].price%></span
+                  >
                 </div></a
               >
             </div>
@@ -306,38 +334,45 @@
         </div>
         <%}%>
       </div>
-      
     </section>
     <div class="text-center my-3">
-        <a 
+      <a
         href="/products?query=viewMore"
         class="btn btn-outline-dark py-2 px-3 mt-5"
         style="font-size: 0.75rem"
         >SHOW MORE</a
       >
-     
     </div>
-    <footer class="bg-theme">
+    <footer class="bg-theme" style="background: #f3f2f2; height: 20%">
       <div
-        class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around"
+        class="container links pt-4 pb-2 row mx-auto line-break d-flex justify-content-around footer-links"
       >
-        <a class="col-lg-2 pb-2 text-center text-white" href="#">Track Shipping</a>
-        <a class="col-lg-2 pb-2 text-center text-white" href="#">Contact Us</a>
-        <a class="col-lg-2 pb-2 text-center text-white" href="#">Customer Care</a>
-        <a class="col-lg-2 pb-2 text-center text-white" href="#">About us</a>
+        <a class="col-lg-2 pb-2 text-center text-black" href="#"
+          >Track Shipping</a
+        >
+        <a class="col-lg-2 pb-2 text-center text-black" href="#">Contact Us</a>
+        <a class="col-lg-2 pb-2 text-center text-black" href="#"
+          >Customer Care</a
+        >
+        <a class="col-lg-2 pb-2 text-center text-black" href="#">About us</a>
         <span class="col-lg-2 justify-content-center d-flex align-items-center">
-          <i class="fab fa-instagram text-white"></i>
-          <i class="fab fa-facebook-f text-white"></i>
-          <i class="fab fa-twitter text-white"></i>
-          <i class="fab fa-whatsapp text-white"></i>
+          <i class="fab fa-instagram text-black"></i>
+          <i class="fab fa-facebook-f text-black"></i>
+          <i class="fab fa-twitter text-black"></i>
+          <i class="fab fa-whatsapp text-black"></i>
         </span>
       </div>
-      <div class="copyright bg-theme py-2 text-center text-white">
-        <span
+      <div
+        class="copyright bg-theme py-1 text-center"
+        style="font-size: 0.85rem; background: #f1efef"
+      >
+        <span style="color: black"
           >Copyright © 2023 | LAP4YOU | Made by
-          <a href="https://rishikesht1245.github.io/Rishikesh_website/"
-            style="color: white;">Rishikesh T</a
-          ></span
+          <a
+            href="https://rishikesht1245.github.io/Rishikesh_website/"
+            style="color: gray"
+            >Rishikesh T
+          </a></span
         >
       </div>
     </footer>

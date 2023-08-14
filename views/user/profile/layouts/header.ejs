@@ -17,12 +17,19 @@
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"
     />
-    <link rel="shortcut icon" type="image/jpg" href="/public/img/lap4you-favicon.png" />
+    <link
+      rel="shortcut icon"
+      type="image/jpg"
+      href="/public/img/lap4you-favicon.png"
+    />
     <!-- include cropper js CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css"
+    />
     <title><%= locals.documentTitle %></title>
     <style>
-        html {
+      html {
         scroll-behavior: smooth;
       }
       .swal2-popup {
@@ -47,32 +54,32 @@
         box-shadow: inset 0 6px 10px 0 rgba(0, 0, 0, 0.2),
           0 6px 20px 0 rgba(0, 0, 0, 0.19);
       }
-      .hide{
+      .hide {
         display: none;
       }
-        #image{
-            display: block;
-            max-width: 100%;
-        }
-        .preview {
-            overflow: hidden;
-            width: 160px; 
-            height: 160px;
-            margin: 10px;
-            border: 1px solid red;
-        }
-      .cropped{
+      #image {
+        display: block;
+        max-width: 100%;
+      }
+      .preview {
+        overflow: hidden;
+        width: 160px;
+        height: 160px;
+        margin: 10px;
+        border: 1px solid red;
+      }
+      .cropped {
         width: 100%;
         height: auto;
       }
       .star-checkbox {
         display: none; /* Hide the default checkbox */
-        }
+      }
     </style>
   </head>
   <body>
     <header>
-      <div class="container-fluid header-top">
+      <div class="container-fluid header-top" style="background: #f3f2f2">
         <div class="container d-flex header-top-links justify-content-end">
           <a class="px-2 d-none d-lg-block" href="">Contact Us</a>
           <a class="px-2 d-none d-lg-block" href="">About Us</a>
@@ -91,7 +98,7 @@
               class="d-inline-block align-text-top"
             />
             <div class="brand-name ms-3">
-              <span>LAP<span style="color: red;">4</span>YOU</span>
+              <span>LAP<span style="color: red">4</span>YOU</span>
             </div>
           </a>
           <!-- <button
